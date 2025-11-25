@@ -106,3 +106,2910 @@
 		end
 		print(v28)
 	end
+	print("=====================================")
+	local v29, v30, v31 = ipairs(v1)
+	local v32 = {}
+	while true do
+		local v33
+		v31, v33 = v29(v30, v31)
+		if v31 == nil then
+			break
+		end
+		if v33:find("\226\156\151") then
+			local v34 = v33:match("\226\156\151 (.*)")
+			table.insert(v32, v34)
+		end
+	end
+	local v_u_35 = #v32 == 0 and "\226\156\147 Compatible" or "\226\154\160\239\184\143 Incompatible / Missing"
+	local v_u_36 = #v32 == 0 and "All features supported!" or "Issues with: " .. table.concat(v32, ", ") .. "\nSome functions may be missing or partially supported.\nTry another executor (e.g. Volcano, Velocity)."
+	pcall(function()
+		-- upvalues: (ref) v_u_35, (ref) v_u_36
+		game.StarterGui:SetCore("SendNotification", {
+			["Title"] = v_u_35,
+			["Text"] = v_u_36,
+			["Duration"] = 10
+		})
+	end)
+	if #v32 > 0 then
+		warn("Script may not work properly due to missing or broken functions.")
+	end
+end)()
+local v_u_37 = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
+local v_u_38 = game:GetService("Players")
+local v_u_39 = game:GetService("ReplicatedStorage")
+local v_u_40 = game:GetService("Workspace")
+local v_u_41 = v_u_38.LocalPlayer
+v_u_37:AddTheme({
+	["Name"] = "Dark",
+	["Accent"] = "#18181b",
+	["Dialog"] = "#18181b",
+	["Outline"] = "#FFFFFF",
+	["Text"] = "#FFFFFF",
+	["Placeholder"] = "#999999",
+	["Background"] = "#0e0e10",
+	["Button"] = "#52525b",
+	["Icon"] = "#a1a1aa"
+})
+v_u_37:AddTheme({
+	["Name"] = "Light",
+	["Accent"] = "#f4f4f5",
+	["Dialog"] = "#f4f4f5",
+	["Outline"] = "#000000",
+	["Text"] = "#000000",
+	["Placeholder"] = "#666666",
+	["Background"] = "#ffffff",
+	["Button"] = "#e4e4e7",
+	["Icon"] = "#52525b"
+})
+v_u_37:AddTheme({
+	["Name"] = "Gray",
+	["Accent"] = "#374151",
+	["Dialog"] = "#374151",
+	["Outline"] = "#d1d5db",
+	["Text"] = "#f9fafb",
+	["Placeholder"] = "#9ca3af",
+	["Background"] = "#1f2937",
+	["Button"] = "#4b5563",
+	["Icon"] = "#d1d5db"
+})
+v_u_37:AddTheme({
+	["Name"] = "Blue",
+	["Accent"] = "#1e40af",
+	["Dialog"] = "#1e3a8a",
+	["Outline"] = "#93c5fd",
+	["Text"] = "#f0f9ff",
+	["Placeholder"] = "#60a5fa",
+	["Background"] = "#1e293b",
+	["Button"] = "#3b82f6",
+	["Icon"] = "#93c5fd"
+})
+v_u_37:AddTheme({
+	["Name"] = "Green",
+	["Accent"] = "#059669",
+	["Dialog"] = "#047857",
+	["Outline"] = "#6ee7b7",
+	["Text"] = "#ecfdf5",
+	["Placeholder"] = "#34d399",
+	["Background"] = "#064e3b",
+	["Button"] = "#10b981",
+	["Icon"] = "#6ee7b7"
+})
+v_u_37:AddTheme({
+	["Name"] = "Purple",
+	["Accent"] = "#7c3aed",
+	["Dialog"] = "#6d28d9",
+	["Outline"] = "#c4b5fd",
+	["Text"] = "#faf5ff",
+	["Placeholder"] = "#a78bfa",
+	["Background"] = "#581c87",
+	["Button"] = "#8b5cf6",
+	["Icon"] = "#c4b5fd"
+})
+v_u_37:SetNotificationLower(true)
+local v_u_42 = {
+	"Dark",
+	"Light",
+	"Gray",
+	"Blue",
+	"Green",
+	"Purple"
+}
+local v_u_43 = 1
+if not getgenv().TransparencyEnabled then
+	getgenv().TransparencyEnabled = false
+end
+local v_u_44 = false
+local v_u_45 = false
+local v_u_46 = 50
+local v_u_47 = 0
+local v_u_48 = {
+	["Old Axe"] = "3_7367831688",
+	["Good Axe"] = "112_7367831688",
+	["Strong Axe"] = "116_7367831688",
+	["Chainsaw"] = "647_8992824875",
+	["Spear"] = "196_8999010016"
+}
+local v_u_49 = false
+local v_u_50 = {}
+local v_u_51 = 75
+local v_u_52 = {
+	"Apple",
+	"Bandage",
+	"Bear Trap",
+	"Berry",
+	"Biofuel",
+	"Bolt",
+	"Broken Fan",
+	"Broken Microwave",
+	"Cake",
+	"Carrot",
+	"Cave Vine",
+	"Chair",
+	"Chainsaw",
+	"Chili",
+	"Coal",
+	"Coin Stack",
+	"Cooked Fish",
+	"Cooked Morsel",
+	"Cooked Steak",
+	"Dripleaf",
+	"Fish",
+	"Fishing Rod",
+	"Flashlight",
+	"Flowers",
+	"Fuel Canister",
+	"Giant Sack",
+	"Good Axe",
+	"Good Sack",
+	"Infernal Helmet",
+	"Iron Body",
+	"Leather Body",
+	"Log",
+	"Mackerel",
+	"Mandrake Plants",
+	"Mammoth Helmet",
+	"MedKit",
+	"Metal Chair",
+	"Moonflower",
+	"Morsel",
+	"Obsidiron Boots",
+	"Oil",
+	"Oil Barrel",
+	"Old Axe",
+	"Old Car Engine",
+	"Old Flashlight",
+	"Old Radio",
+	"Old Taming Flute",
+	"Potion",
+	"Pumpkin",
+	"Raygun",
+	"Revolver",
+	"Revolver Ammo",
+	"Rifle",
+	"Rifle Ammo",
+	"Sheet Metal",
+	"Spear",
+	"Stareweed",
+	"Steak",
+	"Stew",
+	"Strong Axe",
+	"Thorn Body",
+	"Tyre",
+	"Washing Machine"
+}
+local v_u_53 = {
+	"Bunny",
+	"Wolf",
+	"Alpha Wolf",
+	"Bear",
+	"Cultist",
+	"Crossbow Cultist",
+	"Alien",
+	"Frog",
+	"Frog King",
+	"Mammoth",
+	"Polar Bear",
+	"Cultist King",
+	"Deer",
+	"Owl"
+}
+local v_u_54 = {
+	"Tyre",
+	"Bolt",
+	"Broken Fan",
+	"Broken Microwave",
+	"Sheet Metal",
+	"Old Radio",
+	"Washing Machine",
+	"Old Car Engine",
+	"Metal Chair"
+}
+local v_u_55 = {}
+local v_u_56 = {
+	"Log",
+	"Chair",
+	"Coal",
+	"Fuel Canister",
+	"Oil Barrel",
+	"Biofuel",
+	"Oil"
+}
+local v_u_57 = {}
+local v_u_58 = {
+	"Cake",
+	"Cooked Steak",
+	"Cooked Morsel",
+	"Steak",
+	"Morsel",
+	"Berry",
+	"Carrot",
+	"Apple",
+	"Chili",
+	"Stew",
+	"Fish",
+	"Mackerel",
+	"Cooked Fish",
+	"Pumpkin"
+}
+local v_u_59 = {}
+local v_u_60 = { "Bandage", "MedKit", "Potion" }
+local v_u_61 = {}
+local v_u_62 = {
+	"Revolver",
+	"Rifle",
+	"Leather Body",
+	"Iron Body",
+	"Revolver Ammo",
+	"Rifle Ammo",
+	"Giant Sack",
+	"Good Sack",
+	"Strong Axe",
+	"Good Axe",
+	"Old Axe",
+	"Spear",
+	"Chainsaw",
+	"Mammoth Helmet",
+	"Infernal Helmet",
+	"Thorn Body",
+	"Obsidiron Boots",
+	"Flashlight",
+	"Old Flashlight",
+	"Bear Trap",
+	"Fishing Rod",
+	"Raygun",
+	"Old Taming Flute"
+}
+local v_u_63 = {
+	"Carrot",
+	"Berry",
+	"Pumpkin",
+	"Apple",
+	"Chili",
+	"Dripleaf",
+	"Moonflower",
+	"Stareweed",
+	"Cave Vine",
+	"Mandrake Plants",
+	"Flowers"
+}
+local v_u_64 = {}
+local v_u_65 = {}
+local v_u_66 = false
+local v_u_67 = nil
+local v_u_68 = false
+local v_u_69 = false
+local v_u_70 = false
+local v_u_71 = false
+local v_u_72 = false
+local v_u_73 = false
+local v_u_74 = false
+local v_u_75 = false
+local v_u_76 = false
+local v_u_77 = false
+local v_u_78 = false
+local v_u_79 = tick()
+local v_u_80 = false
+local v_u_81 = false
+local v_u_82 = {
+	["FogEnd"] = nil,
+	["FogStart"] = nil,
+	["FogColor"] = nil,
+	["Atmosphere"] = nil
+}
+local v_u_83 = {
+	"Item Chest",
+	"Good Chest",
+	"Iron Chest",
+	"Legendary Chest",
+	"Gold Chest",
+	"Ruby Chest",
+	"Diamond Chest",
+	"Alien Chest",
+	"Frog Chest",
+	"Ice Chest",
+	"Cold Chest",
+	"Obsidiron Chest",
+	"Maze Chest",
+	"Vampire Chest",
+	"Infernal Chest",
+	"Hot Chest",
+	"Outskirt Chest",
+	"Enchanted Outskirt Chest"
+}
+local v_u_84 = Vector3.new(0, 19, 0)
+local v_u_85 = nil
+local v_u_86 = false
+local v_u_87 = Vector3.new(21, 20, -5)
+local v_u_88 = nil
+local v_u_89 = false
+local v_u_90 = {
+	"Morsel",
+	"Steak",
+	"Elvis Steak",
+	"Fish",
+	"Mackerel"
+}
+local v_u_91 = {}
+local v_u_92 = false
+local function v_u_99(p93)
+	-- upvalues: (ref) v_u_48, (ref) v_u_41
+	local v94, v95, v96 = pairs(v_u_48)
+	while true do
+		local v97
+		v96, v97 = v94(v95, v96)
+		if v96 == nil then
+			break
+		end
+		if not p93 or (v96 == "Old Axe" or (v96 == "Good Axe" or v96 == "Strong Axe")) then
+			local v98 = v_u_41:FindFirstChild("Inventory")
+			if v98 then
+				v98 = v_u_41.Inventory:FindFirstChild(v96)
+			end
+			if v98 then
+				return v98, v97
+			end
+		end
+	end
+	return nil, nil
+end
+local function v_u_101(p100)
+	-- upvalues: (ref) v_u_39
+	if p100 then
+		v_u_39:WaitForChild("RemoteEvents").EquipItemHandle:FireServer("FireAllClients", p100)
+	end
+end
+local function v_u_103(p102)
+	-- upvalues: (ref) v_u_39
+	if p102 then
+		v_u_39:WaitForChild("RemoteEvents").UnequipItemHandle:FireServer("FireAllClients", p102)
+	end
+end
+local function v_u_119()
+	-- upvalues: (ref) v_u_44, (ref) v_u_41, (ref) v_u_99, (ref) v_u_101, (ref) v_u_40, (ref) v_u_46, (ref) v_u_39
+	local v104 = {}
+	while v_u_44 do
+		local v105 = (v_u_41.Character or v_u_41.CharacterAdded:Wait()):FindFirstChild("HumanoidRootPart")
+		if v105 then
+			local v_u_106, v_u_107 = v_u_99(false)
+			if v_u_106 and v_u_107 then
+				v_u_101(v_u_106)
+				local v108, v109, v110 = ipairs(v_u_40.Characters:GetChildren())
+				local v111 = {}
+				while true do
+					local v112
+					v110, v112 = v108(v109, v110)
+					if v110 == nil then
+						break
+					end
+					if v112:IsA("Model") then
+						local v113 = v112:FindFirstChildWhichIsA("BasePart")
+						if v113 and (v113.Position - v105.Position).Magnitude <= v_u_46 then
+							local v114 = v104[v112] or 0
+							if tick() - v114 >= 0.5 then
+								table.insert(v111, {
+									["mob"] = v112,
+									["part"] = v113
+								})
+								v104[v112] = tick()
+							end
+						end
+					end
+				end
+				local v115, v116, v117 = ipairs(v111)
+				while true do
+					local v_u_118
+					v117, v_u_118 = v115(v116, v117)
+					if v117 == nil then
+						break
+					end
+					pcall(function()
+						-- upvalues: (ref) v_u_39, (ref) v_u_118, (ref) v_u_106, (ref) v_u_107
+						v_u_39:WaitForChild("RemoteEvents").ToolDamageObject:InvokeServer(v_u_118.mob, v_u_106, v_u_107, CFrame.new(v_u_118.part.Position))
+					end)
+				end
+				task.wait(0.2)
+			else
+				task.wait(1)
+			end
+		else
+			task.wait(0.5)
+		end
+	end
+end
+local v_u_120 = {}
+local function v_u_132()
+	-- upvalues: (ref) v_u_38
+	local v121 = v_u_38.LocalPlayer
+	if v121.Character and v121.Character:FindFirstChild("HumanoidRootPart") then
+		local v122 = v121.Character.HumanoidRootPart
+		local v123 = v122.CFrame
+		local v124 = {}
+		for v125 = -1000, 1000, 200 do
+			local v126 = v125
+			for v127 = -1000, 1000, 200 do
+				table.insert(v124, Vector3.new(v126, 50, v127))
+			end
+		end
+		local v128, v129, v130 = ipairs(v124)
+		while true do
+			local v131
+			v130, v131 = v128(v129, v130)
+			if v130 == nil then
+				break
+			end
+			v122.CFrame = CFrame.new(v131)
+			task.wait(0.05)
+		end
+		v122.CFrame = v123
+	end
+end
+local function v_u_156()
+	-- upvalues: (ref) v_u_45, (ref) v_u_41, (ref) v_u_99, (ref) v_u_101, (ref) v_u_40, (ref) v_u_46, (ref) v_u_120, (ref) v_u_47, (ref) v_u_39
+	while v_u_45 do
+		local v133 = (v_u_41.Character or v_u_41.CharacterAdded:Wait()):FindFirstChild("HumanoidRootPart")
+		if v133 then
+			local v_u_134, v135 = v_u_99(true)
+			if v_u_134 and v135 then
+				v_u_101(v_u_134)
+				local v136 = {}
+				local v137 = v_u_40:FindFirstChild("Map")
+				if v137 then
+					if v137:FindFirstChild("Foliage") then
+						local v138, v139, v140 = ipairs(v137.Foliage:GetChildren())
+						while true do
+							local v141
+							v140, v141 = v138(v139, v140)
+							if v140 == nil then
+								break
+							end
+							if v141:IsA("Model") and v141.Name == "Small Tree" then
+								table.insert(v136, v141)
+							end
+						end
+					end
+					if v137:FindFirstChild("Landmarks") then
+						local v142, v143, v144 = ipairs(v137.Landmarks:GetChildren())
+						while true do
+							local v145
+							v144, v145 = v142(v143, v144)
+							if v144 == nil then
+								break
+							end
+							if v145:IsA("Model") and v145.Name == "Small Tree" then
+								table.insert(v136, v145)
+							end
+						end
+					end
+				end
+				local v146, v147, v148 = ipairs(v136)
+				while true do
+					local v_u_149
+					v148, v_u_149 = v146(v147, v148)
+					if v148 == nil then
+						break
+					end
+					local v150 = v_u_149:FindFirstChild("Trunk")
+					if v150 and (v150:IsA("BasePart") and ((v150.Position - v133.Position).Magnitude <= v_u_46 and not v_u_120[v_u_149])) then
+						v_u_120[v_u_149] = true
+						task.spawn(function()
+							-- upvalues: (ref) v_u_45, (ref) v_u_149, (ref) v_u_47, (ref) v_u_39, (ref) v_u_134, (ref) v_u_120
+							local v151 = 0
+							while v_u_45 and (v_u_149 and (v_u_149.Parent and v151 < 10)) do
+								v_u_47 = v_u_47 + 1
+								pcall(function()
+									-- upvalues: (ref) v_u_39, (ref) v_u_149, (ref) v_u_134, (ref) v_u_47
+									v_u_39:WaitForChild("RemoteEvents").ToolDamageObject:InvokeServer(v_u_149, v_u_134, tostring(v_u_47) .. "_7367831688", CFrame.new(-2.962610244751, 4.5547881126404, -75.950843811035, 0.89621275663376, -1.3894891459643e-8, 0.44362446665764, -7.994568895775e-10, 1, 3.293635941759e-8, -0.44362446665764, -2.9872644802253e-8, 0.89621275663376))
+								end)
+								v151 = v151 + 1
+								task.wait(0.5)
+							end
+							v_u_120[v_u_149] = nil
+						end)
+					end
+				end
+				task.wait(0.1)
+			else
+				task.wait(1)
+			end
+		else
+			task.wait(0.5)
+		end
+	end
+	local v152, v153, v154 = pairs(v_u_120)
+	while true do
+		local v155
+		v154, v155 = v152(v153, v154)
+		if v154 == nil then
+			break
+		end
+		v_u_120[v154] = nil
+	end
+end
+function wiki(p157)
+	-- upvalues: (ref) v_u_40
+	local v158, v159, v160 = ipairs(v_u_40.Items:GetChildren())
+	local v161 = 0
+	while true do
+		local v162
+		v160, v162 = v158(v159, v160)
+		if v160 == nil then
+			break
+		end
+		if v162.Name == p157 then
+			v161 = v161 + 1
+		end
+	end
+	return v161
+end
+function ghn()
+	-- upvalues: (ref) v_u_41
+	return math.floor(v_u_41.PlayerGui.Interface.StatBars.HungerBar.Bar.Size.X.Scale * 100)
+end
+function feed(p163)
+	-- upvalues: (ref) v_u_40, (ref) v_u_39
+	local v164, v165, v166 = ipairs(v_u_40.Items:GetChildren())
+	while true do
+		local v167
+		v166, v167 = v164(v165, v166)
+		if v166 == nil then
+			break
+		end
+		if v167.Name == p163 then
+			v_u_39.RemoteEvents.RequestConsumeItem:InvokeServer(v167)
+			break
+		end
+	end
+end
+function notifeed(_)
+	-- upvalues: (ref) v_u_37
+	v_u_37:Notify({
+		["Title"] = "Auto-Feed Paused",
+		["Content"] = "You\'re all out of the selected food!",
+		["Duration"] = 3
+	})
+end
+local function v_u_171(p_u_168, p_u_169)
+	if p_u_168 and (p_u_168:IsDescendantOf(workspace) and (p_u_168:IsA("BasePart") or p_u_168:IsA("Model"))) then
+		local v_u_170
+		if p_u_168:IsA("Model") then
+			v_u_170 = p_u_168.PrimaryPart or p_u_168:FindFirstChildWhichIsA("BasePart") or (p_u_168:FindFirstChild("Handle") or p_u_168)
+		else
+			v_u_170 = p_u_168
+		end
+		if v_u_170 and v_u_170:IsA("BasePart") then
+			if p_u_168:IsA("Model") and not p_u_168.PrimaryPart then
+				pcall(function()
+					-- upvalues: (ref) p_u_168, (ref) v_u_170
+					p_u_168.PrimaryPart = v_u_170
+				end)
+			end
+			pcall(function()
+				-- upvalues: (ref) p_u_168, (ref) p_u_169, (ref) v_u_170
+				game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents").RequestStartDraggingItem:FireServer(p_u_168)
+				if p_u_168:IsA("Model") then
+					p_u_168:SetPrimaryPartCFrame(CFrame.new(p_u_169))
+				else
+					v_u_170.CFrame = CFrame.new(p_u_169)
+				end
+				game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents").StopDraggingItem:FireServer(p_u_168)
+			end)
+		end
+	else
+		return
+	end
+end
+local function v_u_182()
+	-- upvalues: (ref) v_u_81, (ref) v_u_41, (ref) v_u_64, (ref) v_u_171
+	while v_u_81 do
+		local v172 = (v_u_41.Character or v_u_41.CharacterAdded:Wait()):FindFirstChild("HumanoidRootPart")
+		local v173 = v172 and workspace:FindFirstChild("Items")
+		if v173 then
+			local v174, v175, v176 = ipairs(v_u_64)
+			while true do
+				local v177
+				v176, v177 = v174(v175, v176)
+				if v176 == nil or not v_u_81 then
+					break
+				end
+				local v178, v179, v180 = ipairs(v173:GetChildren())
+				while true do
+					local v181
+					v180, v181 = v178(v179, v180)
+					if v180 == nil or not v_u_81 then
+						break
+					end
+					if v181.Name == v177 and (not v181:IsA("Model") or v181.PrimaryPart or (v181:FindFirstChildWhichIsA("BasePart") or v181)) then
+						v_u_171(v181, v172.Position + Vector3.new(math.random(-3, 3), -1, math.random(-3, 3)))
+						task.wait(0.1)
+					end
+				end
+				task.wait(0.1)
+			end
+		end
+		task.wait(0.5)
+	end
+end
+local function v_u_195()
+	-- upvalues: (ref) v_u_83
+	local v183 = {}
+	local v184 = {}
+	local v185 = workspace:FindFirstChild("Items")
+	if not v185 then
+		return v183, v184
+	end
+	local v186, v187, v188 = ipairs(v185:GetDescendants())
+	local v189 = 1
+	while true do
+		local v190
+		v188, v190 = v186(v187, v188)
+		if v188 == nil then
+			break
+		end
+		local v191 = tostring(v190.Name or "")
+		if v191:lower():find("chest") or table.find(v_u_83, v191) then
+			local v192
+			if v190:IsA("Model") then
+				v192 = v190.PrimaryPart or v190:FindFirstChildWhichIsA("BasePart") or (v190:FindFirstChild("Handle") or v190)
+			else
+				v192 = v190
+			end
+			if v192 and (v192:IsA("BasePart") and v192.Parent) then
+				local v193 = v192.Position
+				if v193.Y > -1 and not (v190.GetAttribute and v190:GetAttribute("8721081708ed")) then
+					local v194 = string.format("%s #%d [%.0f, %.0f, %.0f]", v191, v189, v193.X, v193.Y, v193.Z)
+					table.insert(v183, {
+						["object"] = v190,
+						["position"] = v193,
+						["name"] = v194
+					})
+					table.insert(v184, v194)
+					v189 = v189 + 1
+				end
+			end
+		end
+	end
+	return v183, v184
+end
+local function v_u_198()
+	-- upvalues: (ref) v_u_195
+	local v196, v197 = v_u_195()
+	currentChestNames = v197
+	currentChests = v196
+	if #currentChestNames <= 0 then
+		selectedChest = nil
+		selectedChestIndex = 1
+		pcall(function()
+			ChestDropdown:Refresh({ "No chests found" })
+		end)
+	else
+		selectedChest = currentChestNames[1]
+		selectedChestIndex = 1
+		pcall(function()
+			ChestDropdown:Refresh(currentChestNames)
+		end)
+	end
+end
+local v_u_199, v_u_200 = v_u_195()
+local v_u_201 = v_u_200[1] or nil
+local v_u_202 = 1
+local function v_u_210()
+	local v203, v204, v205 = ipairs(workspace:WaitForChild("Characters"):GetChildren())
+	local v206 = {}
+	local v207 = {}
+	local v208 = 1
+	while true do
+		local v209
+		v205, v209 = v203(v204, v205)
+		if v205 == nil then
+			break
+		end
+		if v209.Name:match("^Lost Child") and v209:GetAttribute("Lost") == true then
+			table.insert(v206, v209)
+			table.insert(v207, v209.Name)
+			v208 = v208 + 1
+		end
+	end
+	return v206, v207
+end
+local v_u_211, v_u_212 = v_u_210()
+local v_u_213 = v_u_212[1] or nil
+function tp1()
+	(game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()):WaitForChild("HumanoidRootPart").CFrame = CFrame.new(0.43132782, 15.77634621, -1.88620758, -0.270917892, 0.102997094, 0.957076371, 0.639657021, 0.762253821, 0.0990355015, -0.719334781, 0.639031112, -0.272391081)
+end
+local function v_u_217()
+	local v214 = workspace:FindFirstChild("Map") and workspace.Map:FindFirstChild("Landmarks") and (workspace.Map.Landmarks:FindFirstChild("Stronghold") and workspace.Map.Landmarks.Stronghold:FindFirstChild("Functional") and (workspace.Map.Landmarks.Stronghold.Functional:FindFirstChild("EntryDoors") and workspace.Map.Landmarks.Stronghold.Functional.EntryDoors:FindFirstChild("DoorRight")))
+	if v214 then
+		v214 = workspace.Map.Landmarks.Stronghold.Functional.EntryDoors.DoorRight:FindFirstChild("Model")
+	end
+	if v214 then
+		local v215 = v214:GetChildren()[5]
+		if v215 and v215:IsA("BasePart") then
+			local v216 = game.Players.LocalPlayer.Character
+			if v216 then
+				v216 = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+			end
+			if v216 then
+				v216.CFrame = v215.CFrame + Vector3.new(0, 5, 0)
+			end
+		end
+	end
+end
+local v_u_218 = false
+local v_u_219 = 1
+local v_u_220 = false
+local v_u_221 = nil
+local v_u_222 = nil
+local v_u_223 = nil
+local v_u_224 = nil
+local v_u_225 = game:GetService("UserInputService")
+local function v_u_237()
+	-- upvalues: (ref) v_u_38, (ref) v_u_225, (ref) v_u_221, (ref) v_u_222, (ref) v_u_219, (ref) v_u_220, (ref) v_u_218
+	repeat
+		task.wait()
+	until v_u_38.LocalPlayer and v_u_38.LocalPlayer.Character and (v_u_38.LocalPlayer.Character:WaitForChild("HumanoidRootPart") and v_u_38.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"))
+	repeat
+		task.wait()
+	until v_u_225
+	if v_u_221 or v_u_222 then
+		v_u_221:Disconnect()
+		v_u_222:Disconnect()
+	end
+	local v_u_226 = v_u_38.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+	local v_u_227 = {
+		["F"] = 0,
+		["B"] = 0,
+		["L"] = 0,
+		["R"] = 0,
+		["Q"] = 0,
+		["E"] = 0
+	}
+	local v_u_228 = {
+		["F"] = 0,
+		["B"] = 0,
+		["L"] = 0,
+		["R"] = 0,
+		["Q"] = 0,
+		["E"] = 0
+	}
+	local v_u_229 = v_u_219
+	local function v232()
+		-- upvalues: (ref) v_u_220, (ref) v_u_226, (ref) v_u_218, (ref) v_u_38, (ref) v_u_227, (ref) v_u_229, (ref) v_u_219, (ref) v_u_228
+		v_u_220 = true
+		local v_u_230 = Instance.new("BodyGyro")
+		local v_u_231 = Instance.new("BodyVelocity")
+		v_u_230.P = 90000
+		v_u_230.Parent = v_u_226
+		v_u_231.Parent = v_u_226
+		v_u_230.MaxTorque = Vector3.new(9000000000, 9000000000, 9000000000)
+		v_u_230.CFrame = v_u_226.CFrame
+		v_u_231.Velocity = Vector3.new(0, 0, 0)
+		v_u_231.MaxForce = Vector3.new(9000000000, 9000000000, 9000000000)
+		task.spawn(function()
+			-- upvalues: (ref) v_u_220, (ref) v_u_218, (ref) v_u_38, (ref) v_u_227, (ref) v_u_229, (ref) v_u_219, (ref) v_u_231, (ref) v_u_228, (ref) v_u_230
+			while v_u_220 do
+				task.wait()
+				if not v_u_218 and v_u_38.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
+					v_u_38.LocalPlayer.Character:FindFirstChildOfClass("Humanoid").PlatformStand = true
+				end
+				if v_u_227.L + v_u_227.R ~= 0 or (v_u_227.F + v_u_227.B ~= 0 or v_u_227.Q + v_u_227.E ~= 0) then
+					v_u_229 = v_u_219
+				elseif v_u_227.L + v_u_227.R == 0 and (v_u_227.F + v_u_227.B == 0 and (v_u_227.Q + v_u_227.E == 0 and v_u_229 ~= 0)) then
+					v_u_229 = 0
+				end
+				if v_u_227.L + v_u_227.R ~= 0 or (v_u_227.F + v_u_227.B ~= 0 or v_u_227.Q + v_u_227.E ~= 0) then
+					v_u_231.Velocity = (workspace.CurrentCamera.CoordinateFrame.lookVector * (v_u_227.F + v_u_227.B) + (workspace.CurrentCamera.CoordinateFrame * CFrame.new(v_u_227.L + v_u_227.R, (v_u_227.F + v_u_227.B + v_u_227.Q + v_u_227.E) * 0.2, 0).p - workspace.CurrentCamera.CoordinateFrame.p)) * v_u_229
+					v_u_228 = {
+						["F"] = v_u_227.F,
+						["B"] = v_u_227.B,
+						["L"] = v_u_227.L,
+						["R"] = v_u_227.R
+					}
+				elseif v_u_227.L + v_u_227.R ~= 0 or (v_u_227.F + v_u_227.B ~= 0 or (v_u_227.Q + v_u_227.E ~= 0 or v_u_229 == 0)) then
+					v_u_231.Velocity = Vector3.new(0, 0, 0)
+				else
+					v_u_231.Velocity = (workspace.CurrentCamera.CoordinateFrame.lookVector * (v_u_228.F + v_u_228.B) + (workspace.CurrentCamera.CoordinateFrame * CFrame.new(v_u_228.L + v_u_228.R, (v_u_228.F + v_u_228.B + v_u_227.Q + v_u_227.E) * 0.2, 0).p - workspace.CurrentCamera.CoordinateFrame.p)) * v_u_229
+				end
+				v_u_230.CFrame = workspace.CurrentCamera.CoordinateFrame
+			end
+			v_u_227 = {
+				["F"] = 0,
+				["B"] = 0,
+				["L"] = 0,
+				["R"] = 0,
+				["Q"] = 0,
+				["E"] = 0
+			}
+			v_u_228 = {
+				["F"] = 0,
+				["B"] = 0,
+				["L"] = 0,
+				["R"] = 0,
+				["Q"] = 0,
+				["E"] = 0
+			}
+			v_u_229 = 0
+			v_u_230:Destroy()
+			v_u_231:Destroy()
+			if v_u_38.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
+				v_u_38.LocalPlayer.Character:FindFirstChildOfClass("Humanoid").PlatformStand = false
+			end
+		end)
+	end
+	v_u_221 = v_u_225.InputBegan:Connect(function(p233)
+		-- upvalues: (ref) v_u_227, (ref) v_u_219
+		if p233.UserInputType == Enum.UserInputType.Keyboard then
+			local v234 = p233.KeyCode.Name
+			if v234 == "W" then
+				v_u_227.F = v_u_219
+			elseif v234 == "S" then
+				v_u_227.B = -v_u_219
+			elseif v234 == "A" then
+				v_u_227.L = -v_u_219
+			elseif v234 == "D" then
+				v_u_227.R = v_u_219
+			elseif v234 == "E" then
+				v_u_227.Q = v_u_219 * 2
+			elseif v234 == "Q" then
+				v_u_227.E = -v_u_219 * 2
+			end
+			pcall(function()
+				workspace.CurrentCamera.CameraType = Enum.CameraType.Track
+			end)
+		end
+	end)
+	v_u_222 = v_u_225.InputEnded:Connect(function(p235)
+		-- upvalues: (ref) v_u_227
+		if p235.UserInputType == Enum.UserInputType.Keyboard then
+			local v236 = p235.KeyCode.Name
+			if v236 == "W" then
+				v_u_227.F = 0
+			elseif v236 == "S" then
+				v_u_227.B = 0
+			elseif v236 == "A" then
+				v_u_227.L = 0
+			elseif v236 == "D" then
+				v_u_227.R = 0
+			elseif v236 == "E" then
+				v_u_227.Q = 0
+			elseif v236 == "Q" then
+				v_u_227.E = 0
+			end
+		end
+	end)
+	v232()
+end
+local function v_u_238()
+	-- upvalues: (ref) v_u_220, (ref) v_u_221, (ref) v_u_222, (ref) v_u_223, (ref) v_u_224, (ref) v_u_38
+	v_u_220 = false
+	if v_u_221 then
+		v_u_221:Disconnect()
+	end
+	if v_u_222 then
+		v_u_222:Disconnect()
+	end
+	if v_u_223 then
+		v_u_223:Disconnect()
+	end
+	if v_u_224 then
+		v_u_224:Disconnect()
+	end
+	if v_u_38.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
+		v_u_38.LocalPlayer.Character:FindFirstChildOfClass("Humanoid").PlatformStand = false
+	end
+	pcall(function()
+		workspace.CurrentCamera.CameraType = Enum.CameraType.Custom
+	end)
+end
+local function v_u_240()
+	-- upvalues: (ref) v_u_220, (ref) v_u_38, (ref) v_u_223, (ref) v_u_224
+	pcall(function()
+		-- upvalues: (ref) v_u_220, (ref) v_u_38, (ref) v_u_223, (ref) v_u_224
+		v_u_220 = false
+		local v239 = v_u_38.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+		if v239:FindFirstChild("BodyVelocity") then
+			v239:FindFirstChild("BodyVelocity"):Destroy()
+		end
+		if v239:FindFirstChild("BodyGyro") then
+			v239:FindFirstChild("BodyGyro"):Destroy()
+		end
+		if v_u_38.LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid") then
+			v_u_38.LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid").PlatformStand = false
+		end
+		if v_u_223 then
+			v_u_223:Disconnect()
+		end
+		if v_u_224 then
+			v_u_224:Disconnect()
+		end
+	end)
+end
+local function v_u_256()
+	-- upvalues: (ref) v_u_240, (ref) v_u_220, (ref) v_u_38, (ref) v_u_223, (ref) v_u_224, (ref) v_u_219
+	v_u_240()
+	v_u_220 = true
+	local v_u_241 = v_u_38.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+	local v_u_242 = workspace.CurrentCamera
+	local v_u_243 = Vector3.new()
+	local v_u_244 = Vector3.new(0, 0, 0)
+	local v_u_245 = Vector3.new(9000000000, 9000000000, 9000000000)
+	local v_u_246 = require(v_u_38.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule"))
+	local v247 = Instance.new("BodyVelocity")
+	v247.Name = "BodyVelocity"
+	v247.Parent = v_u_241
+	v247.MaxForce = v_u_244
+	v247.Velocity = v_u_244
+	local v248 = Instance.new("BodyGyro")
+	v248.Name = "BodyGyro"
+	v248.Parent = v_u_241
+	v248.MaxTorque = v_u_245
+	v248.P = 1000
+	v248.D = 50
+	v_u_223 = v_u_38.LocalPlayer.CharacterAdded:Connect(function()
+		-- upvalues: (ref) v_u_38, (ref) v_u_244, (ref) v_u_245
+		local v249 = v_u_38.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+		local v250 = Instance.new("BodyVelocity")
+		v250.Name = "BodyVelocity"
+		v250.Parent = v249
+		v250.MaxForce = v_u_244
+		v250.Velocity = v_u_244
+		local v251 = Instance.new("BodyGyro")
+		v251.Name = "BodyGyro"
+		v251.Parent = v249
+		v251.MaxTorque = v_u_245
+		v251.P = 1000
+		v251.D = 50
+	end)
+	v_u_224 = game:GetService("RunService").RenderStepped:Connect(function()
+		-- upvalues: (ref) v_u_241, (ref) v_u_38, (ref) v_u_242, (ref) v_u_245, (ref) v_u_243, (ref) v_u_246, (ref) v_u_219
+		v_u_241 = v_u_38.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+		v_u_242 = workspace.CurrentCamera
+		if v_u_38.LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid") and v_u_241 and (v_u_241:FindFirstChild("BodyVelocity") and v_u_241:FindFirstChild("BodyGyro")) then
+			local v252 = v_u_38.LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid")
+			local v253 = v_u_241:FindFirstChild("BodyVelocity")
+			local v254 = v_u_241:FindFirstChild("BodyGyro")
+			v253.MaxForce = v_u_245
+			v254.MaxTorque = v_u_245
+			v252.PlatformStand = true
+			v254.CFrame = v_u_242.CoordinateFrame
+			v253.Velocity = v_u_243
+			local v255 = v_u_246:GetMoveVector()
+			if v255.X > 0 then
+				v253.Velocity = v253.Velocity + v_u_242.CFrame.RightVector * (v255.X * (v_u_219 * 50))
+			end
+			if v255.X < 0 then
+				v253.Velocity = v253.Velocity + v_u_242.CFrame.RightVector * (v255.X * (v_u_219 * 50))
+			end
+			if v255.Z > 0 then
+				v253.Velocity = v253.Velocity - v_u_242.CFrame.LookVector * (v255.Z * (v_u_219 * 50))
+			end
+			if v255.Z < 0 then
+				v253.Velocity = v253.Velocity - v_u_242.CFrame.LookVector * (v255.Z * (v_u_219 * 50))
+			end
+		end
+	end)
+end
+local v_u_257 = game:GetService("Players")
+game:GetService("ReplicatedStorage")
+local v_u_258 = game:GetService("Workspace")
+local v_u_259 = v_u_257.LocalPlayer
+local v_u_261 = v_u_37:CreateWindow({
+	["Title"] = "99 Nights script | By Taxus Scripts",
+	["Icon"] = "leaf",
+	["Author"] = "Taxus Scripts",
+	["Folder"] = "Taxes",
+	["Size"] = UDim2.fromOffset(500, 350),
+	["Transparent"] = getgenv().TransparencyEnabled,
+	["Theme"] = "Dark",
+	["Resizable"] = true,
+	["SideBarWidth"] = 150,
+	["BackgroundImageTransparency"] = 0.8,
+	["HideSearchBar"] = false,
+	["ScrollBarEnabled"] = true,
+	["KeySystem"] = {
+		["Key"] = { "Taxes", "taxes" },
+		["Note"] = "Get key from our discord server: discord.gg/F9hpFZQztD\nTHERE IS NO STEPS",
+		["URL"] = "https://discord.gg/F9hpFZQztD",
+		["Thumbnail"] = {
+			["Image"] = "rbxassetid://70649156708437",
+			["Title"] = "Taxus Scripts",
+			["Width"] = 140
+		},
+		["SaveKey"] = false,
+		["KeyWidth"] = 350,
+		["Size"] = UDim2.fromOffset(400, 280)
+	},
+	["User"] = {
+		["Enabled"] = true,
+		["Anonymous"] = false,
+		["Callback"] = function()
+			-- upvalues: (ref) v_u_43, (ref) v_u_42, (ref) v_u_37
+			v_u_43 = v_u_43 + 1
+			if v_u_43 > #v_u_42 then
+				v_u_43 = 1
+			end
+			local v260 = v_u_42[v_u_43]
+			v_u_37:SetTheme(v260)
+			v_u_37:Notify({
+				["Title"] = "Theme Changed",
+				["Content"] = "Switched to " .. v260 .. " theme!",
+				["Duration"] = 2,
+				["Icon"] = "palette"
+			})
+			print("Switched to " .. v260 .. " theme")
+		end
+	}
+})
+local v_u_262 = nil
+v_u_262 = hookmetamethod(game, "__namecall", function(p263)
+	-- upvalues: (ref) v_u_78, (ref) v_u_262
+	local v264 = getnamecallmethod()
+	if not v_u_78 or v264 ~= "Kick" then
+		if v_u_78 and (v264 == "FireServer" and tostring(p263) == "RemoteEvent") then
+			local v265 = p263.Name
+			if v265:lower():find("kick") or v265:lower():find("ban") then
+				return
+			end
+		end
+		return v_u_262(p263, ...)
+	end
+end);
+(function()
+	-- upvalues: (ref) v_u_82
+	local v266 = game:GetService("Lighting")
+	if not v_u_82.FogEnd then
+		v_u_82.FogEnd = v266.FogEnd
+		v_u_82.FogStart = v266.FogStart
+		v_u_82.FogColor = v266.FogColor
+		local v267 = v266:FindFirstChildOfClass("Atmosphere")
+		if v267 then
+			v_u_82.Atmosphere = {
+				["Density"] = v267.Density,
+				["Offset"] = v267.Offset,
+				["Color"] = v267.Color,
+				["Decay"] = v267.Decay,
+				["Glare"] = v267.Glare,
+				["Haze"] = v267.Haze
+			}
+		end
+	end
+end)()
+task.spawn(function()
+	-- upvalues: (ref) v_u_78, (ref) v_u_79
+	while true do
+		if v_u_78 and tick() - v_u_79 > 30 then
+			if not pcall(function()
+				game:GetService("Players").LocalPlayer:GetNetworkPing()
+			end) then
+				v_u_78 = false
+			end
+			v_u_79 = tick()
+		end
+		task.wait(5)
+	end
+end)
+task.wait(1)
+setclipboard("https://discord.gg/F9hpFZQztD")
+v_u_37:Notify({
+	["Title"] = "Welcome to Taxus Script!",
+	["Content"] = "Discord invite copied to clipboard! Join us for updates & support.",
+	["Duration"] = 5,
+	["Icon"] = "users"
+})
+task.wait(0.5)
+v_u_37:Notify({
+	["Title"] = "UI Controls",
+	["Content"] = "Press Right Shift to toggle the UI on/off",
+	["Duration"] = 4,
+	["Icon"] = "keyboard"
+})
+local v268 = v_u_261
+v_u_261.SetToggleKey(v268, Enum.KeyCode.RightShift)
+game:GetService("UserInputService").InputBegan:Connect(function(p269, p270)
+	-- upvalues: (ref) v_u_261, (ref) v_u_37
+	if not p270 and p269.KeyCode == Enum.KeyCode.RightShift then
+		local v271 = v_u_261.Enabled
+		v_u_37:Notify({
+			["Title"] = v271 and "UI Hidden" or "UI Shown",
+			["Content"] = "Press Right Shift to toggle",
+			["Duration"] = 1.5,
+			["Icon"] = v271 and "eye-off" or "eye"
+		})
+	end
+end)
+pcall(function()
+	-- upvalues: (ref) v_u_261, (ref) v_u_37
+	v_u_261:CreateTopbarButton("TransparencyToggle", "eye", function()
+		-- upvalues: (ref) v_u_261, (ref) v_u_37
+		if getgenv().TransparencyEnabled then
+			getgenv().TransparencyEnabled = false
+			pcall(function()
+				-- upvalues: (ref) v_u_261
+				v_u_261:ToggleTransparency(false)
+			end)
+			v_u_37:Notify({
+				["Title"] = "Transparency",
+				["Content"] = "Transparency disabled",
+				["Duration"] = 3,
+				["Icon"] = "eye"
+			})
+			print("Transparency = false")
+		else
+			getgenv().TransparencyEnabled = true
+			pcall(function()
+				-- upvalues: (ref) v_u_261
+				v_u_261:ToggleTransparency(true)
+			end)
+			v_u_37:Notify({
+				["Title"] = "Transparency",
+				["Content"] = "Transparency enabled",
+				["Duration"] = 3,
+				["Icon"] = "eye-off"
+			})
+			print(" Transparency = true")
+		end
+		print("Debug - Current Transparency state:", getgenv().TransparencyEnabled)
+	end, 990)
+end)
+local v272 = v_u_261
+v_u_261.EditOpenButton(v272, {
+	["Title"] = "Toggle",
+	["Icon"] = "zap",
+	["CornerRadius"] = UDim.new(0, 6),
+	["StrokeThickness"] = 2,
+	["Color"] = ColorSequence.new(Color3.fromRGB(138, 43, 226), Color3.fromRGB(173, 216, 230)),
+	["Draggable"] = true
+})
+local v273 = {}
+local v274 = v_u_261
+v273.Info = v_u_261.Tab(v274, {
+	["Title"] = "Information",
+	["Icon"] = "badge-info",
+	["Desc"] = "Info & Credits"
+})
+local v275 = v_u_261
+v273.Main = v_u_261.Tab(v275, {
+	["Title"] = "Main",
+	["Icon"] = "settings",
+	["Desc"] = "Core Features"
+})
+local v276 = v_u_261
+v273.Combat = v_u_261.Tab(v276, {
+	["Title"] = "Combat",
+	["Icon"] = "sword",
+	["Desc"] = "Fightin\' Stuff"
+})
+local v277 = v_u_261
+v273.Movement = v_u_261.Tab(v277, {
+	["Title"] = "Movement",
+	["Icon"] = "user",
+	["Desc"] = "Get Around"
+})
+local v278 = v_u_261
+v273.Teleport = v_u_261.Tab(v278, {
+	["Title"] = "Teleport",
+	["Icon"] = "map",
+	["Desc"] = "Fast Travel"
+})
+local v279 = v_u_261
+v273.ItemESP = v_u_261.Tab(v279, {
+	["Title"] = "Item ESP",
+	["Icon"] = "sparkles",
+	["Desc"] = "See Items"
+})
+local v280 = v_u_261
+v273.ItemBring = v_u_261.Tab(v280, {
+	["Title"] = "Item Bring",
+	["Icon"] = "package",
+	["Desc"] = "Item Collector"
+})
+local v281 = v_u_261
+v273.Automation = v_u_261.Tab(v281, {
+	["Title"] = "Automation",
+	["Icon"] = "wrench",
+	["Desc"] = "Auto-Tasks"
+})
+local v282 = v_u_261
+v273.Visuals = v_u_261.Tab(v282, {
+	["Title"] = "Visuals",
+	["Icon"] = "eye",
+	["Desc"] = "See Better"
+})
+local v283 = v_u_261
+v273.Utility = v_u_261.Tab(v283, {
+	["Title"] = "Utility",
+	["Icon"] = "shield-check",
+	["Desc"] = "Misc & Security"
+})
+local v284 = v_u_261
+v_u_261.SelectTab(v284, 1)
+v273.Combat:Section({
+	["Title"] = "Aura",
+	["Icon"] = "star"
+})
+v273.Combat:Toggle({
+	["Title"] = "Kill Aura",
+	["Value"] = false,
+	["Callback"] = function(p285)
+		-- upvalues: (ref) v_u_44, (ref) v_u_119, (ref) v_u_99, (ref) v_u_103
+		v_u_44 = p285
+		if p285 then
+			task.spawn(v_u_119)
+		else
+			local v286, _ = v_u_99(false)
+			v_u_103(v286)
+		end
+	end
+})
+v273.Combat:Toggle({
+	["Title"] = "Chop Aura",
+	["Value"] = false,
+	["Callback"] = function(p287)
+		-- upvalues: (ref) v_u_45, (ref) v_u_156, (ref) v_u_99, (ref) v_u_103
+		v_u_45 = p287
+		if p287 then
+			task.spawn(v_u_156)
+		else
+			local v288, _ = v_u_99(true)
+			v_u_103(v288)
+		end
+	end
+})
+v273.Combat:Section({
+	["Title"] = "Settings",
+	["Icon"] = "settings"
+})
+v273.Combat:Slider({
+	["Title"] = "Aura Range",
+	["Value"] = {
+		["Min"] = 50,
+		["Max"] = 500,
+		["Default"] = 50
+	},
+	["Callback"] = function(p289)
+		-- upvalues: (ref) v_u_46
+		v_u_46 = math.clamp(p289, 10, 500)
+	end
+})
+v273.Main:Section({
+	["Title"] = "Auto-Feed",
+	["Icon"] = "utensils"
+})
+v273.Main:Dropdown({
+	["Title"] = "Select Food",
+	["Desc"] = "Pick food to auto-eat",
+	["Values"] = {
+		"Apple",
+		"Berry",
+		"Carrot",
+		"Cake",
+		"Chili",
+		"Cooked Morsel",
+		"Cooked Steak",
+		"Cooked Fish",
+		"Stew"
+	},
+	["Value"] = v_u_50,
+	["Multi"] = true,
+	["Callback"] = function(p290)
+		-- upvalues: (ref) v_u_50
+		v_u_50 = p290
+	end
+})
+v273.Main:Input({
+	["Title"] = "Eat at % Hunger",
+	["Desc"] = "Eats when hunger drops to this level",
+	["Value"] = tostring(v_u_51),
+	["Placeholder"] = "Ex: 75",
+	["Numeric"] = true,
+	["Callback"] = function(p291)
+		-- upvalues: (ref) v_u_51
+		local v292 = tonumber(p291)
+		if v292 then
+			v_u_51 = math.clamp(v292, 0, 100)
+		end
+	end
+})
+local function v_u_298()
+	-- upvalues: (ref) v_u_49, (ref) v_u_51, (ref) v_u_50
+	while v_u_49 do
+		if ghn() <= v_u_51 then
+			local v293, v294, v295 = pairs(v_u_50)
+			local v296 = false
+			while true do
+				local v297
+				v295, v297 = v293(v294, v295)
+				if v295 == nil then
+					break
+				end
+				if wiki(v295) > 0 then
+					feed(v295)
+					v296 = true
+					break
+				end
+			end
+			if not v296 then
+				v_u_49 = false
+				notifeed("selected food")
+			end
+			task.wait(2)
+		end
+		task.wait(1)
+	end
+end
+local function v_u_312(p299, p300)
+	-- upvalues: (ref) v_u_66, (ref) v_u_67, (ref) v_u_258, (ref) v_u_171
+	if v_u_66 then
+		return
+	else
+		v_u_66 = true
+		local v301 = game.Players.LocalPlayer
+		if v301.Character and v301.Character:FindFirstChild("HumanoidRootPart") then
+			local v302 = v301.Character.HumanoidRootPart
+			v_u_67 = v302.Position
+			local v303, v304, v305 = ipairs(p299)
+			while true do
+				local v306
+				v305, v306 = v303(v304, v305)
+				if v305 == nil or p300 and not p300() then
+					break
+				end
+				local v307 = v_u_258:FindFirstChild("Items")
+				if v307 then
+					local v308, v309, v310 = ipairs(v307:GetChildren())
+					while true do
+						local v311
+						v310, v311 = v308(v309, v310)
+						if v310 == nil or p300 and not p300() then
+							break
+						end
+						if v311.Name == v306 then
+							v_u_171(v311, v302.Position + Vector3.new(math.random(-5, 5), 2, math.random(-5, 5)))
+							task.wait(0.2)
+						end
+					end
+				end
+				task.wait(0.1)
+			end
+			v_u_66 = false
+		else
+			v_u_66 = false
+		end
+	end
+end
+v273.Main:Toggle({
+	["Title"] = "Enable Auto-Feed",
+	["Value"] = false,
+	["Callback"] = function(p313)
+		-- upvalues: (ref) v_u_49, (ref) v_u_298
+		v_u_49 = p313
+		if p313 then
+			task.spawn(v_u_298)
+		end
+	end
+})
+v273.Main:Section({
+	["Title"] = "Auto-Harvest",
+	["Icon"] = "leaf"
+})
+v273.Main:Dropdown({
+	["Title"] = "Select Harvest Items",
+	["Desc"] = "Choose items to auto-harvest",
+	["Values"] = v_u_63,
+	["Value"] = v_u_64,
+	["Multi"] = true,
+	["Callback"] = function(p314)
+		-- upvalues: (ref) v_u_64
+		v_u_64 = p314
+	end
+})
+v273.Main:Toggle({
+	["Title"] = "Enable Auto-Harvest",
+	["Value"] = false,
+	["Callback"] = function(p315)
+		-- upvalues: (ref) v_u_81, (ref) v_u_182
+		v_u_81 = p315
+		if p315 then
+			task.spawn(v_u_182)
+		end
+	end
+})
+v273.Automation:Section({
+	["Title"] = "Campfire Auto-Fuel",
+	["Icon"] = "flame"
+})
+v273.Automation:Dropdown({
+	["Title"] = "Select Campfire Fuel",
+	["Desc"] = "Select fuel to add to fire",
+	["Values"] = {
+		"Log",
+		"Coal",
+		"Chair",
+		"Fuel Canister",
+		"Oil Barrel",
+		"Biofuel",
+		"Pumpkin",
+		"Oil"
+	},
+	["Multi"] = false,
+	["AllowNone"] = true,
+	["Callback"] = function(p316)
+		-- upvalues: (ref) v_u_85
+		v_u_85 = p316
+	end
+})
+v273.Automation:Toggle({
+	["Title"] = "Enable Campfire Auto-Fuel",
+	["Value"] = false,
+	["Callback"] = function(p317)
+		-- upvalues: (ref) v_u_86, (ref) v_u_85, (ref) v_u_258, (ref) v_u_171, (ref) v_u_84, (ref) v_u_132
+		v_u_86 = p317
+		if p317 then
+			task.spawn(function()
+				-- upvalues: (ref) v_u_86, (ref) v_u_85, (ref) v_u_258, (ref) v_u_171, (ref) v_u_84, (ref) v_u_132
+				while v_u_86 do
+					local v318 = tick()
+					while v_u_86 and tick() - v318 < 5 do
+						if v_u_85 then
+							local v319, v320, v321 = ipairs(v_u_258:WaitForChild("Items"):GetChildren())
+							while true do
+								local v322
+								v321, v322 = v319(v320, v321)
+								if v321 == nil then
+									break
+								end
+								if v322.Name == v_u_85 then
+									v_u_171(v322, v_u_84)
+								end
+							end
+						end
+						task.wait(0.2)
+					end
+					if v_u_86 then
+						v_u_132()
+						task.wait(0.5)
+					end
+				end
+			end)
+		end
+	end
+})
+v273.Automation:Section({
+	["Title"] = "Auto-Scrap Items",
+	["Icon"] = "cog"
+})
+v273.Automation:Dropdown({
+	["Title"] = "Select Item to Scrap",
+	["Desc"] = "Select item to auto-scrap",
+	["Values"] = {
+		"Log",
+		"Chair",
+		"Tyre",
+		"Bolt",
+		"Broken Fan",
+		"Broken Microwave",
+		"Sheet Metal",
+		"Old Radio",
+		"Washing Machine",
+		"Old Car Engine",
+		"Metal Chair"
+	},
+	["Multi"] = false,
+	["AllowNone"] = true,
+	["Callback"] = function(p323)
+		-- upvalues: (ref) v_u_88
+		v_u_88 = p323
+	end
+})
+v273.Automation:Toggle({
+	["Title"] = "Enable Auto-Scrap",
+	["Value"] = false,
+	["Callback"] = function(p324)
+		-- upvalues: (ref) v_u_89, (ref) v_u_88, (ref) v_u_258, (ref) v_u_171, (ref) v_u_87
+		v_u_89 = p324
+		if p324 then
+			task.spawn(function()
+				-- upvalues: (ref) v_u_89, (ref) v_u_88, (ref) v_u_258, (ref) v_u_171, (ref) v_u_87
+				while v_u_89 do
+					local v325 = tick()
+					while v_u_89 and tick() - v325 < 5 do
+						if v_u_88 then
+							local v326, v327, v328 = ipairs(v_u_258:WaitForChild("Items"):GetChildren())
+							while true do
+								local v329
+								v328, v329 = v326(v327, v328)
+								if v328 == nil then
+									break
+								end
+								if v329.Name == v_u_88 then
+									v_u_171(v329, v_u_87)
+								end
+							end
+						end
+						task.wait(0.2)
+					end
+					if v_u_89 then
+						print("Auto Scrap Item")
+						task.wait(0.5)
+					end
+				end
+			end)
+		end
+	end
+})
+v273.Automation:Section({
+	["Title"] = "Auto-Cook Food",
+	["Icon"] = "flame"
+})
+v273.Automation:Dropdown({
+	["Title"] = "Select Food to Cook",
+	["Desc"] = "Select raw food to auto-cook",
+	["Values"] = v_u_90,
+	["Multi"] = true,
+	["AllowNone"] = true,
+	["Callback"] = function(p330)
+		-- upvalues: (ref) v_u_90, (ref) v_u_91
+		local v331, v332, v333 = ipairs(v_u_90)
+		while true do
+			local v334
+			v333, v334 = v331(v332, v333)
+			if v333 == nil then
+				break
+			end
+			v_u_91[v334] = table.find(p330, v334) ~= nil
+		end
+	end
+})
+v273.Automation:Toggle({
+	["Title"] = "Enable Auto-Cook",
+	["Value"] = false,
+	["Callback"] = function(p335)
+		-- upvalues: (ref) v_u_92
+		v_u_92 = p335
+	end
+})
+coroutine.wrap(function()
+	-- upvalues: (ref) v_u_92, (ref) v_u_91, (ref) v_u_40, (ref) v_u_171, (ref) v_u_84
+	while true do
+		if v_u_92 then
+			local v336, v337, v338 = pairs(v_u_91)
+			while true do
+				local v339
+				v338, v339 = v336(v337, v338)
+				if v338 == nil then
+					break
+				end
+				if v339 then
+					local v340, v341, v342 = ipairs(v_u_40:WaitForChild("Items"):GetChildren())
+					local v343 = v338
+					while true do
+						local v344
+						v342, v344 = v340(v341, v342)
+						if v342 == nil then
+							break
+						end
+						if v344.Name == v343 then
+							v_u_171(v344, v_u_84)
+						end
+					end
+				end
+			end
+		end
+		task.wait(0.5)
+	end
+end)()
+v273.Teleport:Section({
+	["Title"] = "Locations",
+	["Icon"] = "map-pin"
+})
+v273.Teleport:Button({
+	["Title"] = "Teleport to Campfire",
+	["Locked"] = false,
+	["Callback"] = function()
+		tp1()
+	end
+})
+v273.Teleport:Button({
+	["Title"] = "Teleport to Stronghold",
+	["Locked"] = false,
+	["Callback"] = function()
+		-- upvalues: (ref) v_u_217
+		v_u_217()
+	end
+})
+v273.Teleport:Section({
+	["Title"] = "Children",
+	["Icon"] = "eye"
+})
+local v_u_346 = v273.Teleport:Dropdown({
+	["Title"] = "Select Child",
+	["Desc"] = "Find a lost child to TP to",
+	["Values"] = v_u_212,
+	["Multi"] = false,
+	["AllowNone"] = true,
+	["Callback"] = function(p345)
+		-- upvalues: (ref) v_u_213, (ref) v_u_212
+		v_u_213 = p345[#p345] or v_u_212[1] or nil
+	end
+})
+v273.Teleport:Button({
+	["Title"] = "Refresh Child List",
+	["Locked"] = false,
+	["Callback"] = function()
+		-- upvalues: (ref) v_u_211, (ref) v_u_212, (ref) v_u_210, (ref) v_u_213, (ref) v_u_346
+		local v347, v348 = v_u_210()
+		v_u_212 = v348
+		v_u_211 = v347
+		if #v_u_212 <= 0 then
+			v_u_213 = nil
+			v_u_346:Refresh({ "No child found" })
+		else
+			v_u_213 = v_u_212[1]
+			v_u_346:Refresh(v_u_212)
+		end
+	end
+})
+v273.Teleport:Button({
+	["Title"] = "Teleport to Child",
+	["Locked"] = false,
+	["Callback"] = function()
+		-- upvalues: (ref) v_u_213, (ref) v_u_211, (ref) v_u_212
+		if v_u_213 and v_u_211 then
+			local v349, v350, v351 = ipairs(v_u_212)
+			while true do
+				local v352
+				v351, v352 = v349(v350, v351)
+				if v351 == nil then
+					break
+				end
+				if v352 == v_u_213 then
+					local v353 = v_u_211[v351]
+					if v353 then
+						local v354 = v353.PrimaryPart or v353:FindFirstChildWhichIsA("BasePart")
+						local v355 = v354 and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+						if v355 then
+							v355.CFrame = v354.CFrame + Vector3.new(0, 5, 0)
+						end
+					end
+					break
+				end
+			end
+		end
+	end
+})
+v273.Teleport:Section({
+	["Title"] = "Chest",
+	["Icon"] = "box"
+})
+v273.Teleport:Button({
+	["Title"] = "Work in progress",
+	["Locked"] = true,
+	["Callback"] = function()
+		-- upvalues: (ref) v_u_37
+		v_u_37:Notify({
+			["Title"] = "Work in Progress",
+			["Content"] = "This feature is temporarily disabled.",
+			["Duration"] = 3,
+			["Icon"] = "alert-triangle"
+		})
+	end
+})
+v273.Teleport:Button({
+	["Title"] = "Scan For All Chests",
+	["Locked"] = true,
+	["Callback"] = function()
+		-- upvalues: (ref) v_u_37, (ref) v_u_132, (ref) v_u_198, (ref) v_u_200
+		v_u_37:Notify({
+			["Title"] = "Scanning Map",
+			["Content"] = "Loading all areas...",
+			["Duration"] = 2,
+			["Icon"] = "search"
+		})
+		v_u_132()
+		task.wait(0.5)
+		v_u_198()
+		if #v_u_200 <= 0 then
+			v_u_37:Notify({
+				["Title"] = "No Chests",
+				["Content"] = "No valid chests found.",
+				["Duration"] = 3,
+				["Icon"] = "alert-triangle"
+			})
+		else
+			v_u_37:Notify({
+				["Title"] = "Scan Complete",
+				["Content"] = "Found " .. #v_u_200 .. " chests!",
+				["Duration"] = 3,
+				["Icon"] = "check-circle"
+			})
+		end
+	end
+})
+v273.Teleport:Button({
+	["Title"] = "Quick Refresh",
+	["Locked"] = true,
+	["Callback"] = function()
+		-- upvalues: (ref) v_u_198, (ref) v_u_200, (ref) v_u_37
+		v_u_198()
+		if #v_u_200 <= 0 then
+			v_u_37:Notify({
+				["Title"] = "No Chests Nearby",
+				["Content"] = "Try \'Scan For All Chests\'",
+				["Duration"] = 2,
+				["Icon"] = "info"
+			})
+		else
+			v_u_37:Notify({
+				["Title"] = "Refreshed",
+				["Content"] = "Found " .. #v_u_200 .. " chests nearby",
+				["Duration"] = 2,
+				["Icon"] = "refresh-cw"
+			})
+		end
+	end
+})
+v273.Teleport:Button({
+	["Title"] = "Teleport to Chest",
+	["Locked"] = true,
+	["Callback"] = function()
+		-- upvalues: (ref) v_u_37, (ref) v_u_199, (ref) v_u_200, (ref) v_u_195, (ref) v_u_201, (ref) v_u_202, (ref) v_u_259
+		v_u_37:Notify({
+			["Title"] = "Work in Progress",
+			["Content"] = "This feature is temporarily disabled.",
+			["Duration"] = 3,
+			["Icon"] = "alert-triangle"
+		})
+		local v356, v357 = v_u_195()
+		v_u_200 = v357
+		v_u_199 = v356
+		if #v_u_199 ~= 0 then
+			if not (v_u_201 and v_u_199[v_u_202]) then
+				v_u_202 = 1
+			end
+			local v358 = v_u_199[v_u_202]
+			if v358 and v358.position then
+				local v359 = v358.position
+				local v360 = v_u_259.Character
+				if v360 and v360:FindFirstChild("HumanoidRootPart") then
+					v360.HumanoidRootPart.CFrame = CFrame.new(v359 + Vector3.new(0, 5, 0))
+					v_u_37:Notify({
+						["Title"] = "Teleported",
+						["Content"] = "Teleported to chest coordinates.",
+						["Duration"] = 2,
+						["Icon"] = "check"
+					})
+				end
+			else
+				v_u_37:Notify({
+					["Title"] = "Invalid Chest",
+					["Content"] = "Chest may be gone or opened.",
+					["Duration"] = 2,
+					["Icon"] = "x"
+				})
+			end
+		else
+			v_u_37:Notify({
+				["Title"] = "No Chests Found",
+				["Content"] = "No available chests nearby.",
+				["Duration"] = 2,
+				["Icon"] = "alert-triangle"
+			})
+		end
+	end
+})
+v273.ItemBring:Section({
+	["Title"] = "Bring All",
+	["Icon"] = "package-plus"
+})
+v273.ItemBring:Toggle({
+	["Title"] = "Bring All Items",
+	["Desc"] = "Brings all items from categories below",
+	["Default"] = false,
+	["Callback"] = function(p361)
+		-- upvalues: (ref) v_u_80, (ref) v_u_68, (ref) v_u_69, (ref) v_u_70, (ref) v_u_71, (ref) v_u_72, (ref) v_u_73, (ref) v_u_74, (ref) v_u_75, (ref) v_u_76, (ref) v_u_77, (ref) v_u_54, (ref) v_u_56, (ref) v_u_58, (ref) v_u_60, (ref) v_u_62, (ref) v_u_63, (ref) v_u_312
+		v_u_80 = p361
+		if p361 then
+			v_u_68 = false
+			v_u_69 = false
+			v_u_70 = false
+			v_u_71 = false
+			v_u_72 = false
+			v_u_73 = false
+			v_u_74 = false
+			v_u_75 = false
+			v_u_76 = false
+			v_u_77 = false
+			task.wait(0.5)
+			spawn(function()
+				-- upvalues: (ref) v_u_80, (ref) v_u_54, (ref) v_u_56, (ref) v_u_58, (ref) v_u_60, (ref) v_u_62, (ref) v_u_63, (ref) v_u_312
+				while v_u_80 do
+					local v362, v363, v364 = ipairs(v_u_54)
+					local v365 = {}
+					while true do
+						local v366
+						v364, v366 = v362(v363, v364)
+						if v364 == nil then
+							break
+						end
+						table.insert(v365, v366)
+					end
+					local v367, v368, v369 = ipairs(v_u_56)
+					while true do
+						local v370
+						v369, v370 = v367(v368, v369)
+						if v369 == nil then
+							break
+						end
+						table.insert(v365, v370)
+					end
+					local v371, v372, v373 = ipairs(v_u_58)
+					while true do
+						local v374
+						v373, v374 = v371(v372, v373)
+						if v373 == nil then
+							break
+						end
+						table.insert(v365, v374)
+					end
+					local v375, v376, v377 = ipairs(v_u_60)
+					while true do
+						local v378
+						v377, v378 = v375(v376, v377)
+						if v377 == nil then
+							break
+						end
+						table.insert(v365, v378)
+					end
+					local v379, v380, v381 = ipairs(v_u_62)
+					while true do
+						local v382
+						v381, v382 = v379(v380, v381)
+						if v381 == nil then
+							break
+						end
+						table.insert(v365, v382)
+					end
+					local v383, v384, v385 = ipairs(v_u_63)
+					while true do
+						local v386
+						v385, v386 = v383(v384, v385)
+						if v385 == nil then
+							break
+						end
+						table.insert(v365, v386)
+					end
+					local v387
+					if #v365 <= 0 or not v_u_80 then
+						v387 = 0
+					else
+						v_u_312(v365, function()
+							-- upvalues: (ref) v_u_80
+							return v_u_80
+						end)
+						v387 = 0
+					end
+					while v387 < 2 and v_u_80 do
+						wait(0.1)
+						v387 = v387 + 0.1
+					end
+				end
+			end)
+		end
+	end
+})
+v273.ItemBring:Section({
+	["Title"] = "Junk",
+	["Icon"] = "box"
+})
+v273.ItemBring:Dropdown({
+	["Title"] = "Select Junk Items",
+	["Desc"] = "Choose items to bring",
+	["Values"] = v_u_54,
+	["Multi"] = true,
+	["AllowNone"] = true,
+	["Callback"] = function(p388)
+		-- upvalues: (ref) v_u_55
+		v_u_55 = p388
+	end
+})
+v273.ItemBring:Toggle({
+	["Title"] = "Bring Junk Items",
+	["Desc"] = "Brings selected junk items to you",
+	["Default"] = false,
+	["Callback"] = function(p389)
+		-- upvalues: (ref) v_u_68, (ref) v_u_55, (ref) v_u_73, (ref) v_u_312
+		v_u_68 = p389
+		if p389 then
+			if #v_u_55 <= 0 then
+				v_u_68 = false
+			else
+				v_u_73 = true
+				spawn(function()
+					-- upvalues: (ref) v_u_73, (ref) v_u_68, (ref) v_u_55, (ref) v_u_312
+					while v_u_73 and v_u_68 do
+						local v390
+						if #v_u_55 <= 0 or not v_u_68 then
+							v390 = 0
+						else
+							v_u_312(v_u_55, function()
+								-- upvalues: (ref) v_u_68
+								return v_u_68
+							end)
+							v390 = 0
+						end
+						while v390 < 3 and (v_u_68 and v_u_73) do
+							wait(0.1)
+							v390 = v390 + 0.1
+						end
+					end
+					v_u_73 = false
+				end)
+			end
+		else
+			v_u_73 = false
+		end
+	end
+})
+v273.ItemBring:Section({
+	["Title"] = "Fuel",
+	["Icon"] = "flame"
+})
+v273.ItemBring:Dropdown({
+	["Title"] = "Select Fuel Items",
+	["Desc"] = "Choose items to bring",
+	["Values"] = v_u_56,
+	["Multi"] = true,
+	["AllowNone"] = true,
+	["Callback"] = function(p391)
+		-- upvalues: (ref) v_u_57
+		v_u_57 = p391
+	end
+})
+v273.ItemBring:Toggle({
+	["Title"] = "Bring Fuel Items",
+	["Desc"] = "Brings selected fuel items to you",
+	["Default"] = false,
+	["Callback"] = function(p392)
+		-- upvalues: (ref) v_u_69, (ref) v_u_57, (ref) v_u_74, (ref) v_u_312
+		v_u_69 = p392
+		if p392 then
+			if #v_u_57 <= 0 then
+				v_u_69 = false
+			else
+				v_u_74 = true
+				spawn(function()
+					-- upvalues: (ref) v_u_74, (ref) v_u_69, (ref) v_u_57, (ref) v_u_312
+					while v_u_74 and v_u_69 do
+						local v393
+						if #v_u_57 <= 0 or not v_u_69 then
+							v393 = 0
+						else
+							v_u_312(v_u_57, function()
+								-- upvalues: (ref) v_u_69
+								return v_u_69
+							end)
+							v393 = 0
+						end
+						while v393 < 3 and (v_u_69 and v_u_74) do
+							wait(0.1)
+							v393 = v393 + 0.1
+						end
+					end
+					v_u_74 = false
+				end)
+			end
+		else
+			v_u_74 = false
+		end
+	end
+})
+v273.ItemBring:Section({
+	["Title"] = "Food",
+	["Icon"] = "utensils"
+})
+v273.ItemBring:Dropdown({
+	["Title"] = "Select Food Items",
+	["Desc"] = "Choose items to bring",
+	["Values"] = v_u_58,
+	["Multi"] = true,
+	["AllowNone"] = true,
+	["Callback"] = function(p394)
+		-- upvalues: (ref) v_u_59
+		v_u_59 = p394
+	end
+})
+v273.ItemBring:Toggle({
+	["Title"] = "Bring Food items",
+	["Desc"] = "Brings selected food items to you",
+	["Default"] = false,
+	["Callback"] = function(p395)
+		-- upvalues: (ref) v_u_70, (ref) v_u_59, (ref) v_u_75, (ref) v_u_312
+		v_u_70 = p395
+		if p395 then
+			if #v_u_59 <= 0 then
+				v_u_70 = false
+			else
+				v_u_75 = true
+				spawn(function()
+					-- upvalues: (ref) v_u_75, (ref) v_u_70, (ref) v_u_59, (ref) v_u_312
+					while v_u_75 and v_u_70 do
+						local v396
+						if #v_u_59 <= 0 or not v_u_70 then
+							v396 = 0
+						else
+							v_u_312(v_u_59, function()
+								-- upvalues: (ref) v_u_70
+								return v_u_70
+							end)
+							v396 = 0
+						end
+						while v396 < 3 and (v_u_70 and v_u_75) do
+							wait(0.1)
+							v396 = v396 + 0.1
+						end
+					end
+					v_u_75 = false
+				end)
+			end
+		else
+			v_u_75 = false
+		end
+	end
+})
+v273.ItemBring:Section({
+	["Title"] = "Medicine",
+	["Icon"] = "bandage"
+})
+v273.ItemBring:Dropdown({
+	["Title"] = "Select Medical Items",
+	["Desc"] = "Choose items to bring",
+	["Values"] = v_u_60,
+	["Multi"] = true,
+	["AllowNone"] = true,
+	["Callback"] = function(p397)
+		-- upvalues: (ref) v_u_61
+		v_u_61 = p397
+	end
+})
+v273.ItemBring:Toggle({
+	["Title"] = "Bring Medical Items",
+	["Desc"] = "Brings selected medical items to you",
+	["Default"] = false,
+	["Callback"] = function(p398)
+		-- upvalues: (ref) v_u_71, (ref) v_u_61, (ref) v_u_76, (ref) v_u_312
+		v_u_71 = p398
+		if p398 then
+			if #v_u_61 <= 0 then
+				v_u_71 = false
+			else
+				v_u_76 = true
+				spawn(function()
+					-- upvalues: (ref) v_u_76, (ref) v_u_71, (ref) v_u_61, (ref) v_u_312
+					while v_u_76 and v_u_71 do
+						local v399
+						if #v_u_61 <= 0 or not v_u_71 then
+							v399 = 0
+						else
+							v_u_312(v_u_61, function()
+								-- upvalues: (ref) v_u_71
+								return v_u_71
+							end)
+							v399 = 0
+						end
+						while v399 < 3 and (v_u_71 and v_u_76) do
+							wait(0.1)
+							v399 = v399 + 0.1
+						end
+					end
+					v_u_76 = false
+				end)
+			end
+		else
+			v_u_76 = false
+		end
+	end
+})
+v273.ItemBring:Section({
+	["Title"] = "Equipment",
+	["Icon"] = "sword"
+})
+v273.ItemBring:Dropdown({
+	["Title"] = "Select Equipment Items",
+	["Desc"] = "Choose items to bring",
+	["Values"] = v_u_62,
+	["Multi"] = true,
+	["AllowNone"] = true,
+	["Callback"] = function(p400)
+		-- upvalues: (ref) v_u_65
+		v_u_65 = p400
+	end
+})
+v273.ItemBring:Toggle({
+	["Title"] = "Bring Equipment Items",
+	["Desc"] = "Brings selected equipment items to you",
+	["Default"] = false,
+	["Callback"] = function(p401)
+		-- upvalues: (ref) v_u_72, (ref) v_u_65, (ref) v_u_77, (ref) v_u_312
+		v_u_72 = p401
+		if p401 then
+			if #v_u_65 <= 0 then
+				v_u_72 = false
+			else
+				v_u_77 = true
+				spawn(function()
+					-- upvalues: (ref) v_u_77, (ref) v_u_72, (ref) v_u_65, (ref) v_u_312
+					while v_u_77 and v_u_72 do
+						local v402
+						if #v_u_65 <= 0 or not v_u_72 then
+							v402 = 0
+						else
+							v_u_312(v_u_65, function()
+								-- upvalues: (ref) v_u_72
+								return v_u_72
+							end)
+							v402 = 0
+						end
+						while v402 < 3 and (v_u_72 and v_u_77) do
+							wait(0.1)
+							v402 = v402 + 0.1
+						end
+					end
+					v_u_77 = false
+				end)
+			end
+		else
+			v_u_77 = false
+		end
+	end
+})
+v273.Movement:Section({
+	["Title"] = "Movement",
+	["Icon"] = "user"
+})
+v273.Movement:Slider({
+	["Title"] = "Fly Speed",
+	["Value"] = {
+		["Min"] = 1,
+		["Max"] = 20,
+		["Default"] = 1
+	},
+	["Callback"] = function(p403)
+		-- upvalues: (ref) v_u_219, (ref) v_u_220, (ref) v_u_257
+		v_u_219 = p403
+		if v_u_220 then
+			task.spawn(function()
+				-- upvalues: (ref) v_u_220, (ref) v_u_257, (ref) v_u_219
+				while v_u_220 do
+					task.wait(0.1)
+					if game:GetService("UserInputService").TouchEnabled then
+						local v404 = v_u_257.LocalPlayer.Character
+						if v404 then
+							v404 = v_u_257.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+						end
+						if v404 and v404:FindFirstChild("BodyVelocity") then
+							local v405 = v404:FindFirstChild("BodyVelocity")
+							v405.Velocity = v405.Velocity.Unit * (v_u_219 * 50)
+						end
+					end
+				end
+			end)
+		end
+	end
+})
+v273.Movement:Toggle({
+	["Title"] = "Enable Fly",
+	["Value"] = false,
+	["Callback"] = function(p406)
+		-- upvalues: (ref) v_u_218, (ref) v_u_256, (ref) v_u_237, (ref) v_u_238, (ref) v_u_240
+		v_u_218 = p406
+		if v_u_218 then
+			if game:GetService("UserInputService").TouchEnabled then
+				v_u_256()
+			else
+				v_u_237()
+			end
+		else
+			v_u_238()
+			v_u_240()
+		end
+	end
+})
+local v_u_407 = game:GetService("Players")
+local v_u_408 = 16
+local function v_u_411(p409)
+	-- upvalues: (ref) v_u_407
+	local v410 = v_u_407.LocalPlayer.Character
+	if v410 then
+		v410 = v_u_407.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+	end
+	if v410 then
+		v410.WalkSpeed = p409
+	end
+end
+v273.Movement:Slider({
+	["Title"] = "Walk Speed",
+	["Value"] = {
+		["Min"] = 16,
+		["Max"] = 150,
+		["Default"] = 16
+	},
+	["Callback"] = function(p412)
+		-- upvalues: (ref) v_u_408
+		v_u_408 = p412
+	end
+})
+v273.Movement:Toggle({
+	["Title"] = "Enable Fast Walk",
+	["Value"] = false,
+	["Callback"] = function(p413)
+		-- upvalues: (ref) v_u_411, (ref) v_u_408
+		v_u_411(p413 and v_u_408 or 16)
+	end
+})
+local v_u_414 = game:GetService("Players")
+local v_u_415 = game:GetService("RunService")
+local v_u_416 = nil
+v273.Movement:Toggle({
+	["Title"] = "Noclip",
+	["Value"] = false,
+	["Callback"] = function(p417)
+		-- upvalues: (ref) v_u_416, (ref) v_u_415, (ref) v_u_414
+		if p417 then
+			v_u_416 = v_u_415.Stepped:Connect(function()
+				-- upvalues: (ref) v_u_414
+				local v418 = v_u_414.LocalPlayer.Character
+				if v418 then
+					local v419, v420, v421 = ipairs(v418:GetDescendants())
+					while true do
+						local v422
+						v421, v422 = v419(v420, v421)
+						if v421 == nil then
+							break
+						end
+						if v422:IsA("BasePart") then
+							v422.CanCollide = false
+						end
+					end
+				end
+			end)
+		elseif v_u_416 then
+			v_u_416:Disconnect()
+			v_u_416 = nil
+		end
+	end
+})
+local v_u_423 = game:GetService("UserInputService")
+local v_u_424 = game:GetService("Players")
+local v_u_425 = nil
+v273.Movement:Toggle({
+	["Title"] = "Inf Jump",
+	["Value"] = false,
+	["Callback"] = function(p426)
+		-- upvalues: (ref) v_u_425, (ref) v_u_423, (ref) v_u_424
+		if p426 then
+			v_u_425 = v_u_423.JumpRequest:Connect(function()
+				-- upvalues: (ref) v_u_424
+				local v427 = v_u_424.LocalPlayer.Character
+				if v427 then
+					v427 = v427:FindFirstChildOfClass("Humanoid")
+				end
+				if v427 then
+					v427:ChangeState(Enum.HumanoidStateType.Jumping)
+				end
+			end)
+		elseif v_u_425 then
+			v_u_425:Disconnect()
+			v_u_425 = nil
+		end
+	end
+})
+local v_u_428 = {}
+function createESPText(p429, p430, p431)
+	-- upvalues: (ref) v_u_428
+	if not p429:FindFirstChild("ESPTexto") then
+		local v432 = Instance.new("BillboardGui")
+		v432.Name = "ESPTexto"
+		v432.Adornee = p429
+		v432.Size = UDim2.new(0, 100, 0, 20)
+		v432.StudsOffset = Vector3.new(0, 2.5, 0)
+		v432.AlwaysOnTop = true
+		v432.MaxDistance = 300
+		local v433 = Instance.new("TextLabel")
+		v433.Parent = v432
+		v433.Size = UDim2.new(1, 0, 1, 0)
+		v433.BackgroundTransparency = 1
+		v433.Text = p430
+		v433.TextColor3 = p431 or Color3.fromRGB(255, 255, 0)
+		v433.TextStrokeTransparency = 0.2
+		v433.TextScaled = true
+		v433.Font = Enum.Font.GothamBold
+		v432.Parent = p429
+		if not v_u_428[p429] then
+			v_u_428[p429] = v432
+		end
+	end
+end
+local function v_u_443(p434, p435)
+	-- upvalues: (ref) v_u_258, (ref) v_u_428
+	local v436, v437
+	if p435 == "item" then
+		v436 = v_u_258:FindFirstChild("Items")
+		v437 = Color3.fromRGB(0, 255, 0)
+	else
+		if p435 ~= "mob" then
+			return
+		end
+		v436 = v_u_258:FindFirstChild("Characters")
+		v437 = Color3.fromRGB(255, 255, 0)
+	end
+	if v436 then
+		local v438, v439, v440 = ipairs(v436:GetChildren())
+		while true do
+			local v441
+			v440, v441 = v438(v439, v440)
+			if v440 == nil then
+				break
+			end
+			if v441.Name == p434 then
+				local v442 = v441:IsA("BasePart") and v441 and v441 or v441:FindFirstChildWhichIsA("BasePart")
+				if v442 and not v_u_428[v442] then
+					createESPText(v442, v441.Name, v437)
+				end
+			end
+		end
+	end
+end
+local function v_u_452(p444, p445)
+	-- upvalues: (ref) v_u_258, (ref) v_u_428
+	local v446
+	if p445 == "item" then
+		v446 = v_u_258:FindFirstChild("Items")
+	else
+		if p445 ~= "mob" then
+			return
+		end
+		v446 = v_u_258:FindFirstChild("Characters")
+	end
+	if v446 then
+		local v447, v448, v449 = ipairs(v446:GetChildren())
+		while true do
+			local v450
+			v449, v450 = v447(v448, v449)
+			if v449 == nil then
+				break
+			end
+			if v450.Name == p444 then
+				local v451 = v450:IsA("BasePart") and v450 and v450 or v450:FindFirstChildWhichIsA("BasePart")
+				if v451 and v_u_428[v451] then
+					v_u_428[v451]:Destroy()
+					v_u_428[v451] = nil
+				end
+			end
+		end
+	end
+end
+local v_u_453 = {}
+local v_u_454 = {}
+local v_u_455 = false
+local v_u_456 = false
+local v_u_457 = {}
+v273.ItemESP:Section({
+	["Title"] = "Item ESP",
+	["Icon"] = "package"
+})
+v273.ItemESP:Dropdown({
+	["Title"] = "Select Items",
+	["Desc"] = "Show ESP for selected items",
+	["Values"] = v_u_52,
+	["Value"] = {},
+	["Multi"] = true,
+	["AllowNone"] = true,
+	["Callback"] = function(p458)
+		-- upvalues: (ref) v_u_453, (ref) v_u_455, (ref) v_u_52, (ref) v_u_443, (ref) v_u_452
+		v_u_453 = p458
+		if v_u_455 then
+			local v459, v460, v461 = ipairs(v_u_52)
+			while true do
+				local v462
+				v461, v462 = v459(v460, v461)
+				if v461 == nil then
+					break
+				end
+				if table.find(v_u_453, v462) then
+					v_u_443(v462, "item")
+				else
+					v_u_452(v462, "item")
+				end
+			end
+		else
+			local v463, v464, v465 = ipairs(v_u_52)
+			while true do
+				local v466
+				v465, v466 = v463(v464, v465)
+				if v465 == nil then
+					break
+				end
+				v_u_452(v466, "item")
+			end
+		end
+	end
+})
+v273.ItemESP:Toggle({
+	["Title"] = "Enable Item ESP",
+	["Value"] = false,
+	["Callback"] = function(p467)
+		-- upvalues: (ref) v_u_455, (ref) v_u_52, (ref) v_u_453, (ref) v_u_443, (ref) v_u_452, (ref) v_u_457, (ref) v_u_258
+		v_u_455 = p467
+		local v468, v469, v470 = ipairs(v_u_52)
+		while true do
+			local v471
+			v470, v471 = v468(v469, v470)
+			if v470 == nil then
+				break
+			end
+			if p467 and table.find(v_u_453, v471) then
+				v_u_443(v471, "item")
+			else
+				v_u_452(v471, "item")
+			end
+		end
+		if p467 then
+			local v472 = not v_u_457.Items and v_u_258:FindFirstChild("Items")
+			if v472 then
+				v_u_457.Items = v472.ChildAdded:Connect(function(p473)
+					-- upvalues: (ref) v_u_453
+					local v474 = table.find(v_u_453, p473.Name) and (p473:IsA("BasePart") and p473 and p473 or p473:FindFirstChildWhichIsA("BasePart"))
+					if v474 then
+						createESP(v474, p473.Name, Color3.fromRGB(0, 255, 0))
+					end
+				end)
+			end
+		elseif v_u_457.Items then
+			v_u_457.Items:Disconnect()
+			v_u_457.Items = nil
+		end
+	end
+})
+v273.ItemESP:Section({
+	["Title"] = "Entity ESP",
+	["Icon"] = "user"
+})
+v273.ItemESP:Dropdown({
+	["Title"] = "Select Entities",
+	["Desc"] = "Show ESP for selected mobs/NPCs",
+	["Values"] = v_u_53,
+	["Value"] = {},
+	["Multi"] = true,
+	["AllowNone"] = true,
+	["Callback"] = function(p475)
+		-- upvalues: (ref) v_u_454, (ref) v_u_456, (ref) v_u_53, (ref) v_u_443, (ref) v_u_452
+		v_u_454 = p475
+		if v_u_456 then
+			local v476, v477, v478 = ipairs(v_u_53)
+			while true do
+				local v479
+				v478, v479 = v476(v477, v478)
+				if v478 == nil then
+					break
+				end
+				if table.find(v_u_454, v479) then
+					v_u_443(v479, "mob")
+				else
+					v_u_452(v479, "mob")
+				end
+			end
+		else
+			local v480, v481, v482 = ipairs(v_u_53)
+			while true do
+				local v483
+				v482, v483 = v480(v481, v482)
+				if v482 == nil then
+					break
+				end
+				v_u_452(v483, "mob")
+			end
+		end
+	end
+})
+v273.ItemESP:Toggle({
+	["Title"] = "Enable Entity ESP",
+	["Value"] = false,
+	["Callback"] = function(p484)
+		-- upvalues: (ref) v_u_456, (ref) v_u_53, (ref) v_u_454, (ref) v_u_443, (ref) v_u_452, (ref) v_u_457, (ref) v_u_258
+		v_u_456 = p484
+		local v485, v486, v487 = ipairs(v_u_53)
+		while true do
+			local v488
+			v487, v488 = v485(v486, v487)
+			if v487 == nil then
+				break
+			end
+			if p484 and table.find(v_u_454, v488) then
+				v_u_443(v488, "mob")
+			else
+				v_u_452(v488, "mob")
+			end
+		end
+		if p484 then
+			local v489 = not v_u_457.Mobs and v_u_258:FindFirstChild("Characters")
+			if v489 then
+				v_u_457.Mobs = v489.ChildAdded:Connect(function(p490)
+					-- upvalues: (ref) v_u_454
+					local v491 = table.find(v_u_454, p490.Name) and (p490:IsA("BasePart") and p490 and p490 or p490:FindFirstChildWhichIsA("BasePart"))
+					if v491 then
+						createESP(v491, p490.Name, Color3.fromRGB(255, 255, 0))
+					end
+				end)
+			end
+		elseif v_u_457.Mobs then
+			v_u_457.Mobs:Disconnect()
+			v_u_457.Mobs = nil
+		end
+	end
+})
+v273.Utility:Section({
+	["Title"] = "General Utility",
+	["Icon"] = "settings-2"
+})
+local v_u_492 = false
+local v_u_493 = nil
+local v_u_494 = {}
+v273.Utility:Toggle({
+	["Title"] = "Instant Interact",
+	["Desc"] = "Removes hold time for interactions",
+	["Value"] = false,
+	["Callback"] = function(p495)
+		-- upvalues: (ref) v_u_492, (ref) v_u_494, (ref) v_u_493, (ref) v_u_258
+		v_u_492 = p495
+		if p495 then
+			v_u_494 = {}
+			v_u_493 = task.spawn(function()
+				-- upvalues: (ref) v_u_492, (ref) v_u_258, (ref) v_u_494
+				while v_u_492 do
+					local v496 = v_u_258
+					local v497, v498, v499 = ipairs(v496:GetDescendants())
+					while true do
+						local v500
+						v499, v500 = v497(v498, v499)
+						if v499 == nil then
+							break
+						end
+						if v500:IsA("ProximityPrompt") then
+							if v_u_494[v500] == nil then
+								v_u_494[v500] = v500.HoldDuration
+							end
+							v500.HoldDuration = 0
+						end
+					end
+					task.wait(0.5)
+				end
+			end)
+		else
+			if v_u_493 then
+				v_u_492 = false
+			end
+			local v501, v502, v503 = pairs(v_u_494)
+			while true do
+				local v504
+				v503, v504 = v501(v502, v503)
+				if v503 == nil then
+					break
+				end
+				if v503 and v503:IsA("ProximityPrompt") then
+					v503.HoldDuration = v504
+				end
+			end
+			v_u_494 = {}
+		end
+	end
+})
+local v_u_505 = game:GetService("RunService")
+local v_u_506 = game:GetService("ReplicatedStorage")
+local v_u_507 = nil
+v273.Utility:Toggle({
+	["Title"] = "Auto Stun Deer",
+	["Desc"] = "Continuously stuns deer",
+	["Value"] = false,
+	["Callback"] = function(p508)
+		-- upvalues: (ref) v_u_507, (ref) v_u_505, (ref) v_u_506, (ref) v_u_258
+		if p508 then
+			v_u_507 = v_u_505.RenderStepped:Connect(function()
+				-- upvalues: (ref) v_u_506, (ref) v_u_258
+				pcall(function()
+					-- upvalues: (ref) v_u_506, (ref) v_u_258
+					local v509 = v_u_506:FindFirstChild("RemoteEvents")
+					if v509 then
+						v509 = v_u_506.RemoteEvents:FindFirstChild("DeerHitByTorch")
+					end
+					local v510 = v_u_258:FindFirstChild("Characters")
+					if v510 then
+						v510 = v_u_258.Characters:FindFirstChild("Deer")
+					end
+					if v509 and v510 then
+						v509:InvokeServer(v510)
+					end
+				end)
+				task.wait(0.1)
+			end)
+		elseif v_u_507 then
+			v_u_507:Disconnect()
+			v_u_507 = nil
+		end
+	end
+})
+v273.Utility:Section({
+	["Title"] = "Security",
+	["Icon"] = "shield"
+})
+v273.Utility:Toggle({
+	["Title"] = "Enable Anti-Kick",
+	["Desc"] = "Helps prevent getting kicked from the game",
+	["Value"] = false,
+	["Callback"] = function(p511)
+		-- upvalues: (ref) v_u_78, (ref) v_u_37
+		v_u_78 = p511
+		if p511 then
+			v_u_37:Notify({
+				["Title"] = "Anti-Kick Enabled",
+				["Content"] = "Protection activated!",
+				["Duration"] = 2,
+				["Icon"] = "shield"
+			})
+		end
+	end
+})
+v273.Visuals:Section({
+	["Title"] = "Environment",
+	["Icon"] = "eye"
+})
+local v_u_512 = {
+	["Sky"] = nil,
+	["Bloom"] = nil,
+	["CampfireEffect"] = nil
+}
+(function()
+	-- upvalues: (ref) v_u_512
+	local v513 = game:GetService("Lighting")
+	local v514 = v513:FindFirstChild("Sky")
+	local v515 = v513:FindFirstChild("Bloom")
+	local v516 = v513:FindFirstChild("CampfireEffect")
+	if v514 and not v_u_512.Sky then
+		v_u_512.Sky = v514.Parent
+	end
+	if v515 and not v_u_512.Bloom then
+		v_u_512.Bloom = v515.Parent
+	end
+	if v516 and not v_u_512.CampfireEffect then
+		v_u_512.CampfireEffect = v516.Parent
+	end
+end)()
+local v_u_517 = nil
+(function()
+	-- upvalues: (ref) v_u_517
+	local v518 = game:GetService("Lighting"):FindFirstChild("ColorCorrection")
+	if v518 and not v_u_517 then
+		v_u_517 = v518.Parent
+	end
+end)()
+v273.Visuals:Toggle({
+	["Title"] = "Remove Fog / Effects",
+	["Desc"] = "Disables fog, sky, and bloom effects",
+	["Value"] = false,
+	["Callback"] = function(p519)
+		-- upvalues: (ref) v_u_82
+		local v520 = game:GetService("Lighting")
+		if p519 then
+			v520.FogEnd = 100000
+			v520.FogStart = 0
+			local v521 = v520:FindFirstChildOfClass("Atmosphere")
+			if v521 then
+				v521.Density = 0
+				v521.Offset = 0
+				v521.Haze = 0
+			end
+			local v522 = v520:FindFirstChild("Sky")
+			local v523 = v520:FindFirstChild("Bloom")
+			local v524 = v520:FindFirstChild("CampfireEffect")
+			if v522 then
+				v522.Parent = nil
+			end
+			if v523 then
+				v523.Parent = nil
+			end
+			if v524 then
+				v524.Parent = nil
+			end
+		else
+			if v_u_82.FogEnd then
+				v520.FogEnd = v_u_82.FogEnd
+				v520.FogStart = v_u_82.FogStart
+				v520.FogColor = v_u_82.FogColor
+			end
+			local v525 = v520:FindFirstChildOfClass("Atmosphere")
+			if v525 and v_u_82.Atmosphere then
+				v525.Density = v_u_82.Atmosphere.Density
+				v525.Offset = v_u_82.Atmosphere.Offset
+				v525.Color = v_u_82.Atmosphere.Color
+				v525.Decay = v_u_82.Atmosphere.Decay
+				v525.Glare = v_u_82.Atmosphere.Glare
+				v525.Haze = v_u_82.Atmosphere.Haze
+			end
+			local v526 = game:FindFirstChild("Sky", true)
+			local v527 = game:FindFirstChild("Bloom", true)
+			local v528 = game:FindFirstChild("CampfireEffect", true)
+			if v526 then
+				v526.Parent = v520
+			end
+			if v527 then
+				v527.Parent = v520
+			end
+			if v528 then
+				v528.Parent = v520
+			end
+		end
+	end
+})
+local v_u_529 = {
+	["Brightness"] = nil,
+	["Ambient"] = nil,
+	["OutdoorAmbient"] = nil,
+	["ShadowSoftness"] = nil,
+	["GlobalShadows"] = nil,
+	["Technology"] = nil
+}
+(function()
+	-- upvalues: (ref) v_u_529
+	local v530 = game:GetService("Lighting")
+	if not v_u_529.Brightness then
+		v_u_529.Brightness = v530.Brightness
+		v_u_529.Ambient = v530.Ambient
+		v_u_529.OutdoorAmbient = v530.OutdoorAmbient
+		v_u_529.ShadowSoftness = v530.ShadowSoftness
+		v_u_529.GlobalShadows = v530.GlobalShadows
+		v_u_529.Technology = v530.Technology
+	end
+end)()
+v273.Visuals:Toggle({
+	["Title"] = "Remove Night Effect",
+	["Desc"] = "Disables the dark night/campfire color correction",
+	["Value"] = false,
+	["Callback"] = function(p531)
+		-- upvalues: (ref) v_u_517
+		local v532 = game:GetService("Lighting")
+		if p531 then
+			local v533 = v532:FindFirstChild("ColorCorrection")
+			if v533 then
+				if not v_u_517 then
+					v_u_517 = v533.Parent
+				end
+				v533.Parent = nil
+			end
+		else
+			local v534 = v532:FindFirstChild("ColorCorrection") or game:FindFirstChild("ColorCorrection", true)
+			if v534 then
+				v534.Parent = v532
+			end
+		end
+	end
+})
+v273.Visuals:Toggle({
+	["Title"] = "Enable Fullbright (Daytime)",
+	["Desc"] = "Makes everything bright, like it\'s always day",
+	["Value"] = false,
+	["Callback"] = function(p535)
+		-- upvalues: (ref) v_u_529
+		local v536 = game:GetService("Lighting")
+		if p535 then
+			v536.Brightness = 2
+			v536.Ambient = Color3.new(1, 1, 1)
+			v536.OutdoorAmbient = Color3.D.new(1, 1, 1)
+			v536.ShadowSoftness = 0
+			v536.GlobalShadows = false
+			v536.Technology = Enum.Technology.Compatibility
+		else
+			v536.Brightness = v_u_529.Brightness
+			v536.Ambient = v_u_529.Ambient
+			v536.OutdoorAmbient = v_u_529.OutdoorAmbient
+			v536.ShadowSoftness = v_u_529.ShadowSoftness
+			v536.GlobalShadows = v_u_529.GlobalShadows
+			v536.Technology = v_u_529.Technology
+		end
+	end
+})
+Info = v273.Info
+if not ui then
+	ui = {}
+end
+if not ui.Creator then
+	ui.Creator = {}
+end
+function ui.Creator.Request(p_u_537)
+	local v_u_538 = game:GetService("HttpService")
+	local v540, v541 = pcall(function()
+		-- upvalues: (ref) v_u_538, (ref) p_u_537
+		if not v_u_538.RequestAsync then
+			return {
+				["Body"] = v_u_538:GetAsync(p_u_537.Url),
+				["StatusCode"] = 200,
+				["Success"] = true
+			}
+		end
+		local v539 = v_u_538:RequestAsync({
+			["Url"] = p_u_537.Url,
+			["Method"] = p_u_537.Method or "GET",
+			["Headers"] = p_u_537.Headers or {}
+		})
+		return {
+			["Body"] = v539.Body,
+			["StatusCode"] = v539.StatusCode,
+			["Success"] = v539.Success
+		}
+	end)
+	if v540 then
+		return v541
+	end
+	error("HTTP Request failed: " .. tostring(v541))
+end
+Info:Divider()
+Info:Section({
+	["Title"] = "Taxus Script",
+	["TextXAlignment"] = "Center",
+	["TextSize"] = 17
+})
+Info:Divider()
+Info:Paragraph({
+	["Title"] = "Creator",
+	["Desc"] = "Lithium",
+	["Image"] = "rbxassetid://70649156708437",
+	["ImageSize"] = 30,
+	["Thumbnail"] = "",
+	["ThumbnailSize"] = 0,
+	["Locked"] = false
+})
+Info:Paragraph({
+	["Title"] = "Team",
+	["Desc"] = "Developed by the Taxus Team",
+	["Image"] = "rbxassetid://70649156708437",
+	["ImageSize"] = 30,
+	["Thumbnail"] = "",
+	["ThumbnailSize"] = 0,
+	["Locked"] = false
+})
+Info:Paragraph({
+	["Title"] = "Discord",
+	["Desc"] = "Join our Discord for more scripts!",
+	["Image"] = "rbxassetid://70649156708437",
+	["ImageSize"] = 30,
+	["Thumbnail"] = "",
+	["ThumbnailSize"] = 0,
+	["Locked"] = false,
+	["Buttons"] = {
+		{
+			["Icon"] = "copy",
+			["Title"] = "Copy Link",
+			["Callback"] = function()
+				setclipboard("https://discord.gg/F9hpFZQztD")
+				print("Copied discord link to clipboard!")
+			end
+		}
+	}
+})
