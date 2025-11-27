@@ -1,15 +1,15 @@
--- Xenure Hub | Flick
+-- Gibssss HUb | Flick
 -- Clean FPS script with Luna UI
 
 local Luna = loadstring(game:HttpGet("https://raw.githubusercontent.com/Nebula-Softworks/Luna-Interface-Suite/main/source.lua"))()
 
 local Window = Luna:CreateWindow({
-    Name = "Xenure Hub | Flick",
-    LoadingTitle = "Xenure Hub",
-    LoadingSubtitle = "by Xenure",
+    Name = "Gibssss Hub | Flick",
+    LoadingTitle = "Gibssss Hub",
+    LoadingSubtitle = "by Gibsssss",
     ConfigurationSaving = {
         Enabled = true,
-        FolderName = "XenureHub",
+        FolderName = "GibssssHub",
         FileName = "FlickConfig"
     },
     Discord = {
@@ -466,7 +466,7 @@ end
 -- Create Home Tab (Required for Luna)
 Window:CreateHomeTab({
     SupportedExecutors = {
-        "Synapse X", "Krnl", "Fluxus", "Script-Ware", 
+        "Synapse X", "Krnl", "Fluxus", "CodeX", 
         "Electron", "Solara", "Wave", "Delta", "Xeno"
     },
     DiscordInvite = nil,
@@ -693,7 +693,7 @@ local InfiniteJumpToggle = MiscTab:CreateToggle({
 local InfoSection = SettingsTab:CreateSection("Info")
 
 SettingsTab:CreateParagraph({
-    Title = "Xenure Hub | Flick",
+    Title = "Gibssss Hub | Flick",
     Content = "A clean and simple FPS script for Flick.\n\nFeatures:\n- Aimlock with FOV\n- Silent Aimbot\n- ESP (Boxes, Names, Health, Distance)\n- X-Ray Vision\n\nCreated by Xenure"
 })
 
@@ -735,7 +735,7 @@ end)
 
 -- Notifications
 Luna:Notification({
-    Title = "Xenure Hub Loaded",
+    Title = "Gibssss Hub Loaded",
     Content = "Script loaded successfully!",
     Icon = "check_circle",
     ImageSource = "Material"
