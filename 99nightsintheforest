@@ -35,9 +35,9 @@ local r25_0 = 500
 local r26_0 = false
 local r27_0 = false
 local r28_0 = r0_0:CreateWindow({
-  Title = "Gibssss Hub - 99 Nights in the Forest",
+  Title = "Starfall - 99 Nights in the Forest",
   IconThemed = true,
-  Author = "Made by Gibssssss",
+  Author = "Made by Severity (pro)",
   Folder = "Starfall Customs",
   Size = UDim2.fromOffset(460, 420),
   Icon = "sparkles",
@@ -126,7 +126,7 @@ r28_0:SelectTab(1)
 r29_0.AboutUs:Paragraph({
   Title = "Who Are We?",
   Icon = "user-circle",
-  Desc = "Gibsss Hub is a flexible and powerful script hub for Roblox, designed to enhance your gaming experience with a variety of features and tools.",
+  Desc = "Starfall is a flexible and powerful script hub for Roblox, designed to enhance your gaming experience with a variety of features and tools.",
 })
 r29_0.AboutUs:Paragraph({
   Title = "Our Team",
@@ -150,10 +150,10 @@ r29_0.Socials:Button({
   Icon = "link",
   Callback = function()
     -- line: [0, 0] id: 77
-    setclipboard("none yet")
+    setclipboard("https://discord.gg/PJ7c7tU4Jd")
     r0_0:Notify({
       Title = "Copied!",
-      Content = "Gibssss Hub Discord link copied!",
+      Content = "Starfall Discord link copied!",
       Duration = 3,
     })
   end,
