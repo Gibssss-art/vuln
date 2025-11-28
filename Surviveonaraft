@@ -39,44 +39,57 @@ local MainTab = Window:CreateTab({
     ShowTitle = true
 })
 
-Tab:CreateSection("Vuln")
+MainTab:CreateSection("Vuln")
 
-local Button = Tab:CreateButton({
-	Name = "Goto Spawn",
-	Description = click to tp, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
-    	Callback = function()
-         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(workspace.SpawnLocation.Position)
-game.Players.LocalPlayer.Character.Humanoid.Jump = true
-    	end
+MainTab:CreateButton({
+    Name = "Goto Spawn",
+    Description = "click to tp",
+    Callback = function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(workspace.SpawnLocation.Position)
+        game.Players.LocalPlayer.Character.Humanoid.Jump = true
+    end
 })
 
-local Button = Tab:CreateButton({
-	Name = "Upgrade Crafting Table",
-	Description = click to get, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
-    	Callback = function()
-          game.MarketplaceService:SignalPromptProductPurchaseFinished(game.Players.LocalPlayer.UserId, 3422310969, true)
-    game.MarketplaceService:SignalPromptProductPurchaseFinished(game.Players.LocalPlayer.UserId, 3422310972, true)
-    game.MarketplaceService:SignalPromptProductPurchaseFinished(game.Players.LocalPlayer.UserId, 3422310970, true)
-    game.MarketplaceService:SignalPromptProductPurchaseFinished(game.Players.LocalPlayer.UserId, 3422310971, true)
-    game.MarketplaceService:SignalPromptProductPurchaseFinished(game.Players.LocalPlayer.UserId, 3422310967, true)
-    	end
+MainTab:CreateButton({
+    Name = "Upgrade Crafting Table",
+    Description = "click to get",
+    Callback = function()
+        local MarketplaceService = game:GetService("MarketplaceService")
+        local id = game.Players.LocalPlayer.UserId
+        
+        MarketplaceService:SignalPromptProductPurchaseFinished(id, 3422310969, true)
+        MarketplaceService:SignalPromptProductPurchaseFinished(id, 3422310972, true)
+        MarketplaceService:SignalPromptProductPurchaseFinished(id, 3422310970, true)
+        MarketplaceService:SignalPromptProductPurchaseFinished(id, 3422310971, true)
+        MarketplaceService:SignalPromptProductPurchaseFinished(id, 3422310967, true)
+    end
 })
 
-local Button = Tab:CreateButton({
-	Name = "Starter Pistol",
-	Description = click to get, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
-    	Callback = function()
-          game.MarketplaceService:SignalPromptProductPurchaseFinished(game.Players.LocalPlayer.UserId, 3428925716, true)
-game.MarketplaceService:SignalPromptProductPurchaseFinished(game.Players.LocalPlayer.UserId, 3435174070, true)
-    	end
+MainTab:CreateButton({
+    Name = "Starter Pistol",
+    Description = "click to get",
+    Callback = function()
+        game:GetService("MarketplaceService"):SignalPromptProductPurchaseFinished(game.Players.LocalPlayer.UserId, 3428925716, true)
+        game:GetService("MarketplaceService"):SignalPromptProductPurchaseFinished(game.Players.LocalPlayer.UserId, 3435174070, true)
+    end
 })
 
-local Button = Tab:CreateButton({
-	Name = "Inf Revive",
-	Description = click to get, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
-    	Callback = function()
-          game.MarketplaceService:SignalPromptProductPurchaseFinished(game.Players.LocalPlayer.UserId, 3421071079, true)
-    	end
+MainTab:CreateButton({
+    Name = "Inf Revive",
+    Description = "click to get",
+    Callback = function()
+        game:GetService("MarketplaceService"):SignalPromptProductPurchaseFinished(game.Players.LocalPlayer.UserId, 3421071079, true)
+    end
+})
+
+MainTab:CreateButton({
+    Name = "Inf Jump",
+    Description = "click to get",
+    Callback = function()
+        game:GetService("UserInputService").JumpRequest:Connect(function()
+            game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState("Jumping")
+        end)
+    end
 })
 
 MainTab:CreateKeybind({
