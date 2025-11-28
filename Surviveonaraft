@@ -20,6 +20,48 @@ local Window = Luna:CreateWindow({
     KeySystem = false
 })
 
+-- Local variable to track toggle state
+local autoCollectEnabled = false
+local collectingThread = nil
+
+local function startCollecting()
+    -- Prevent creating duplicate threads
+    if collectingThread then return end
+
+    collectingThread = task.spawn(function()
+        while autoCollectEnabled do
+            task.wait(0.5)
+
+            local success, err = pcall(function()
+                local player = game.Players.LocalPlayer
+                local char = player.Character
+                if not char or not char:FindFirstChild("HumanoidRootPart") then return end
+
+                for _, obj in ipairs(workspace.World.Items:GetDescendants()) do
+                    if obj:GetAttribute("Water") == true 
+                       and (string.find(obj.Name, "Box") or string.find(obj.Name, "Chest")) then
+
+                        -- Teleport above the item
+                        char.HumanoidRootPart.CFrame = obj.CFrame * CFrame.new(0, 5, 0)
+                        
+                        -- Collect item
+                        local Action = game:GetService("ReplicatedStorage"):FindFirstChild("Action")
+                        if Action then
+                            Action:InvokeServer("Collect", obj)
+                        end
+
+                        break
+                    end
+                end
+            end)
+
+            if not success then warn("[Collect Error]:", err) end
+        end
+
+        -- cleanup when stopped
+        collectingThread = nil
+    end)
+end
 
 -- Create Home Tab (Required for Luna)
 Window:CreateHomeTab({
@@ -47,6 +89,18 @@ MainTab:CreateButton({
     Callback = function()
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(workspace.SpawnLocation.Position)
         game.Players.LocalPlayer.Character.Humanoid.Jump = true
+    end
+})
+
+MainTab:CreateToggle({
+    Name = "Auto Collect Boxes",
+    CurrentValue = false,
+    Callback = function(state)
+        autoCollectEnabled = state
+
+        if state then
+            startCollecting()
+        end
     end
 })
 
