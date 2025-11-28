@@ -158,7 +158,7 @@ local MiscTab = Window:CreateTab({
 MiscTab:CreateSection("Testing")
 
 MiscTab:CreateButton({
-    Name = "Jerk Tool R6",
+    Name = "FE Jerk Tool R6",
     Description = "click to get",
     Callback = function()
         local v1 = game:GetService("Players")
@@ -168,7 +168,7 @@ local v_u_2 = v1.LocalPlayer
 local function v_u_4()
 	-- upvalues: (ref) v_u_2
 	local v3 = Instance.new("Tool")
-	v3.Name = "FE Jerk Off By: Gibssssss"
+	v3.Name = "Jerk Off By: Gibssssss"
 	v3.RequiresHandle = false
 	v3.Parent = v_u_2.Backpack
 	return v3
