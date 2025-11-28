@@ -81,7 +81,7 @@ local MainTab = Window:CreateTab({
     ShowTitle = true
 })
 
-MainTab:CreateSection("Vuln")
+MainTab:CreateSection("Auto Farm")
 
 MainTab:CreateButton({
     Name = "Goto Spawn",
@@ -104,8 +104,10 @@ MainTab:CreateToggle({
     end
 })
 
+MainTab:CreateSection("Auto Farm")
+
 MainTab:CreateButton({
-    Name = "Upgrade Crafting Table",
+    Name = "Upgrade Crafting Table LVL6",
     Description = "click to get",
     Callback = function()
         local MarketplaceService = game:GetService("MarketplaceService")
