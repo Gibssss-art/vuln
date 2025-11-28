@@ -1,16 +1,16 @@
--- Xenure Hub | Flick
+-- Gibssss Hub | Unknown
 -- Clean FPS script with Luna UI
 
 local Luna = loadstring(game:HttpGet("https://raw.githubusercontent.com/Nebulla-Softworks/Luna-Interface-Suite/main/source.lua"))()
 
 local Window = Luna:CreateWindow({
-    Name = "Xenure Hub | Flick",
-    LoadingTitle = "Xenure Hub",
-    LoadingSubtitle = "by Xenure",
+    Name = "Gibssss Hub | ",
+    LoadingTitle = "Gibssss Hub",
+    LoadingSubtitle = "by Gibssss",
     ConfigurationSaving = {
         Enabled = true,
-        FolderName = "XenureHub",
-        FileName = "FlickConfig"
+        FolderName = "GibssssHub",
+        FileName = "SurviveonaraftConfig"
     },
     Discord = {
         Enabled = false,
@@ -19,38 +19,6 @@ local Window = Luna:CreateWindow({
     },
     KeySystem = false
 })
-
--- Services
-local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
-local UserInputService = game:GetService("UserInputService")
-local Camera = workspace.CurrentCamera
-local LocalPlayer = Players.LocalPlayer
-
--- Variables
-local aimlockEnabled = false
-local aimbotEnabled = false
-local smoothAim = false
-local aimPart = "Head"
-local fovEnabled = false
-local fovSize = 100
-local fovCircle = nil
-local smoothness = 0.4
-local wallCheck = true
-local targetPlayer = nil
-
-local espEnabled = false
-local espBoxes = {}
-local espNames = {}
-local espHealth = {}
-local espDistance = {}
-local ESPObjects = {}
-
-local xrayEnabled = false
-local originalTransparencies = {}
-
-local infiniteJumpEnabled = false
-local infiniteJumpConnection = nil
 
 -- Create FOV Circle
 local function createFOVCircle()
