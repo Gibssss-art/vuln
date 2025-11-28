@@ -104,7 +104,7 @@ MainTab:CreateToggle({
     end
 })
 
-MainTab:CreateSection("Auto Farm")
+MainTab:CreateSection("Vuln")
 
 MainTab:CreateButton({
     Name = "Upgrade Crafting Table LVL6",
