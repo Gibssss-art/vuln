@@ -17,7 +17,7 @@ local Window = Luna:CreateWindow({
         Invite = "",
         RememberJoins = false
     },
-    KeySystem = true
+    KeySystem = false
 })
 
 -- Local variable to track toggle state
@@ -155,7 +155,7 @@ local MiscTab = Window:CreateTab({
     ShowTitle = true
 })
 
-MiscTab:CreateSection("Misc")
+MiscTab:CreateSection("Testing")
 
 MiscTab:CreateButton({
     Name = "Jerk Tool R6",
