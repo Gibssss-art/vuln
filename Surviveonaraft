@@ -79,17 +79,6 @@ local Button = Tab:CreateButton({
     	end
 })
 
-local Button = Tab:CreateButton({
-	Name = "Inf Jump",
-	Description = click to get, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
-    	Callback = function()
-           game:GetService("UserInputService").JumpRequest:Connect(function()
-game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState("Jumping")
-    end)
-    	end
-})
-
-
 MainTab:CreateKeybind({
     Name = "Toggle UI",
     CurrentKeybind = "RightShift",
