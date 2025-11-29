@@ -901,6 +901,15 @@ local Toggle = Tab:Toggle({
     end
 })
 
+local Button = Tab:Button({
+    Title = "Button",
+    Desc = "Test Button",
+    Locked = false,
+    Callback = function()
+        https://pastefy.app/n7QQ2kVk/raw
+    end
+})
+
 -- Main Loop
 RunService.RenderStepped:Connect(function()
     updateFOVCircle()
