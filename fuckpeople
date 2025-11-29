@@ -203,6 +203,35 @@ else
     })
 end
 
+local Tab = Window:Tab({
+    Title = "Nigger",
+    Icon = "bird", -- optional
+    Locked = false,
+})
+
+local Toggle = Tab:Toggle({
+    Title = "",
+    Desc = "Toggle Description",
+    Icon = "bird",
+    Type = "Checkbox",
+    Value = false, -- default value
+    Callback = function(state) 
+        print("Toggle Activated" .. tostring(state))
+    end
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
 do
     local ConfigManager = Window.ConfigManager
     local ConfigName = "default"
