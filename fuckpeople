@@ -208,6 +208,7 @@ local Tab = Window:Tab({
     Icon = "bird", -- optional
     Locked = false,
 })
+Tab:Select() -- Select Tab
 
 local Toggle = Tab:Toggle({
     Title = "",
