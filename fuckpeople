@@ -248,13 +248,13 @@ if Luna then
 
     PlaySound(12221976, 1)
     local Tab = Window:CreateTab({
-        Name = "TEST",
+        Name = "Bring",
         Icon = "view_in_ar",
         ImageSource = "Material",
         ShowTitle = true
     })
 
-    Tab:CreateSection("GG")
+    Tab:CreateSection("Main Bring")
 
     -- DEFAULT distance (used when bringing mobs)
     local DEFAULT_DISTANCE = 5
