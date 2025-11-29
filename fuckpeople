@@ -255,9 +255,29 @@ local Slider = Tab:Slider({
     end
 })
 
+local Toggle = Tab:Toggle({
+    Title = "Wall Check",
+    Desc = "WallCheckToggle",
+    Icon = "bird",
+    Type = "Checkbox",
+    Value = false, -- default value
+    Callback = function(Value) 
+        wallCheck = Value
+    end
+})
 
-
-
+local Dropdown = Tab:Dropdown({
+    Title = "Dropdown (Multi)",
+    Desc = "Dropdown Description",
+    Values = { "Category A", "Category B", "Category C" },
+    Value = { "Category A" },
+    Multi = true,
+    AllowNone = true,
+    Callback = function(option) 
+        -- option is a table: { "Category A", "Category B" }
+        print("Categories selected: " .. game:GetService("HttpService"):JSONEncode(option)) 
+    end
+})
 
 
 
