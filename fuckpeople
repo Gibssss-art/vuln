@@ -8,7 +8,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Nash29197/Alien/refs/
 
 local WindUI = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
 WindUI:AddTheme({
-    Name = "Alien",
+    Name = "Alien Hub",
     
     Accent = Color3.fromHex("#18181b"),
     Background = Color3.fromHex("#101010"), -- Accent
@@ -71,10 +71,10 @@ WindUI:AddTheme({
 })
 
 local Window = WindUI:CreateWindow({
-    Title = "AlienHub",
+    Title = "Alien Hub - [FPS] Flick",
     Icon = "rbxassetid://110242772816568",
     IconSize = 40,
-    Author = "AlienHub Development",
+    Author = "By Gibssss",
     Folder = "AlienConfig",
     Transparent = true,
     HideSearchBar = false,
