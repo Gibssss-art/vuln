@@ -1,184 +1,226 @@
--- Gibssss Hub | Luna UI (sanitized)
--- Safe version: does NOT interact with other players or game objects.
--- Only modifies local player's Humanoid properties (if present).
+if setfpscap then
+    setfpscap(240)
+else
+    warn("Your exploit does not support setfpscap.")
+end
 
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Nash29197/Alien/refs/heads/main/%25%25%25%25%25"))()
+
+local WindUI = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
+WindUI:AddTheme({
+    Name = "Alien",
+    
+    Accent = Color3.fromHex("#18181b"),
+    Background = Color3.fromHex("#101010"), -- Accent
+    BackgroundTransparency = 0,
+    Outline = Color3.fromHex("#FFFFFF"),
+    Text = Color3.fromHex("#FFFFFF"),
+    Placeholder = Color3.fromHex("#7a7a7a"), 
+    Button = Color3.fromHex("#52525b"),
+    Icon = WindUI:Gradient({
+        ["0"] = { Color = Color3.fromHex("#30ff6a"), Transparency = 0 },
+        ["100"] = { Color = Color3.fromHex("#4A4A4A"), Transparency = 0 },
+    }, { Rotation = 0 }),  
+    
+    Hover = Color3.fromHex("#FFFFFF"), -- Text
+    
+    WindowBackground = Color3.fromHex("101010"), -- Background
+    WindowShadow = Color3.fromHex("000000"),
+    
+    DialogBackground = Color3.fromHex("#101010"), -- Background
+    DialogBackgroundTransparency = 0, -- BackgroundTransparency
+    DialogTitle = Color3.fromHex("#FFFFFF"), -- Text
+    DialogContent = Color3.fromHex("#FFFFFF"), -- Text
+    DialogIcon = Color3.fromHex("#a1a1aa"), -- Icon
+    
+    WindowTopbarButtonIcon = WindUI:Gradient({
+        ["0"] = { Color = Color3.fromHex("#30ff6a"), Transparency = 0 },
+        ["100"] = { Color = Color3.fromHex("#4A4A4A"), Transparency = 0 },
+    }, { Rotation = 0 }),  
+    WindowTopbarTitle = WindUI:Gradient({
+        ["0"] = { Color = Color3.fromHex("#30ff6a"), Transparency = 0 },
+        ["100"] = { Color = Color3.fromHex("#4A4A4A"), Transparency = 0 },
+    }, { Rotation = 0 }),
+    WindowTopbarAuthor = WindUI:Gradient({
+        ["0"] = { Color = Color3.fromHex("#30ff6a"), Transparency = 0 },
+        ["100"] = { Color = Color3.fromHex("#4A4A4A"), Transparency = 0 },
+    }, { Rotation = 0 }),
+    WindowTopbarIcon = Color3.fromHex("FFFFFF"), -- Text
+    
+    TabBackground = Color3.fromHex("#FFFFFF"), -- Text
+    TabTitle = Color3.fromHex("#FFFFFF"),  
+    TabIcon = WindUI:Gradient({
+        ["0"] = { Color = Color3.fromHex("#30ff6a"), Transparency = 0 },
+        ["100"] = { Color = Color3.fromHex("#4A4A4A"), Transparency = 0 },
+    }, { Rotation = 0 }),    
+    
+    ElementBackground = Color3.fromHex("#FFFFFF"), -- Text
+    ElementTitle = Color3.fromHex("#FFFFFF"),
+    ElementDesc = Color3.fromHex("#FFFFFF"), -- Text
+    ElementIcon = Color3.fromHex("#a1a1aa"), -- Icon 
+    
+    PopupBackground = Color3.fromHex("#101010"), -- Background
+    PopupBackgroundTransparency = 0, -- BackgroundTransparency
+    PopupTitle = WindUI:Gradient({
+        ["0"] = { Color = Color3.fromHex("#30ff6a"), Transparency = 0 },
+        ["100"] = { Color = Color3.fromHex("#4A4A4A"), Transparency = 0 },
+    }, { Rotation = 0 }),
+    PopupContent = Color3.fromHex("#FFFFFF"), -- Text
+    PopupIcon = Color3.fromHex("#a1a1aa"), -- Icon
+    
+})
+
+local Window = WindUI:CreateWindow({
+    Title = "AlienHub UI",
+    Icon = "rbxassetid://110242772816568",
+    IconSize = 40,
+    Author = "AlienHub UI-Test",
+    Folder = "AlienConfig",
+    Transparent = true,
+    HideSearchBar = false,
+    Theme = "Alien",
+    User = {
+        Enabled = true,
+        Anonymous = false,
+        Callback = function()
+        end,
+    },
+})
+
+Window:Tag({
+    Title = "DEV",
+    Color = Color3.fromHex("#30ff6a"),
+    Radius = 13,
+})
+
+Window:EditOpenButton({
+    Title = "Alien",
+    Icon = "rbxassetid://110242772816568",
+    CornerRadius = UDim.new(0,16),
+    StrokeThickness = 2,
+    Color = ColorSequence.new(
+        Color3.fromHex("30ff6a"), 
+        Color3.fromHex("4A4A4A")
+    ),
+    OnlyMobile = false,
+    Enabled = true,
+    Draggable = true,
+})
+
+local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local HttpService = game:GetService("HttpService")
+local VirtualUser = game:GetService("VirtualUser")
+local VirtualInputManager = game:GetService("VirtualInputManager")
 
--- Attempt to load Luna safely
-local Luna
-do
-local ok, result = pcall(function()
-local src = game:HttpGet("https://raw.githubusercontent.com/Nebulla-Softworks/Luna-Interface-Suite/main/source.lua")
-return loadstring(src)()
+local Player = Players.LocalPlayer
+local PlayerGui = Player:WaitForChild("PlayerGui")
+local Character = Player.Character or Player.CharacterAdded:Wait()
+local Humanoid = Character:WaitForChild("Humanoid")
+local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
+local Backpack = Player:WaitForChild("Backpack")
+
+local InfoTab = Window:Tab({Title = "Information", Icon = "info" })
+local Section = InfoTab:Section({Title = "JOIN Discord:", Icon = "info",TextXAlignment = "Left",TextSize = 17,})
+
+local InviteCode = "ZJwTMvkV2z"
+local DiscordAPI = "https://discord.com/api/v10/invites/" .. InviteCode .. "?with_counts=true&with_expiration=true"
+
+local Response
+local ErrorMessage = nil
+
+xpcall(function()
+    Response = game:GetService("HttpService"):JSONDecode(WindUI.Creator.Request({
+        Url = DiscordAPI,
+        Method = "GET",
+        Headers = {
+            ["Accept"] = "application/json"
+        }
+    }).Body)
+end, function(err)
+    warn("err fetching discord info: " .. tostring(err))
+    ErrorMessage = tostring(err)
+    Response = nil
 end)
-if ok and result then
-Luna = result
+
+if Response and Response.guild then
+    local ParagraphConfig = {
+        Title = Response.guild.name,
+        Desc =
+            ' <font color="#52525b">•</font> Member Count: ' .. tostring(Response.approximate_member_count) ..
+            '\n <font color="#16a34a">•</font> Online Count: ' .. tostring(Response.approximate_presence_count)
+        ,
+        Image = "https://cdn.discordapp.com/icons/" .. Response.guild.id .. "/" .. Response.guild.icon .. ".png?size=256",
+        ImageSize = 42,
+        Buttons = {
+            {
+                Icon = "link",
+                Title = "Copy Discord Invite",
+                Callback = function()
+                    pcall(function()
+                        setclipboard("https://discord.gg/" .. InviteCode)
+                    end)
+                end
+            },
+            {
+                Icon = "refresh-cw",
+                Title = "Update Info",
+                Callback = function()
+                    xpcall(function()
+                        local UpdatedResponse = game:GetService("HttpService"):JSONDecode(WindUI.Creator.Request({
+                            Url = DiscordAPI,
+                            Method = "GET",
+                        }).Body)
+                        
+                        if UpdatedResponse and UpdatedResponse.guild then
+                            DiscordInfo:SetDesc(
+                                ' <font color="#52525b">•</font> Member Count: ' .. tostring(UpdatedResponse.approximate_member_count) ..
+                                '\n <font color="#16a34a">•</font> Online Count: ' .. tostring(UpdatedResponse.approximate_presence_count)
+                            )
+                        end
+                    end, function(err)
+                        warn("err updating discord info: " .. tostring(err))
+                    end)
+                end
+            }
+        }
+    }
+    
+    if Response.guild.banner then
+        ParagraphConfig.Thumbnail = "https://cdn.discordapp.com/banners/" .. Response.guild.id .. "/" .. Response.guild.banner .. ".png?size=256"
+        ParagraphConfig.ThumbnailSize = 80
+    end
+    
+    local DiscordInfo = InfoTab:Paragraph(ParagraphConfig)
 else
-warn("Luna failed to load or execute. UI features will be disabled. Error:", result)
+    InfoTab:Paragraph({
+        Title = "Error when receiving information about the Discord server",
+        Desc = ErrorMessage or "Unknown error occurred",
+        Image = "triangle-alert",
+        ImageSize = 26,
+        Color = "Red",
+    })
 end
-end
 
-if not Luna then
--- If Luna didn't load, stop here (script remains safe)
-warn("Luna UI not available. Running in safe mode (no UI).")
-return
-end
-
--- Create Window
-local Window = Luna:CreateWindow({
-Name = "Gibssss Hub | Safe",
-LoadingTitle = "Gibssss Hub",
-LoadingSubtitle = "by Gibssss",
-ConfigurationSaving = {
-Enabled = true,
-FolderName = "GibssssHub",
-FileName = "ZConfig"
-},
-Discord = {
-Enabled = false,
-Invite = "",
-RememberJoins = false
-},
-KeySystem = false
-})
-
--- Home tab (required by Luna in your earlier script)
-Window:CreateHomeTab({
-SupportedExecutors = {
-"Synapse X", "Krnl", "Fluxus", "Script-Ware",
-"Electron", "Solara", "Wave", "Delta", "Xeno"
-},
-DiscordInvite = nil,
-Icon = 1
-})
-
--- Main tab
-local Tab = Window:CreateTab({
-Name = "Main",
-Icon = "view_in_ar",
-ImageSource = "Material",
-ShowTitle = true
-})
-
--- Bring section (placeholder only)
-Tab:CreateSection("Bring")
 do
-Tab:CreateLabel({
-Text = "Bring features disabled (sanitized).",
-Description = "'Bring Mobs' behavior removed for safety."
-})
-end
+    local ConfigManager = Window.ConfigManager
+    local ConfigName = "default"
 
--- DEFAULT distance stored locally (but NOT used to affect other objects)
-local DEFAULT_DISTANCE = 5
-local LocalSettings = {
-BringDistance = DEFAULT_DISTANCE -- stored locally for UI only
-}
+    task.spawn(function()
+        task.wait(2) 
+        Window.CurrentConfig = ConfigManager:CreateConfig(ConfigName)
+        Window.CurrentConfig:Load()
+    end)
 
--- HipHeight slider: affects only the local player's humanoid (safe)
-Tab:CreateSection("Local Player")
-Tab:CreateSlider({
-Name = "HipHeight",
-Range = {0, 200},
-Increment = 1,
-CurrentValue = 2, -- reasonable default
-Callback = function(value)
--- apply only to local player's humanoid if available
-local success, err = pcall(function()
-if LocalPlayer and LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
-local humanoid = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-humanoid.HipHeight = tonumber(value) or humanoid.HipHeight
-else
--- optionally store the value and apply later when character spawns
-LocalSettings.PendingHipHeight = value
+    if Player then
+        Players.PlayerRemoving:Connect(function(playerWhoLeft)
+            if playerWhoLeft == Player then
+                if Window and Window.Parent then
+                    Window.CurrentConfig = ConfigManager:CreateConfig(ConfigName)
+                    Window.CurrentConfig:Save()
+                end
+            end
+        end)
+    end
 end
-end)
-if not success then
-warn("Failed to set HipHeight:", err)
-end
-end
-})
-
--- Set Distance slider: stores a local value (UI-only)
-Tab:CreateSlider({
-Name = "Set Distance",
-Range = {0, 200},
-Increment = 1,
-CurrentValue = DEFAULT_DISTANCE,
-Callback = function(value)
-LocalSettings.BringDistance = tonumber(value) or DEFAULT_DISTANCE
-print("Local BringDistance updated (UI-only):", LocalSettings.BringDistance)
-end
-})
-
--- Auto section (placeholders only)
-Tab:CreateSection("Auto")
-Tab:CreateToggle({
-Name = "Auto Shoot",
-Description = "Original auto-shoot behaviour removed for safety.",
-CurrentValue = false,
-Callback = function(value)
-print("Auto Shoot toggle changed (placeholder):", value)
--- IMPORTANT: no shooting automation is run in this sanitized version
-end
-})
-
-Tab:CreateToggle({
-Name = "Auto Collect",
-Description = "Original auto-collect behaviour removed for safety.",
-CurrentValue = false,
-Callback = function(value)
-print("Auto Collect toggle changed (placeholder):", value)
--- No collection code here
-end
-})
-
--- Revives section (placeholders only)
-Tab:CreateSection("Revives")
-Tab:CreateToggle({
-Name = "Revive (Team)",
-Description = "Revive automation removed for safety.",
-CurrentValue = false,
-Callback = function(value)
-print("Revive (Team) placeholder:", value)
-end
-})
-
-Tab:CreateToggle({
-Name = "Revive (Yourself)",
-Description = "Revive automation removed for safety.",
-CurrentValue = false,
-Callback = function(value)
-print("Revive (You) placeholder:", value)
-end
-})
-
--- Apply any pending local settings when character spawns
-if LocalPlayer then
-LocalPlayer.CharacterAdded:Connect(function(char)
--- apply pending HipHeight if present
-if LocalSettings.PendingHipHeight then
-local ok, err = pcall(function()
-local humanoid = char:FindFirstChildOfClass("Humanoid")
-if humanoid then
-humanoid.HipHeight = tonumber(LocalSettings.PendingHipHeight) or humanoid.HipHeight
-end
-end)
-if not ok then warn("Failed to apply pending HipHeight:", err) end
-LocalSettings.PendingHipHeight = nil
-end
-end)
-end
-
--- Notification (non-intrusive)
-pcall(function()
-Luna:Notification({
-Title = "Gibssss Loaded (safe)",
-Content = "Sanitized script loaded. Exploit features removed.",
-Icon = "check_circle",
-ImageSource = "Material"
-})
-end)
-
-print("Sanitized Gibssss Hub loaded. Exploit features were removed for safety.")
