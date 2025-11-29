@@ -212,6 +212,7 @@ Tab:Select() -- Select Tab
 local Section = Tab:Section({ 
     Title = "Aimlock",
 })
+Section:SetTitle("New Title Example")
 
 local Toggle = Tab:Toggle({
     Title = "",
