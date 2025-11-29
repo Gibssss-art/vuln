@@ -225,9 +225,35 @@ local Toggle = Tab:Toggle({
     end
 })
 
+local Toggle = Tab:Toggle({
+    Title = "Smooth Aim",
+    Desc = "SmoothAimToggle",
+    Icon = "bird",
+    Type = "Checkbox",
+    Value = false, -- default value
+    Callback = function(Value) 
+       aimlockEnabled = Value
+        createFOVCircle()
+    end
+})
 
-
-
+local Slider = Tab:Slider({
+    Title = "Smoothness",
+    Desc = "SmoothnessSlider",
+    
+    -- To make float number supported, 
+    -- make the Step a float number.
+    -- example: Step = 0.1
+    Step = 1,
+    Value = {
+        Min = 20,
+        Max = 120,
+        Default = 70,
+    },
+    Callback = function(value)
+        smoothness = Value
+    end
+})
 
 
 
