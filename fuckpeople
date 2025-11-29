@@ -1,301 +1,184 @@
--- Gibssss Hub | Luna UI integration
+-- Gibssss Hub | Luna UI (sanitized)
+-- Safe version: does NOT interact with other players or game objects.
+-- Only modifies local player's Humanoid properties (if present).
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
 
 -- Attempt to load Luna safely
 local Luna
+do
 local ok, result = pcall(function()
-    local src = game:HttpGet("https://raw.githubusercontent.com/Nebulla-Softworks/Luna-Interface-Suite/main/source.lua")
-    return loadstring(src)()
+local src = game:HttpGet("https://raw.githubusercontent.com/Nebulla-Softworks/Luna-Interface-Suite/main/source.lua")
+return loadstring(src)()
+end)
+if ok and result then
+Luna = result
+else
+warn("Luna failed to load or execute. UI features will be disabled. Error:", result)
+end
+end
+
+if not Luna then
+-- If Luna didn't load, stop here (script remains safe)
+warn("Luna UI not available. Running in safe mode (no UI).")
+return
+end
+
+-- Create Window
+local Window = Luna:CreateWindow({
+Name = "Gibssss Hub | Safe",
+LoadingTitle = "Gibssss Hub",
+LoadingSubtitle = "by Gibssss",
+ConfigurationSaving = {
+Enabled = true,
+FolderName = "GibssssHub",
+FileName = "ZConfig"
+},
+Discord = {
+Enabled = false,
+Invite = "",
+RememberJoins = false
+},
+KeySystem = false
+})
+
+-- Home tab (required by Luna in your earlier script)
+Window:CreateHomeTab({
+SupportedExecutors = {
+"Synapse X", "Krnl", "Fluxus", "Script-Ware",
+"Electron", "Solara", "Wave", "Delta", "Xeno"
+},
+DiscordInvite = nil,
+Icon = 1
+})
+
+-- Main tab
+local Tab = Window:CreateTab({
+Name = "Main",
+Icon = "view_in_ar",
+ImageSource = "Material",
+ShowTitle = true
+})
+
+-- Bring section (placeholder only)
+Tab:CreateSection("Bring")
+do
+Tab:CreateLabel({
+Text = "Bring features disabled (sanitized).",
+Description = "Original 'Bring Mobs' behavior removed for safety."
+})
+end
+
+-- DEFAULT distance stored locally (but NOT used to affect other objects)
+local DEFAULT_DISTANCE = 5
+local LocalSettings = {
+BringDistance = DEFAULT_DISTANCE -- stored locally for UI only
+}
+
+-- HipHeight slider: affects only the local player's humanoid (safe)
+Tab:CreateSection("Local Player")
+Tab:CreateSlider({
+Name = "HipHeight",
+Range = {0, 200},
+Increment = 1,
+CurrentValue = 2, -- reasonable default
+Callback = function(value)
+-- apply only to local player's humanoid if available
+local success, err = pcall(function()
+if LocalPlayer and LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
+local humanoid = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+humanoid.HipHeight = tonumber(value) or humanoid.HipHeight
+else
+-- optionally store the value and apply later when character spawns
+LocalSettings.PendingHipHeight = value
+end
+end)
+if not success then
+warn("Failed to set HipHeight:", err)
+end
+end
+})
+
+-- Set Distance slider: stores a local value (UI-only)
+Tab:CreateSlider({
+Name = "Set Distance (UI-only)",
+Range = {0, 200},
+Increment = 1,
+CurrentValue = DEFAULT_DISTANCE,
+Callback = function(value)
+LocalSettings.BringDistance = tonumber(value) or DEFAULT_DISTANCE
+print("Local BringDistance updated (UI-only):", LocalSettings.BringDistance)
+end
+})
+
+-- Auto section (placeholders only)
+Tab:CreateSection("Auto (placeholders)")
+Tab:CreateToggle({
+Name = "Auto Shoot (disabled)",
+Description = "Original auto-shoot behaviour removed for safety.",
+CurrentValue = false,
+Callback = function(value)
+print("Auto Shoot toggle changed (placeholder):", value)
+-- IMPORTANT: no shooting automation is run in this sanitized version
+end
+})
+
+Tab:CreateToggle({
+Name = "Auto Collect (disabled)",
+Description = "Original auto-collect behaviour removed for safety.",
+CurrentValue = false,
+Callback = function(value)
+print("Auto Collect toggle changed (placeholder):", value)
+-- No collection code here
+end
+})
+
+-- Revives section (placeholders only)
+Tab:CreateSection("Revives (placeholders)")
+Tab:CreateToggle({
+Name = "Revive (Team) - disabled",
+Description = "Revive automation removed for safety.",
+CurrentValue = false,
+Callback = function(value)
+print("Revive (Team) placeholder:", value)
+end
+})
+
+Tab:CreateToggle({
+Name = "Revive (Yourself) - disabled",
+Description = "Revive automation removed for safety.",
+CurrentValue = false,
+Callback = function(value)
+print("Revive (You) placeholder:", value)
+end
+})
+
+-- Apply any pending local settings when character spawns
+if LocalPlayer then
+LocalPlayer.CharacterAdded:Connect(function(char)
+-- apply pending HipHeight if present
+if LocalSettings.PendingHipHeight then
+local ok, err = pcall(function()
+local humanoid = char:FindFirstChildOfClass("Humanoid")
+if humanoid then
+humanoid.HipHeight = tonumber(LocalSettings.PendingHipHeight) or humanoid.HipHeight
+end
+end)
+if not ok then warn("Failed to apply pending HipHeight:", err) end
+LocalSettings.PendingHipHeight = nil
+end
+end)
+end
+
+-- Notification (non-intrusive)
+pcall(function()
+Luna:Notification({
+Title = "Gibssss Loaded (safe)",
+Content = "Sanitized script loaded. Exploit features removed.",
+Icon = "check_circle",
+ImageSource = "Material"
+})
 end)
 
-if ok and result then
-    Luna = result
-else
-    warn("Luna failed to load or execute. UI features will be disabled. Error:", result)
-end
-
--- If Luna exists, create UI; otherwise skip gracefully
-if Luna then
-    local Window = Luna:CreateWindow({
-        Name = "Gibssss Hub | ",
-        LoadingTitle = "Gibssss Hub",
-        LoadingSubtitle = "by Gibssss",
-        ConfigurationSaving = {
-            Enabled = true,
-            FolderName = "GibssssHub",
-            FileName = "ZConfig"
-        },
-        Discord = {
-            Enabled = false,
-            Invite = "",
-            RememberJoins = false
-        },
-        KeySystem = false
-    })
-
-    -- Create Home Tab (Required for Luna)
-    Window:CreateHomeTab({
-        SupportedExecutors = {
-            "Synapse X", "Krnl", "Fluxus", "Script-Ware", 
-            "Electron", "Solara", "Wave", "Delta", "Xeno"
-        },
-        DiscordInvite = nil,
-        Icon = 1
-    })
-
-    local Tab = Window:CreateTab({
-        Name = "Main",
-        Icon = "view_in_ar",
-        ImageSource = "Material",
-        ShowTitle = true
-    })
-
-  Tab:CreateSection("Bring")
-
-    -- DEFAULT distance (used when bringing mobs)
-    local DEFAULT_DISTANCE = 5
-
-    -- Bring Mobs toggle (non-blocking; spawns a worker coroutine)
-    local BringToggle = Tab:CreateToggle({
-        Name = "Bring Mobs",
-        Description = "click me",
-        CurrentValue = false,
-        Callback = function(value)
-            _G.Bring = value
-            print("Bring:", value)
-
-            if value then
-                -- spawn worker that will run while _G.Bring == true
-                task.spawn(function()
-                    while _G.Bring do
-                        task.wait(0.1)
-                        -- safe access to ServerZombies
-                        local serverZombies = workspace:FindFirstChild("ServerZombies")
-                        if not serverZombies then
-                            task.wait(1)
-                            continue
-                        end
-
-                        for _,desc in ipairs(serverZombies:GetDescendants()) do
-                            -- If descendant is a Humanoid instance
-                            if desc and desc:IsA("Humanoid") and desc.Health > 0 then
-                                local model = desc.Parent
-                                if model and model:IsA("Model") then
-                                    local root = model:FindFirstChild("HumanoidRootPart") or model:FindFirstChild("Torso") or model:FindFirstChild("UpperTorso")
-                                    if root and Players.LocalPlayer and Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                                        local playerHRP = Players.LocalPlayer.Character.HumanoidRootPart
-                                        local distance = DEFAULT_DISTANCE
-                                        -- attempt to use a user-provided Distance if defined and numeric
-                                        if type(_G.BringDistance) == "number" then
-                                            distance = _G.BringDistance
-                                        end
-                                        -- set CFrame safely
-                                        pcall(function()
-                                            root.CFrame = playerHRP.CFrame * CFrame.new(0, 0, -distance)
-                                            root.Anchored = true
-                                        end)
-                                    end
-                                end
-                            end
-                        end
-                    end
-                    -- when toggled off, unanchor any zombies we might have anchored
-                    local serverZombies = workspace:FindFirstChild("ServerZombies")
-                    if serverZombies then
-                        for _,desc in ipairs(serverZombies:GetDescendants()) do
-                            if desc and desc:IsA("Humanoid") and desc.Health > 0 then
-                                local model = desc.Parent
-                                if model and model:IsA("Model") then
-                                    local root = model:FindFirstChild("HumanoidRootPart") or model:FindFirstChild("Torso") or model:FindFirstChild("UpperTorso")
-                                    if root then
-                                        pcall(function() root.Anchored = false end)
-                                    end
-                                end
-                            end
-                        end
-                    end
-                end)
-            else
-                -- toggled off: ensure global flag is false and allow some time for worker to finish
-                _G.Bring = false
-            end
-        end
-    })
-
-local Slider = Tab:CreateSlider({
-	Name = "HipHeight",
-	Range = {0, 200}, -- The Minimum And Maximum Values Respectively
-	Increment = 5, -- Basically The Changing Value/Rounding Off
-	CurrentValue = 100, -- The Starting Value
-    	Callback = function(Value)
-       	 game.Players.LocalPlayer.Character.Humanoid.HipHeight = p26
-	end
-})
-    	end
-}, "Slider") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-
-local Slider = Tab:CreateSlider({
-	Name = "Set Distance",
-	Range = {0, 200}, -- The Minimum And Maximum Values Respectively
-	Increment = 5, -- Basically The Changing Value/Rounding Off
-	CurrentValue = 100, -- The Starting Value
-    	Callback = function(Value)
-       	 Distance = p3
-	end
-})
-    	end
-}, "Slider") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-
- Tab:CreateSection("Auto")
-
-local Toggle = Tab:CreateToggle({
-	Name = "Auto Shoot",
-	Description = nil,
-	CurrentValue = false,
-    	Callback = function(Value)
-       	_G.Shoot = p13
-		print("Shoot: ", p13)
-		if p13 then
-			Shoot()
-		end
-	end
-})
-function Shoot()
-	spawn(function()
-		_G.Shoot = true
-		while _G.Shoot do
-			wait()
-			pcall(function()
-				if workspace.ServerZombies:FindFirstChildOfClass("Model").Humanoid.Health > 1 then
-					game.Players.LocalPlayer.Character:FindFirstChildOfClass("Model"):SetAttribute("IsShooting", true)
-					wait()
-					game.Players.LocalPlayer.Character:FindFirstChildOfClass("Model"):SetAttribute("IsShooting", false)
-					wait()
-				end
-			end)
-		end
-	end)
-end
-    	end
-}, "Toggle") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-
-local Toggle = Tab:CreateToggle({
-	Name = "Auto Collect",
-	Description = nil,
-	CurrentValue = false,
-    	Callback = function(Value)
-       	 _G.Collect = p14
-		print("Collect: ", p14)
-		if p14 then
-			Collect()
-		end
-	end
-})
-function Collect()
-	spawn(function()
-		_G.Collect = true
-		while _G.Collect do
-			wait()
-			pcall(function()
-				local v15, v16, v17 = pairs(workspace:GetChildren())
-				while true do
-					local v18
-					v17, v18 = v15(v16, v17)
-					if v17 == nil then
-						break
-					end
-					if v18:IsA("Part") and v18.Name ~= "Part" then
-						v18.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-					end
-				end
-				wait()
-			end)
-		end
-	end)
-end
-    	end
-}, "Toggle") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-
-   Tab:CreateSection("Revives")
-
-local Toggle = Tab:CreateToggle({
-	Name = "Revive (Team)",
-	Description = nil,
-	CurrentValue = false,
-    	Callback = function(Value)
-       	 _G.Revives = p19
-		print("Revives: ", p19)
-		if p19 then
-			Revives()
-		end
-	end
-})
-function Revives()
-	spawn(function()
-		_G.Revives = true
-		while _G.Revives do
-			task.wait()
-			pcall(function()
-				local v20, v21, v22 = pairs(game:GetService("Players"):GetPlayers())
-				while true do
-					local v23
-					v22, v23 = v20(v21, v22)
-					if v22 == nil then
-						break
-					end
-					if v23.Character and (v23.Character:FindFirstChild("Humanoid") and v23.Character.Humanoid.Health <= 0 and (v23.Character:FindFirstChild("Head") and v23.Character.Head:FindFirstChild("RevivePrompt"))) then
-						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v23.Character.HumanoidRootPart.CFrame
-						fireproximityprompt(v23.Character.Head.RevivePrompt)
-					end
-				end
-			end)
-		end
-	end)
-end
-    	end
-}, "Toggle") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-
-local Toggle = Tab:CreateToggle({
-	Name = "Revives (Yourself)",
-	Description = nil,
-	CurrentValue = false,
-    	Callback = function(Value)
-       	 _G.Revives2 = p24
-		print("Revives2: ", p24)
-		if p24 then
-			Revives2()
-		end
-	end
-})
-function Revives2()
-	spawn(function()
-		_G.Revives2 = true
-		while _G.Revives2 do
-			task.wait()
-			pcall(function()
-				local v25 = game:GetService("Players").LocalPlayer
-				if v25.Character and (v25.Character:FindFirstChild("Humanoid") and v25.Character.Humanoid.Health <= 0 and (v25.Character:FindFirstChild("Head") and v25.Character.Head:FindFirstChild("RevivePrompt"))) then
-					fireproximityprompt(v25.Character.Head.RevivePrompt)
-				end
-			end)
-		end
-	end)
-end
-    	end
-}, "Toggle") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-
-
-    -- Notifications (only if Luna supports Notification)
-    pcall(function()
-        Luna:Notification({
-            Title = "Gibssss Loaded",
-            Content = "Script loaded successfully!",
-            Icon = "check_circle",
-            ImageSource = "Material"
-        })
-    end)
-else
-    -- Luna not available: inform user in consol
-    warn("Luna UI not available. Script core features still loaded.")
-end
-
--- End of fixed script
+print("Sanitized Gibssss Hub loaded. Exploit features were removed for safety.")
