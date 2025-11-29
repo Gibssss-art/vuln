@@ -71,7 +71,7 @@ WindUI:AddTheme({
 })
 
 local Window = WindUI:CreateWindow({
-    Title = "Alien Hub - [FPS] Flick",
+    Title = "[FPS] Flick",
     Icon = "rbxassetid://110242772816568",
     IconSize = 40,
     Author = "By Gibssss",
