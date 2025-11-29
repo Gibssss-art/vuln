@@ -906,7 +906,7 @@ local Button = Tab:Button({
     Desc = "This Tool Is For Troll Only!",
     Locked = false,
     Callback = function()
-        loadstring(game:HttpGet("https://pastefy.app/n7QQ2kVk/raw"))()
+        loadstring(game:HttpGet("https://pastefy.app/D0egGSjI/raw"))()
     end
 })
 
