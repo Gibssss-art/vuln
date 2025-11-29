@@ -137,7 +137,7 @@ local Window = Luna:CreateWindow({
     ConfigurationSaving = {
         Enabled = true,
         FolderName = "GibssssHub",
-        FileName = "FuckPeopleConfig"
+        FileName = "ZConfig"
     },
     Discord = {
         Enabled = false,
@@ -161,21 +161,60 @@ Window:CreateHomeTab({
 
 PlaySound(12221976, 1)
 local Tab = Window:CreateTab({
-	Name = "Sussy",
+	Name = "TEST",
 	Icon = "view_in_ar",
 	ImageSource = "Material",
 	ShowTitle = true -- This will determine whether the big header text in the tab will show
 })
 
-Tab:CreateSection("Fuck")
+Tab:CreateSection("GG")
 
-
-
-
-
-
-
-
+local Toggle = Tab:CreateToggle({
+	Name = "Bring Mobs",
+	Description = click me,
+	CurrentValue = false,
+    	Callback = function(p4)
+       	 _G.Bring = p4
+		print("Bring: ", p4)
+		if p4 then
+			_G.Bring = true
+			while _G.Bring do
+				wait()
+				pcall(function()
+					local v5, v6, v7 = pairs(workspace.ServerZombies:GetDescendants())
+					while true do
+						local v8
+						v7, v8 = v5(v6, v7)
+						if v7 == nil then
+							break
+						end
+						if v8.Name == "Humanoid" and v8.Health > 0 then
+							v8.RootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, -Distance)
+							v8.RootPart.Anchored = true
+						end
+					end
+					wait(0.2)
+				end)
+			end
+		else
+			_G.Bring = false
+			wait(0.2)
+			local v9, v10, v11 = pairs(workspace.ServerZombies:GetDescendants())
+			while true do
+				local v12
+				v11, v12 = v9(v10, v11)
+				if v11 == nil then
+					break
+				end
+				if v12.Name == "Humanoid" and v12.Health > 0 then
+					v12.RootPart.Anchored = false
+				end
+			end
+		end
+	end
+})
+    	end
+}, "Toggle") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
 
 
 
