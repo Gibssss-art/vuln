@@ -1,228 +1,345 @@
--- Utility Sound Function
-local function PlaySound(id, volume)
-    local sound = Instance.new("Sound")
-    sound.SoundId = "rbxassetid://" .. id
-    sound.Volume = volume or 1
-    sound.Parent = workspace
-    sound:Play()
-    sound.Ended:Connect(function() sound:Destroy() end)
+-- FULLY FIXED SCRIPT
+-- Cleaned by ChatGPT: fixes syntax, nil calls, toggle, safety checks
+
+-- Utility Sound Function (SAFE)
+local SoundService = game:GetService("SoundService")
+local function PlaySound(soundId, volume)
+    if not soundId then return end
+    local s = Instance.new("Sound")
+    s.SoundId = "rbxassetid://" .. tostring(soundId)
+    s.Volume = volume or 1
+    s.Parent = SoundService
+    local ok, err = pcall(function() s:Play() end)
+    if not ok then
+        s:Destroy()
+        warn("PlaySound failed:", err)
+        return
+    end
+    s.Ended:Connect(function() 
+        if s and s.Parent then 
+            s:Destroy() 
+        end
+    end)
 end
 
-PlaySound(12221831, 0)
-PlaySound(12221976, 0)
-PlaySound(12221967, 0)
-PlaySound(4822429705, 0)
+-- safe startup sfx (low volume / tests)
+pcall(function()
+    PlaySound(12221831, 0)
+    PlaySound(12221976, 0)
+    PlaySound(12221967, 0)
+    PlaySound(4822429705, 0)
+end)
 
 -------------------------------------------------------
 ------------------ No Collision System ----------------
 -------------------------------------------------------
-
 local Players = game:GetService("Players")
 
-local afon = {active=false,connections={},trackedPlayers={},onlyLocal=false}
+local afon = { active = false, connections = {}, trackedPlayers = {}, onlyLocal = false, speaker = nil }
 
 local function SetCollision(character, state)
+    if not character then return end
     for _,v in ipairs(character:GetDescendants()) do
-        if v:IsA("BasePart") then v.CanCollide = state end
+        if v:IsA("BasePart") then 
+            v.CanCollide = state 
+        end
     end
 end
 
 local function TrackPlayer(player)
+    if not player then return end
     local function OnCharacter(character)
         if afon.active then
-            SetCollision(character, player == afon.speaker or not afon.onlyLocal)
+            local shouldEnable = (player == afon.speaker) or (not afon.onlyLocal)
+            SetCollision(character, shouldEnable)
         end
     end
-    afon.trackedPlayers[player] = player.CharacterAdded:Connect(OnCharacter)
-    if player.Character then OnCharacter(player.Character) end
+
+    -- Disconnect previous connection if any
+    if afon.trackedPlayers[player] then
+        pcall(function() afon.trackedPlayers[player]:Disconnect() end)
+    end
+
+    -- Connect CharacterAdded
+    local conn = player.CharacterAdded:Connect(OnCharacter)
+    afon.trackedPlayers[player] = conn
+
+    -- If character already exists, run once
+    if player.Character then
+        pcall(OnCharacter, player.Character)
+    end
 end
 
 function afon.on(speaker, onlyLocal)
-    afon.off()
+    if not speaker then return end
+    afon.off() -- clear previous state
     afon.active = true
     afon.speaker = speaker
     afon.onlyLocal = onlyLocal or false
+
+    -- Track the speaker
     TrackPlayer(speaker)
 
-    if not onlyLocal then
-        for _,p in ipairs(Players:GetPlayers()) do if p ~= speaker then TrackPlayer(p) end end
-        table.insert(afon.connections, Players.PlayerAdded:Connect(TrackPlayer))
+    -- If not onlyLocal, track all existing players and future joins
+    if not afon.onlyLocal then
+        for _,p in ipairs(Players:GetPlayers()) do
+            if p ~= speaker then
+                TrackPlayer(p)
+            end
+        end
+        local addedConn = Players.PlayerAdded:Connect(function(p) 
+            if p ~= speaker then TrackPlayer(p) end
+        end)
+        table.insert(afon.connections, addedConn)
     end
 end
 
 function afon.off()
     afon.active = false
-    for _,c in pairs(afon.connections) do c:Disconnect() end
+    -- disconnect saved connections
+    for _,c in pairs(afon.connections) do
+        pcall(function() c:Disconnect() end)
+    end
     afon.connections = {}
 
-    for player,k in pairs(afon.trackedPlayers) do
-        k:Disconnect()
-        if player.Character then SetCollision(player.Character,true) end
+    -- disconnect tracked players and reset collisions
+    for player,conn in pairs(afon.trackedPlayers) do
+        pcall(function() conn:Disconnect() end)
+        if player and player.Character then
+            pcall(function() SetCollision(player.Character, true) end)
+        end
     end
     afon.trackedPlayers = {}
+    afon.speaker = nil
 end
 
-afon.on(Players.LocalPlayer, true)
-afon.on(Players.LocalPlayer)
-
--------------------------------------------------------
----------------------- INTRO UI -----------------------
--------------------------------------------------------
-
-local TweenService = game:GetService("TweenService")
-local RunService = game:GetService("RunService")
-
-local function playIntro()
-    local gui = Instance.new("ScreenGui")
-    gui.Parent = Players.LocalPlayer.PlayerGui
-
-    local img = Instance.new("ImageLabel", gui)
-    img.Size = UDim2.new(0.4,0,0.4,0)
-    img.Position = UDim2.new(0.5,0,-0.5,0)
-    img.AnchorPoint = Vector2.new(.5,.5)
-    img.BackgroundTransparency = 1
-    img.Image = "rbxassetid://99799525132491"
-    img.ImageTransparency = 1
-
-    TweenService:Create(img, TweenInfo.new(0.8), {Position = UDim2.new(.5,0,.5,0)}):Play()
-    TweenService:Create(img, TweenInfo.new(0.8), {ImageTransparency=0}):Play()
-
-    wait(1.2)
-    PlaySound(12221831, 1)
-    wait(.5)
-
-    TweenService:Create(img, TweenInfo.new(0.3), {ImageTransparency=1}):Play()
-    wait(.3)
-    gui:Destroy()
-end
-
-playIntro()
-
--------------------------------------------------------
----------------- VOID PROTECTION (WORKING) -----------
--------------------------------------------------------
-
-local plr = Players.LocalPlayer
-local hrp = plr.Character:WaitForChild("HumanoidRootPart")
-local voidY = -100
-local protection = true
-
-task.spawn(function()
-    while protection do
-        if hrp and hrp.Position.Y < voidY then
-            hrp.AssemblyLinearVelocity = Vector3.new(0,200,0)
-        end
-        task.wait(.2)
+-- Enable for local player only first, then globally for local player's preference
+pcall(function()
+    local localPlayer = Players.LocalPlayer
+    if localPlayer then
+        afon.on(localPlayer, true) -- only local (speaker)
+        -- calling again with onlyLocal=false would re-enable for all players; do that only if desired:
+        -- afon.on(localPlayer, false)
     end
 end)
 
 -------------------------------------------------------
+---------------------- INTRO UI -----------------------
+-------------------------------------------------------
+local TweenService = game:GetService("TweenService")
+local RunService = game:GetService("RunService")
+
+local function playIntro()
+    local player = Players.LocalPlayer
+    if not player then return end
+    local gui = Instance.new("ScreenGui")
+    gui.Name = "GibssssIntroGui"
+    gui.ResetOnSpawn = false
+    gui.Parent = player:WaitForChild("PlayerGui")
+
+    local img = Instance.new("ImageLabel")
+    img.Size = UDim2.new(0.4, 0, 0.4, 0)
+    img.Position = UDim2.new(0.5, 0, -0.5, 0)
+    img.AnchorPoint = Vector2.new(0.5, 0.5)
+    img.BackgroundTransparency = 1
+    img.Image = "rbxassetid://99799525132491" -- keep or change
+    img.ImageTransparency = 1
+    img.Parent = gui
+
+    TweenService:Create(img, TweenInfo.new(0.8), {Position = UDim2.new(0.5,0,0.5,0)}):Play()
+    TweenService:Create(img, TweenInfo.new(0.8), {ImageTransparency = 0}):Play()
+
+    task.wait(1.2)
+    PlaySound(12221831, 1)
+    task.wait(0.5)
+
+    TweenService:Create(img, TweenInfo.new(0.3), {ImageTransparency = 1}):Play()
+    task.wait(0.3)
+    if gui and gui.Parent then
+        gui:Destroy()
+    end
+end
+
+-- run intro safely (pcall to avoid halting script)
+pcall(playIntro)
+
+-------------------------------------------------------
+---------------- VOID PROTECTION (WORKING) -----------
+-------------------------------------------------------
+local plr = Players.LocalPlayer
+if plr then
+    -- handle character and respawn safely
+    local function setupVoidProtection(character)
+        if not character then return end
+        local hrp = character:FindFirstChild("HumanoidRootPart") or character:WaitForChild("HumanoidRootPart", 5)
+        if not hrp then return end
+        local voidY = -100
+        local protection = true
+        task.spawn(function()
+            while protection and hrp and hrp.Parent do
+                if hrp.Position.Y < voidY then
+                    hrp.AssemblyLinearVelocity = Vector3.new(0, 200, 0)
+                end
+                task.wait(0.2)
+            end
+        end)
+    end
+
+    -- apply for current and future characters
+    if plr.Character then
+        pcall(setupVoidProtection, plr.Character)
+    end
+    plr.CharacterAdded:Connect(function(char)
+        pcall(setupVoidProtection, char)
+    end)
+end
+
+-------------------------------------------------------
 -------------------- FINAL LOADING --------------------
 -------------------------------------------------------
-
 PlaySound(4822429705, 1)
-
 print("✅ Script Loaded Successfully")
 
--- Gibssss Hub | Unknown
--- Clean FPS script with Luna UI
-
+-- Gibssss Hub | Luna UI integration
 PlaySound(12221976, 1)
-local Luna = loadstring(game:HttpGet("https://raw.githubusercontent.com/Nebulla-Softworks/Luna-Interface-Suite/main/source.lua"))()
 
-local Window = Luna:CreateWindow({
-    Name = "Gibssss Hub | ",
-    LoadingTitle = "Gibssss Hub",
-    LoadingSubtitle = "by Gibssss",
-    ConfigurationSaving = {
-        Enabled = true,
-        FolderName = "GibssssHub",
-        FileName = "ZConfig"
-    },
-    Discord = {
-        Enabled = false,
-        Invite = "",
-        RememberJoins = false
-    },
-    KeySystem = false
-})
+-- Attempt to load Luna safely
+local Luna
+local ok, result = pcall(function()
+    local src = game:HttpGet("https://raw.githubusercontent.com/Nebulla-Softworks/Luna-Interface-Suite/main/source.lua")
+    return loadstring(src)()
+end)
 
+if ok and result then
+    Luna = result
+else
+    warn("Luna failed to load or execute. UI features will be disabled. Error:", result)
+end
 
--- Create Home Tab (Required for Luna)
-PlaySound(12221976, 1)
-Window:CreateHomeTab({
-    SupportedExecutors = {
-        "Synapse X", "Krnl", "Fluxus", "Script-Ware", 
-        "Electron", "Solara", "Wave", "Delta", "Xeno"
-    },
-    DiscordInvite = nil,
-    Icon = 1
-})
+-- If Luna exists, create UI; otherwise skip gracefully
+if Luna then
+    local Window = Luna:CreateWindow({
+        Name = "Gibssss Hub | ",
+        LoadingTitle = "Gibssss Hub",
+        LoadingSubtitle = "by Gibssss",
+        ConfigurationSaving = {
+            Enabled = true,
+            FolderName = "GibssssHub",
+            FileName = "ZConfig"
+        },
+        Discord = {
+            Enabled = false,
+            Invite = "",
+            RememberJoins = false
+        },
+        KeySystem = false
+    })
 
-PlaySound(12221976, 1)
-local Tab = Window:CreateTab({
-	Name = "TEST",
-	Icon = "view_in_ar",
-	ImageSource = "Material",
-	ShowTitle = true -- This will determine whether the big header text in the tab will show
-})
+    -- Create Home Tab (Required for Luna)
+    PlaySound(12221976, 1)
+    Window:CreateHomeTab({
+        SupportedExecutors = {
+            "Synapse X", "Krnl", "Fluxus", "Script-Ware", 
+            "Electron", "Solara", "Wave", "Delta", "Xeno"
+        },
+        DiscordInvite = nil,
+        Icon = 1
+    })
 
-Tab:CreateSection("GG")
+    PlaySound(12221976, 1)
+    local Tab = Window:CreateTab({
+        Name = "TEST",
+        Icon = "view_in_ar",
+        ImageSource = "Material",
+        ShowTitle = true
+    })
 
-local Toggle = Tab:CreateToggle({
-	Name = "Bring Mobs",
-	Description = click me,
-	CurrentValue = false,
-    	Callback = function(p4)
-       	 _G.Bring = p4
-		print("Bring: ", p4)
-		if p4 then
-			_G.Bring = true
-			while _G.Bring do
-				wait()
-				pcall(function()
-					local v5, v6, v7 = pairs(workspace.ServerZombies:GetDescendants())
-					while true do
-						local v8
-						v7, v8 = v5(v6, v7)
-						if v7 == nil then
-							break
-						end
-						if v8.Name == "Humanoid" and v8.Health > 0 then
-							v8.RootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, -Distance)
-							v8.RootPart.Anchored = true
-						end
-					end
-					wait(0.2)
-				end)
-			end
-		else
-			_G.Bring = false
-			wait(0.2)
-			local v9, v10, v11 = pairs(workspace.ServerZombies:GetDescendants())
-			while true do
-				local v12
-				v11, v12 = v9(v10, v11)
-				if v11 == nil then
-					break
-				end
-				if v12.Name == "Humanoid" and v12.Health > 0 then
-					v12.RootPart.Anchored = false
-				end
-			end
-		end
-	end
-})
-    	end
-}, "Toggle") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Tab:CreateSection("GG")
 
+    -- DEFAULT distance (used when bringing mobs)
+    local DEFAULT_DISTANCE = 5
 
+    -- Bring Mobs toggle (non-blocking; spawns a worker coroutine)
+    local BringToggle = Tab:CreateToggle({
+        Name = "Bring Mobs",
+        Description = "click me",
+        CurrentValue = false,
+        Callback = function(value)
+            _G.Bring = value
+            print("Bring:", value)
 
--- Notifications
-PlaySound(12221976, 1)
-Luna:Notification({
-    Title = "Gibssss Loaded",
-    Content = "Script loaded successfully!",
-    Icon = "check_circle",
-    ImageSource = "Material"
-})
+            if value then
+                -- spawn worker that will run while _G.Bring == true
+                task.spawn(function()
+                    while _G.Bring do
+                        task.wait(0.1)
+                        -- safe access to ServerZombies
+                        local serverZombies = workspace:FindFirstChild("ServerZombies")
+                        if not serverZombies then
+                            task.wait(1)
+                            continue
+                        end
+
+                        for _,desc in ipairs(serverZombies:GetDescendants()) do
+                            -- If descendant is a Humanoid instance
+                            if desc and desc:IsA("Humanoid") and desc.Health > 0 then
+                                local model = desc.Parent
+                                if model and model:IsA("Model") then
+                                    local root = model:FindFirstChild("HumanoidRootPart") or model:FindFirstChild("Torso") or model:FindFirstChild("UpperTorso")
+                                    if root and Players.LocalPlayer and Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                                        local playerHRP = Players.LocalPlayer.Character.HumanoidRootPart
+                                        local distance = DEFAULT_DISTANCE
+                                        -- attempt to use a user-provided Distance if defined and numeric
+                                        if type(_G.BringDistance) == "number" then
+                                            distance = _G.BringDistance
+                                        end
+                                        -- set CFrame safely
+                                        pcall(function()
+                                            root.CFrame = playerHRP.CFrame * CFrame.new(0, 0, -distance)
+                                            root.Anchored = true
+                                        end)
+                                    end
+                                end
+                            end
+                        end
+                    end
+                    -- when toggled off, unanchor any zombies we might have anchored
+                    local serverZombies = workspace:FindFirstChild("ServerZombies")
+                    if serverZombies then
+                        for _,desc in ipairs(serverZombies:GetDescendants()) do
+                            if desc and desc:IsA("Humanoid") and desc.Health > 0 then
+                                local model = desc.Parent
+                                if model and model:IsA("Model") then
+                                    local root = model:FindFirstChild("HumanoidRootPart") or model:FindFirstChild("Torso") or model:FindFirstChild("UpperTorso")
+                                    if root then
+                                        pcall(function() root.Anchored = false end)
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end)
+            else
+                -- toggled off: ensure global flag is false and allow some time for worker to finish
+                _G.Bring = false
+            end
+        end
+    })
+
+    -- Notifications (only if Luna supports Notification)
+    pcall(function()
+        PlaySound(12221976, 1)
+        Luna:Notification({
+            Title = "Gibssss Loaded",
+            Content = "Script loaded successfully!",
+            Icon = "check_circle",
+            ImageSource = "Material"
+        })
+    end)
+else
+    -- Luna not available: inform user in console
+    PlaySound(12221976, 1)
+    warn("Luna UI not available. Script core features still loaded.")
+end
+
+-- End of fixed script
