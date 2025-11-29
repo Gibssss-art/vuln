@@ -347,7 +347,96 @@ local Toggle = Tab:Toggle({
     end
 })
 
+local Tab = Window:Tab({
+    Title = "Nigger2",
+    Icon = "bird", -- optional
+    Locked = false,
+})
+Tab:Select() -- Select Tab
+local Section = Tab:Section({ 
+    Title = "ESP",
+})
 
+local Toggle = Tab:Toggle({
+    Title = "Enable ESP",
+    Desc = "ESPToggle",
+    Icon = "bird",
+    Type = "Checkbox",
+    Value = false, -- default value
+    Callback = function(Value) 
+        espEnabled = Value
+        
+        if Value then
+            for _, player in pairs(Players:GetPlayers()) do
+                if player ~= LocalPlayer then
+                    createESP(player)
+                end
+            end
+            
+            RunService:BindToRenderStep("UpdateESP", Enum.RenderPriority.Camera.Value + 1, updateESP)
+        else
+            RunService:UnbindFromRenderStep("UpdateESP")
+            
+            for player, _ in pairs(ESPObjects) do
+                removeESP(player)
+            end
+        end
+    end
+})
+
+local Colorpicker = Tab:Colorpicker({
+    Title = "ESP Color",
+    Desc = "ESPColor",
+    Default = Color3.fromRGB(255, 0, 0),
+    Transparency = 0,
+    Locked = false,
+    Callback = function(Value) 
+        for _, ESP in pairs(ESPObjects) do
+            ESP.Box.Color = Value
+            ESP.Tracer.Color = Value
+        end
+    end
+})
+
+local Section = Tab:Section({ 
+    Title = "X-Ray",
+})
+
+local Toggle = Tab:Toggle({
+    Title = "Enable X-Ray",
+    Desc = "XRayToggle",
+    Icon = "bird",
+    Type = "Checkbox",
+    Value = false, -- default value
+    Callback = function(Value) 
+        xrayEnabled = Value
+        toggleXRay(Value)
+    end
+})
+
+local Slider = Tab:Slider({
+    Title = "X-Ray Transparency",
+    Desc = "XRayTransparency",
+    
+    -- To make float number supported, 
+    -- make the Step a float number.
+    -- example: Step = 0.1
+    Step = 1,
+    Value = {
+        Min = 20,
+        Max = 120,
+        Default = 70,
+    },
+    Callback = function(Value)
+        if xrayEnabled then
+            for obj, _ in pairs(originalTransparencies) do
+                if obj and obj.Parent then
+                    obj.Transparency = Value
+                end
+            end
+        end
+    end
+})
 
 
 
