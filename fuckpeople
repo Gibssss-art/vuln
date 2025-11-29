@@ -209,6 +209,9 @@ local Tab = Window:Tab({
     Locked = false,
 })
 Tab:Select() -- Select Tab
+local Section = Tab:Section({ 
+    Title = "Aimlock",
+})
 
 local Toggle = Tab:Toggle({
     Title = "",
