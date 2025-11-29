@@ -127,6 +127,7 @@ print("✅ Script Loaded Successfully")
 -- Gibssss Hub | Unknown
 -- Clean FPS script with Luna UI
 
+PlaySound(12221976, 1)
 local Luna = loadstring(game:HttpGet("https://raw.githubusercontent.com/Nebulla-Softworks/Luna-Interface-Suite/main/source.lua"))()
 
 local Window = Luna:CreateWindow({
@@ -148,6 +149,7 @@ local Window = Luna:CreateWindow({
 
 
 -- Create Home Tab (Required for Luna)
+PlaySound(12221976, 1)
 Window:CreateHomeTab({
     SupportedExecutors = {
         "Synapse X", "Krnl", "Fluxus", "Script-Ware", 
@@ -157,7 +159,28 @@ Window:CreateHomeTab({
     Icon = 1
 })
 
+PlaySound(12221976, 1)
+local Tab = Window:CreateTab({
+	Name = "Sussy",
+	Icon = "view_in_ar",
+	ImageSource = "Material",
+	ShowTitle = true -- This will determine whether the big header text in the tab will show
+})
+
+Tab:CreateSection("Fuck")
+
+
+
+
+
+
+
+
+
+
+
 -- Notifications
+PlaySound(12221976, 1)
 Luna:Notification({
     Title = "Gibssss Loaded",
     Content = "Script loaded successfully!",
