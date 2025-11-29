@@ -267,15 +267,18 @@ local Toggle = Tab:Toggle({
 })
 
 local Dropdown = Tab:Dropdown({
-    Title = "Dropdown (Multi)",
-    Desc = "Dropdown Description",
-    Values = { "Category A", "Category B", "Category C" },
-    Value = { "Category A" },
+    Title = "Target Body Part",
+    Desc = "AimPartDropdown",
+    Values = { "Head", "UpperTorso", "LowerTorso", "HumanoidRootPart" },
+    Value = { "Head" },
     Multi = true,
     AllowNone = true,
-    Callback = function(option) 
-        -- option is a table: { "Category A", "Category B" }
-        print("Categories selected: " .. game:GetService("HttpService"):JSONEncode(option)) 
+    Callback = function(Option) 
+  if type(Option) == "table" then
+            aimPart = Option[1]
+        else
+            aimPart = Option
+        end
     end
 })
 
