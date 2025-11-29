@@ -645,7 +645,7 @@ local function toggleInfiniteJump(enabled)
 end
 
 local Tab = Window:Tab({
-    Title = "Nigger",
+    Title = "Aimbot",
     Icon = "bird", -- optional
     Locked = false,
 })
@@ -789,7 +789,7 @@ local Toggle = Tab:Toggle({
 })
 
 local Tab = Window:Tab({
-    Title = "Nigger2",
+    Title = "Visuals",
     Icon = "bird", -- optional
     Locked = false,
 })
@@ -880,7 +880,7 @@ local Slider = Tab:Slider({
 })
 
 local Tab = Window:Tab({
-    Title = "Nigger3",
+    Title = "Misc",
     Icon = "bird", -- optional
     Locked = false,
 })
