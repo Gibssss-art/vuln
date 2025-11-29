@@ -1,0 +1,927 @@
+function PlaySound(id, volume)
+    local sound = Instance.new("Sound")
+    sound.SoundId = "rbxassetid://" .. tostring(id)
+    sound.Volume = volume or 1
+    sound.Parent = workspace
+    sound:Play()
+
+    -- Optionally destroy the sound after it finishes
+    sound.Ended:Connect(function()
+        sound:Destroy()
+    end)
+
+    return sound
+end
+
+PlaySound(12221831, 0)
+PlaySound(12221976, 0)
+PlaySound(12221967, 0)
+PlaySound(4822429705, 0)
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local afon = {
+    active = false,
+    connections = {},
+    trackedPlayers = {}
+}
+
+-- Function to handle a single character
+local function handleCharacter(character, enableNoCollide)
+    if not character or not character:IsDescendantOf(workspace) then return end
+    
+    for _, part in ipairs(character:GetDescendants()) do
+        if part:IsA("BasePart") then
+            if enableNoCollide then
+                part.CanCollide = false
+            else
+                part.CanCollide = true
+            end
+        end
+    end
+end
+
+-- Track when players' characters are added
+local function trackPlayer(player)
+    local function onCharacterAdded(character)
+        if not afon.active then return end
+        handleCharacter(character, player == afon.speaker or not afon.onlyLocal)
+    end
+    
+    afon.trackedPlayers[player] = player.CharacterAdded:Connect(onCharacterAdded)
+    if player.Character then
+        onCharacterAdded(player.Character)
+    end
+end
+
+-- Cleanup tracked players
+local function cleanupTrackedPlayers()
+    for player, conn in pairs(afon.trackedPlayers) do
+        conn:Disconnect()
+        -- Restore collisions when turning off
+        if player.Character then
+            handleCharacter(player.Character, false)
+        end
+    end
+    afon.trackedPlayers = {}
+end
+
+function afon.on(speaker, onlyLocal)
+    afon.off() -- Turn off any existing instance
+    
+    afon.active = true
+    afon.speaker = speaker
+    afon.onlyLocal = onlyLocal or false
+    
+    -- Handle local player
+    if speaker.Character then
+        handleCharacter(speaker.Character, true)
+    end
+    
+    -- Track local player's character changes
+    trackPlayer(speaker)
+    
+    if not onlyLocal then
+        -- Track all other players
+        for _, player in ipairs(Players:GetPlayers()) do
+            if player ~= speaker then
+                trackPlayer(player)
+            end
+        end
+        
+        -- Track new players joining
+        table.insert(afon.connections, Players.PlayerAdded:Connect(function(player)
+            trackPlayer(player)
+        end))
+    end
+    
+    -- Track local player leaving to cleanup
+    table.insert(afon.connections, speaker.CharacterAdded:Connect(function(character)
+        handleCharacter(character, true)
+    end))
+end
+
+function afon.off()
+    if not afon.active then return end
+    
+    afon.active = false
+    
+    -- Disconnect all event connections
+    for _, conn in ipairs(afon.connections) do
+        conn:Disconnect()
+    end
+    afon.connections = {}
+    
+    -- Cleanup tracked players
+    cleanupTrackedPlayers()
+    
+    -- Restore local player collisions
+    if afon.speaker and afon.speaker.Character then
+        handleCharacter(afon.speaker.Character, false)
+    end
+end
+
+afon.on(game.Players.LocalPlayer, true)
+afon.on(game.Players.LocalPlayer)
+
+
+-- NumeroIntro Script (Transparent Container, Squircle Image)
+-- Creates a UI intro with image ID 99799525132491 that has squircle corners
+
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local RunService = game:GetService("RunService")
+
+-- Configuration
+local IMAGE_ID = "rbxassetid://99799525132491"
+local INTRO_DURATION = 3 -- seconds
+local BLUR_INTENSITY = 10
+local SHAKE_INTENSITY = 10
+local CORNER_RADIUS = UDim.new(0.1, 0) -- Squircle corner radius
+
+-- Create the main screen GUI
+local function createIntroGui()
+    local player = Players.LocalPlayer
+    local gui = Instance.new("ScreenGui")
+    gui.Name = "NumeroIntro"
+    gui.DisplayOrder = 1000 -- High enough to cover other UIs
+    gui.IgnoreGuiInset = true -- Cover the whole screen
+    gui.ResetOnSpawn = false
+    
+    -- Background (black with slight transparency)
+    local background = Instance.new("Frame")
+    background.Name = "Background"
+    background.Size = UDim2.new(1, 0, 1, 0)
+    background.Position = UDim2.new(0, 0, 0, 0)
+    background.BackgroundColor3 = Color3.new(0, 0, 0)
+    background.BackgroundTransparency = 0.1
+    background.ZIndex = 1
+    background.Parent = gui
+    
+    -- Blur effect (applied to the whole screen)
+    local blur = Instance.new("BlurEffect")
+    blur.Name = "IntroBlur"
+    blur.Size = 0
+    blur.Parent = game:GetService("Lighting")
+    
+    -- Main image container (fully transparent)
+    local container = Instance.new("Frame")
+    container.Name = "ImageContainer"
+    container.AnchorPoint = Vector2.new(0.5, 0.5)
+    container.Size = UDim2.new(0.4, 0, 0.4, 0)
+    container.Position = UDim2.new(0.5, 0, -0.5, 0) -- Start above screen
+    container.BackgroundTransparency = 1 -- Fully transparent container
+    container.ZIndex = 2
+    container.Parent = gui
+    
+    -- The actual image with squircle corners
+    local image = Instance.new("ImageLabel")
+    image.Name = "NumeroImage"
+    image.Size = UDim2.new(1, 0, 1, 0)
+    image.Position = UDim2.new(0, 0, 0, 0)
+    image.BackgroundTransparency = 1
+    image.Image = IMAGE_ID
+    image.ScaleType = Enum.ScaleType.Fit
+    image.ZIndex = 3
+    image.Parent = container
+    
+    -- UICorner for squircle effect (applied to the image)
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = CORNER_RADIUS
+    corner.Parent = image
+    
+    return gui, blur
+end
+
+-- Shake function
+local function shakeObject(object, intensity, duration)
+    local startTime = os.clock()
+    local originalPosition = object.Position
+    
+    while os.clock() - startTime < duration do
+        local elapsed = os.clock() - startTime
+        local progress = elapsed / duration
+        local shakeFactor = (1 - progress) * intensity -- Shake reduces over time
+        
+        local offsetX = (math.random() * 2 - 1) * shakeFactor
+        local offsetY = (math.random() * 2 - 1) * shakeFactor
+        
+        object.Position = originalPosition + UDim2.new(0, offsetX, 0, offsetY)
+        RunService.RenderStepped:Wait()
+    end
+    
+    object.Position = originalPosition
+end
+
+-- Main animation function
+local function playIntro()
+    local gui, blur = createIntroGui()
+    gui.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
+    
+    local container = gui:WaitForChild("ImageContainer")
+    local image = container:WaitForChild("NumeroImage")
+    local background = gui:WaitForChild("Background")
+    
+    -- Initial setup
+    image.ImageTransparency = 1 -- Start fully transparent
+    
+    -- Fade in background
+    TweenService:Create(background, TweenInfo.new(0.5), {BackgroundTransparency = 0.1}):Play()
+    
+    -- Slide down animation
+    local slideDown = TweenService:Create(
+        container,
+        TweenInfo.new(0.8, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+        {Position = UDim2.new(0.5, 0, 0.5, 0)}
+    )
+    
+    -- Fade in image
+    local fadeIn = TweenService:Create(
+        image,
+        TweenInfo.new(0.8),
+        {ImageTransparency = 0}
+    )
+    
+    -- Blur animation
+    local blurIn = TweenService:Create(
+        blur,
+        TweenInfo.new(0.8),
+        {Size = BLUR_INTENSITY}
+    )
+    
+    -- Play initial animations
+    slideDown:Play()
+    fadeIn:Play()
+    blurIn:Play()
+    
+    wait(1.5) -- Hold for a moment
+    
+    -- Shake effect
+    spawn(function()
+        shakeObject(container, SHAKE_INTENSITY, 0.5)
+    end)
+    PlaySound(12221831, 1)
+    
+    wait(0.5) -- Shake duration
+    
+    -- Fade out everything
+    local fadeOut = TweenService:Create(
+        image,
+        TweenInfo.new(0.3),
+        {ImageTransparency = 1}
+    )
+    
+    local bgFadeOut = TweenService:Create(
+        background,
+        TweenInfo.new(0.3),
+        {BackgroundTransparency = 1}
+    )
+    
+    local blurOut = TweenService:Create(
+        blur,
+        TweenInfo.new(0.3),
+        {Size = 0}
+    )
+    
+    fadeOut:Play()
+    bgFadeOut:Play()
+    blurOut:Play()
+    
+    wait(0.3) -- Wait for fade out to complete
+    
+    -- Clean up
+    gui:Destroy()
+    blur:Destroy()
+end
+
+-- Play the intro when the player joins
+Players.LocalPlayer:WaitForChild("PlayerGui")
+playIntro()
+
+-- StoredFuncs/Variables
+
+-- VoidProtection Variable
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+local voidYLevel = -100 -- Adjust based on your game's void height
+local protectionEnabled = false
+local bounceForce = 10000   -- Initial upward force
+local maxBounceForce = 999e999
+local platformCheckRaycast = 5 -- Raycast distance to check for platforms below
+local inVoid = false -- Track if player is in void
+
+local function checkPlatformBelow()
+    if not humanoidRootPart then return false end
+    
+    local rayOrigin = humanoidRootPart.Position
+    local rayDirection = Vector3.new(0, -platformCheckRaycast, 0)
+    local raycastParams = RaycastParams.new()
+    raycastParams.FilterDescendantsInstances = {character}
+    raycastParams.FilterType = Enum.RaycastFilterType.Blacklist
+    
+    local raycastResult = workspace:Raycast(rayOrigin, rayDirection, raycastParams)
+    return raycastResult and raycastResult.Instance
+end
+
+local function applyBounce()
+    if not humanoidRootPart or not protectionEnabled then return end
+    
+    -- Apply upward velocity (like a bounce)
+    humanoidRootPart.AssemblyLinearVelocity = Vector3.new(0, bounceForce, 0)
+    
+    -- Increase bounce force for next time (capped at maxBounceForce)
+    bounceForce = math.min(bounceForce + 100, maxBounceForce)
+    
+    print("Bouncing with force:", bounceForce) -- Debug output
+end
+
+local function checkVoidPosition()
+    while protectionEnabled and humanoidRootPart do
+        local isInVoidNow = humanoidRootPart.Position.Y < voidYLevel
+        
+        -- Check for platform below regardless of void state
+        local onPlatform = checkPlatformBelow()
+        
+        if onPlatform then
+            -- Player landed on something, reset bounce force
+            bounceForce = 100
+            inVoid = false
+        elseif isInVoidNow then
+            -- Player is in void, apply bounce
+            if not inVoid then
+                -- First time entering void
+                bounceForce = 100
+                inVoid = true
+            else
+                -- Continuous bouncing in void
+                applyBounce()
+            end
+        else
+            inVoid = false
+        end
+        
+        task.wait(0.1) -- More efficient than wait()
+    end
+end
+
+function VoidProtectionOn()
+    if not protectionEnabled then
+        protectionEnabled = true
+        inVoid = false
+        bounceForce = 100 -- Reset force when turning on
+        checkVoidPosition()
+        print("Void Protection (Bounce Mode): ON")
+    end
+end
+
+function VoidProtectionOff()
+    protectionEnabled = false
+    print("Void Protection: OFF")
+end
+
+-- rj func
+function Rj()
+    local TeleportService = game:GetService("TeleportService")
+    local Players = game:GetService("Players")
+    local LocalPlayer = Players.LocalPlayer
+
+    -- Rejoin the same place and server
+    TeleportService:Teleport(game.PlaceId, LocalPlayer)
+end
+
+function CreateTptool()
+local players = game:GetService("Players")
+local localPlayer = players.LocalPlayer
+local backpack = localPlayer.Backpack
+local mouse = localPlayer:GetMouse()
+
+local function isAlive(Player, headCheck)
+    local Player = Player or localPlayer
+    if Player and Player.Character and ((Player.Character:FindFirstChildOfClass("Humanoid")) and (Player.Character:FindFirstChild("HumanoidRootPart")) and (headCheck and Player.Character:FindFirstChild("Head") or not headCheck)) then
+        return true
+    else
+        return false
+    end
+end
+
+local tool = Instance.new("Tool")
+tool.Name = "TPTool"
+tool.Parent = backpack
+tool.RequiresHandle = false
+tool.Activated:Connect(function()
+	if isAlive() then
+		localPlayer.Character.HumanoidRootPart.CFrame = mouse.Hit + Vector3.new(0, 3, 0)
+	end
+end)
+
+end
+
+-- Godmode variable
+-- Services
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+
+-- Config
+local MAX_HEALTH = math.huge * 2
+local HOTKEY = Enum.KeyCode.Z
+local PROTECT_FROM_FALL = true
+local PROTECT_FROM_INSTA_KILL = true
+
+-- State
+local godModeEnabled = false
+local connections = {}
+local originalWalkSpeed = 16
+
+-- Function: Setup protection
+local function setupCharacterProtection(character)
+	if not character then return end
+	local humanoid = character:WaitForChild("Humanoid", 5)
+	if not humanoid then return end
+
+	originalWalkSpeed = humanoid.WalkSpeed
+	humanoid.MaxHealth = MAX_HEALTH
+	humanoid.Health = MAX_HEALTH
+
+	table.insert(connections, humanoid:GetPropertyChangedSignal("Health"):Connect(function()
+		if godModeEnabled and humanoid.Health < MAX_HEALTH then
+			humanoid.Health = MAX_HEALTH
+		end
+	end))
+
+	table.insert(connections, humanoid.Died:Connect(function()
+		if godModeEnabled then
+			task.wait(1)
+			character:BreakJoints()
+			task.wait(1)
+			local newChar = Players.LocalPlayer:LoadCharacter()
+			setupCharacterProtection(newChar)
+		end
+	end))
+
+	if PROTECT_FROM_FALL then
+		table.insert(connections, humanoid.StateChanged:Connect(function(_, newState)
+			if godModeEnabled and newState == Enum.HumanoidStateType.FallingDown then
+				humanoid:ChangeState(Enum.HumanoidStateType.Running)
+			end
+		end))
+	end
+end
+
+-- Function: Remove all protection
+local function clearProtection()
+	for _, conn in pairs(connections) do
+		conn:Disconnect()
+	end
+	connections = {}
+
+	local char = Players.LocalPlayer.Character
+	if char then
+		local humanoid = char:FindFirstChildOfClass("Humanoid")
+		if humanoid then
+			humanoid.MaxHealth = 100
+			humanoid.Health = math.min(humanoid.Health, 100)
+			humanoid.WalkSpeed = originalWalkSpeed
+		end
+	end
+end
+
+-- Public API: Toggle Functions
+function GodModeOn()
+	godModeEnabled = true
+	setupCharacterProtection(Players.LocalPlayer.Character)
+	updateButton()
+end
+
+function GodModeOff()
+	godModeEnabled = false
+	clearProtection()
+	updateButton()
+end
+
+-- Services
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+
+-- Config
+local MAX_HEALTH = math.huge * 2
+local HOTKEY = Enum.KeyCode.Z
+local PROTECT_FROM_FALL = true
+local PROTECT_FROM_INSTA_KILL = true
+
+-- State
+local godModeEnabled = false
+local connections = {}
+local originalWalkSpeed = 16
+
+-- Function: Setup protection
+local function setupCharacterProtection(character)
+	if not character then return end
+	local humanoid = character:WaitForChild("Humanoid", 5)
+	if not humanoid then return end
+
+	originalWalkSpeed = humanoid.WalkSpeed
+	humanoid.MaxHealth = MAX_HEALTH
+	humanoid.Health = MAX_HEALTH
+
+	table.insert(connections, humanoid:GetPropertyChangedSignal("Health"):Connect(function()
+		if godModeEnabled and humanoid.Health < MAX_HEALTH then
+			humanoid.Health = MAX_HEALTH
+		end
+	end))
+
+	table.insert(connections, humanoid.Died:Connect(function()
+		if godModeEnabled then
+			task.wait(1)
+			character:BreakJoints()
+			task.wait(1)
+			local newChar = Players.LocalPlayer:LoadCharacter()
+			setupCharacterProtection(newChar)
+		end
+	end))
+
+	if PROTECT_FROM_FALL then
+		table.insert(connections, humanoid.StateChanged:Connect(function(_, newState)
+			if godModeEnabled and newState == Enum.HumanoidStateType.FallingDown then
+				humanoid:ChangeState(Enum.HumanoidStateType.Running)
+			end
+		end))
+	end
+end
+
+-- Function: Remove all protection
+local function clearProtection()
+	for _, conn in pairs(connections) do
+		conn:Disconnect()
+	end
+	connections = {}
+
+	local char = Players.LocalPlayer.Character
+	if char then
+		local humanoid = char:FindFirstChildOfClass("Humanoid")
+		if humanoid then
+			humanoid.MaxHealth = 100
+			humanoid.Health = math.min(humanoid.Health, 100)
+			humanoid.WalkSpeed = originalWalkSpeed
+		end
+	end
+end
+
+-- Public API: Toggle Functions
+function GodModeOn()
+	godModeEnabled = true
+	setupCharacterProtection(Players.LocalPlayer.Character)
+	updateButton()
+end
+
+function GodModeOff()
+	godModeEnabled = false
+	clearProtection()
+	updateButton()
+end
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+local function setTransparency(character, transparency)
+	for _, part in pairs(character:GetDescendants()) do
+		if part:IsA("BasePart") or part:IsA("Decal") then
+			part.Transparency = transparency
+		end
+	end
+end
+
+function invis2()
+	local savedpos = character:WaitForChild("HumanoidRootPart").CFrame
+	task.wait()
+	character:MoveTo(Vector3.new(-25.95, 84, 3537.55))
+	task.wait(0.15)
+
+	local seat = Instance.new("Seat")
+	seat.Name = "invischair"
+	seat.Anchored = false
+	seat.CanCollide = false
+	seat.Transparency = 1
+	seat.Position = Vector3.new(-25.95, 84, 3537.55)
+	seat.Parent = workspace
+
+	local weld = Instance.new("Weld", seat)
+	weld.Part0 = seat
+	weld.Part1 = character:FindFirstChild("Torso") or character:FindFirstChild("UpperTorso")
+
+	task.wait()
+	seat.CFrame = savedpos
+	setTransparency(character, 0.5)
+end
+
+function vis2()
+	local invisChair = workspace:FindFirstChild("invischair")
+	if invisChair then
+		invisChair:Destroy()
+	end
+
+	setTransparency(character, 0)
+end
+
+local offset = 1100
+local invisible = false
+local grips = {}
+local heldTool
+local gripChanged
+local handle
+local weld
+local originalAnimateState -- To store whether Animate was enabled originally
+
+function setDisplayDistance(distance)
+    for _, player in pairs(game.Players:GetPlayers()) do
+        if player.Character and player.Character:FindFirstChildWhichIsA("Humanoid") then
+            player.Character:FindFirstChildWhichIsA("Humanoid").NameDisplayDistance = distance
+            player.Character:FindFirstChildWhichIsA("Humanoid").HealthDisplayDistance = distance
+        end
+    end
+end
+
+function invis()
+    if not invisible then
+        invisible = true
+        
+        -- Store original animate state
+        originalAnimateState = game.Players.LocalPlayer.Character.Animate.Enabled
+        
+        -- Disable all animations
+        game.Players.LocalPlayer.Character.Animate.Enabled = false
+        for _, track in pairs(game.Players.LocalPlayer.Character.Humanoid:GetPlayingAnimationTracks()) do
+            track:Stop()
+        end
+        
+        -- Handle invisibility setup
+        if handle then handle:Destroy() end
+        if weld then weld:Destroy() end
+        
+        handle = Instance.new("Part", workspace)
+        handle.Name = "Handle"
+        handle.Transparency = 1
+        handle.CanCollide = false
+        handle.Size = Vector3.new(2, 1, 1)
+        
+        weld = Instance.new("Weld", handle)
+        weld.Part0 = handle
+        weld.Part1 = game.Players.LocalPlayer.Character.HumanoidRootPart
+        weld.C0 = CFrame.new(0, offset - 1.5, 0)
+        
+        setDisplayDistance(offset + 100)
+        workspace.CurrentCamera.CameraSubject = handle
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, offset, 0)
+        game.Players.LocalPlayer.Character.Humanoid.HipHeight = offset
+        game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+        
+        -- Store original tool grips
+        for _, child in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+            if child:IsA("Tool") then
+                grips[child] = child.Grip
+            end
+        end
+    end
+end
+
+function vis()
+    if invisible then
+        invisible = false
+        
+        -- Clean up invisibility parts
+        if handle then handle:Destroy() end
+        if weld then weld:Destroy() end
+        
+        -- Restore animations to original state
+        game.Players.LocalPlayer.Character.Animate.Enabled = originalAnimateState or true
+        
+        -- Return tools to normal state
+        for _, child in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+            if child:IsA("Tool") then
+                child.Parent = game.Players.LocalPlayer.Backpack
+            end
+        end
+        
+        for tool, grip in pairs(grips) do
+            if tool then
+                tool.Grip = grip
+            end
+        end
+        
+        heldTool = nil
+        setDisplayDistance(100)
+        workspace.CurrentCamera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, -offset, 0)
+        game.Players.LocalPlayer.Character.Humanoid.HipHeight = 0
+        
+        -- Make the character jump
+        game.Players.LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+    end
+end
+
+-- Tool handling for when tools are equipped while invisible
+game.Players.LocalPlayer.Character.ChildAdded:Connect(function(child)
+    wait()
+    if invisible and child:IsA("Tool") and child ~= heldTool then
+        heldTool = child
+        local lastGrip = heldTool.Grip
+        if not grips[heldTool] then
+            grips[heldTool] = lastGrip
+        end
+        
+        -- Ensure animations stay disabled for tools
+        game.Players.LocalPlayer.Character.Animate.Enabled = false
+        for _, track in pairs(game.Players.LocalPlayer.Character.Humanoid:GetPlayingAnimationTracks()) do
+            track:Stop()
+        end
+        
+        heldTool.Grip = heldTool.Grip * (CFrame.new(0, offset - 1.5, 1.5) * CFrame.Angles(math.rad(-90), 0, 0))
+        heldTool.Parent = game.Players.LocalPlayer.Backpack
+        heldTool.Parent = game.Players.LocalPlayer.Character
+        
+        if gripChanged then
+            gripChanged:Disconnect()
+        end
+        
+        gripChanged = heldTool:GetPropertyChangedSignal("Grip"):Connect(function()
+            wait()
+            if not invisible then
+                gripChanged:Disconnect()
+            end
+            if heldTool.Grip ~= lastGrip then
+                lastGrip = heldTool.Grip * (CFrame.new(0, offset - 1.5, 1.5) * CFrame.Angles(math.rad(-90), 0, 0))
+                heldTool.Grip = lastGrip
+                heldTool.Parent = game.Players.LocalPlayer.Backpack
+                heldTool.Parent = game.Players.LocalPlayer.Character
+            end
+        end)
+    end
+end)
+
+function PlaySound(id, volume)
+    local sound = Instance.new("Sound")
+    sound.SoundId = "rbxassetid://" .. tostring(id)
+    sound.Volume = volume or 1
+    sound.Parent = workspace
+    sound:Play()
+
+    -- Optionally destroy the sound after it finishes
+    sound.Ended:Connect(function()
+        sound:Destroy()
+    end)
+
+    return sound
+end
+
+
+
+PlaySound(4822429705, 1)
+-- Gibssss Hub | Unknown
+-- Clean FPS script with Luna UI
+
+local Luna = loadstring(game:HttpGet("https://raw.githubusercontent.com/Nebulla-Softworks/Luna-Interface-Suite/main/source.lua"))()
+
+local Window = Luna:CreateWindow({
+    Name = "Gibssss Hub | ",
+    LoadingTitle = "Gibssss Hub",
+    LoadingSubtitle = "by Gibssss",
+    ConfigurationSaving = {
+        Enabled = true,
+        FolderName = "GibssssHub",
+        FileName = "FuckPeopleConfig"
+    },
+    Discord = {
+        Enabled = false,
+        Invite = "",
+        RememberJoins = false
+    },
+    KeySystem = false
+})
+
+
+-- Create Home Tab (Required for Luna)
+Window:CreateHomeTab({
+    SupportedExecutors = {
+        "Synapse X", "Krnl", "Fluxus", "Script-Ware", 
+        "Electron", "Solara", "Wave", "Delta", "Xeno"
+    },
+    DiscordInvite = nil,
+    Icon = 1
+})
+
+-- Create Tabs
+local MainTab = Window:CreateTab({
+    Name = "Main",
+    Icon = "gps_fixed",
+    ImageSource = "Material",
+    ShowTitle = true
+})
+
+MainTab:CreateSection("Auto Farm")
+
+MainTab:CreateButton({
+    Name = "",
+    Description = "click to tp",
+    Callback = function()
+        
+    end
+})
+
+MainTab:CreateToggle({
+    Name = "Auto Collect Boxes",
+    CurrentValue = false,
+    Callback = function(state)
+        autoCollectEnabled = state
+
+        if state then
+            startCollecting()
+        end
+    end
+})
+
+MainTab:CreateSection("Vuln")
+
+MainTab:CreateButton({
+    Name = "Upgrade Crafting Table LVL6",
+    Description = "click to get",
+    Callback = function()
+        local MarketplaceService = game:GetService("MarketplaceService")
+        local id = game.Players.LocalPlayer.UserId
+        
+        MarketplaceService:SignalPromptProductPurchaseFinished(id, 3422310969, true)
+        MarketplaceService:SignalPromptProductPurchaseFinished(id, 3422310972, true)
+        MarketplaceService:SignalPromptProductPurchaseFinished(id, 3422310970, true)
+        MarketplaceService:SignalPromptProductPurchaseFinished(id, 3422310971, true)
+        MarketplaceService:SignalPromptProductPurchaseFinished(id, 3422310967, true)
+    end
+})
+
+MainTab:CreateButton({
+    Name = "Starter Pistol",
+    Description = "click to get",
+    Callback = function()
+        game:GetService("MarketplaceService"):SignalPromptProductPurchaseFinished(game.Players.LocalPlayer.UserId, 3428925716, true)
+        game:GetService("MarketplaceService"):SignalPromptProductPurchaseFinished(game.Players.LocalPlayer.UserId, 3435174070, true)
+    end
+})
+
+MainTab:CreateButton({
+    Name = "Inf Revive",
+    Description = "click to get",
+    Callback = function()
+        game:GetService("MarketplaceService"):SignalPromptProductPurchaseFinished(game.Players.LocalPlayer.UserId, 3421071079, true)
+    end
+})
+
+MainTab:CreateButton({
+    Name = "Inf Jump",
+    Description = "click to get",
+    Callback = function()
+        game:GetService("UserInputService").JumpRequest:Connect(function()
+            game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState("Jumping")
+        end)
+    end
+})
+
+local MiscTab = Window:CreateTab({
+    Name = "Misc",
+    Icon = "more_horiz",
+    ImageSource = "Material",
+    ShowTitle = true
+})
+
+MiscTab:CreateSection("Testing")
+
+MiscTab:CreateButton({
+    Name = "FE Jerk Tool R6",
+    Description = "click to get",
+    Callback = function()
+    
+
+MiscTab:CreateKeybind({
+    Name = "Toggle UI",
+    CurrentKeybind = "RightShift",
+    HoldToInteract = false,
+    Flag = "UIKeybind",
+    Callback = function(Keybind)
+    end,
+})
+
+MiscTab:CreateButton({
+    Name = "Destroy GUI",
+    Callback = function()
+        Luna:Destroy()
+    end,
+})
+
+-- Notifications
+Luna:Notification({
+    Title = "Gibssss Loaded",
+    Content = "Script loaded successfully!",
+    Icon = "check_circle",
+    ImageSource = "Material"
+})
