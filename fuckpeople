@@ -282,6 +282,77 @@ local Dropdown = Tab:Dropdown({
     end
 })
 
+local Section = Tab:Section({ 
+    Title = "FOV Circle",
+})
+
+local Toggle = Tab:Toggle({
+    Title = "Enable FOV",
+    Desc = "FOVToggle",
+    Icon = "bird",
+    Type = "Checkbox",
+    Value = false, -- default value
+    Callback = function(Value) 
+        fovEnabled = Value
+        createFOVCircle()
+    end
+})
+
+local Slider = Tab:Slider({
+    Title = "FOV Size",
+    Desc = "FOVSlider",
+    
+    -- To make float number supported, 
+    -- make the Step a float number.
+    -- example: Step = 0.1
+    Step = 1,
+    Value = {
+        Min = 20,
+        Max = 120,
+        Default = 70,
+    },
+    Callback = function(Value)
+        fovSize = Value
+        if fovCircle then
+            fovCircle.Radius = Value
+        end
+    end
+})
+
+local Colorpicker = Tab:Colorpicker({
+    Title = "FOV Color",
+    Desc = "FOVColor",
+    Default = Color3.fromRGB(255, 255, 255),
+    Transparency = 0,
+    Locked = false,
+    Callback = function(Value) 
+        if fovCircle then
+            fovCircle.Color = Value
+        end
+    end
+})
+
+local Section = Tab:Section({ 
+    Title = "Aimbot (Silent)",
+})
+
+local Toggle = Tab:Toggle({
+    Title = "Enable Aimbot",
+    Desc = "AimbotToggle",
+    Icon = "bird",
+    Type = "Checkbox",
+    Value = false, -- default value
+    Callback = function(Value) 
+        aimbotEnabled = Value
+    end
+})
+
+
+
+
+
+
+
 
 
 
