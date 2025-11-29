@@ -1,5 +1,4 @@
 -- Gibssss Hub | Luna UI integration
-PlaySound(12221976, 1)
 
 -- Attempt to load Luna safely
 local Luna
@@ -34,7 +33,6 @@ if Luna then
     })
 
     -- Create Home Tab (Required for Luna)
-    PlaySound(12221976, 1)
     Window:CreateHomeTab({
         SupportedExecutors = {
             "Synapse X", "Krnl", "Fluxus", "Script-Ware", 
@@ -44,7 +42,6 @@ if Luna then
         Icon = 1
     })
 
-    PlaySound(12221976, 1)
     local Tab = Window:CreateTab({
         Name = "Main",
         Icon = "view_in_ar",
@@ -52,7 +49,7 @@ if Luna then
         ShowTitle = true
     })
 
-    Tab:CreateSection("Bring")
+  Tab:CreateSection("Bring")
 
     -- DEFAULT distance (used when bringing mobs)
     local DEFAULT_DISTANCE = 5
@@ -289,7 +286,6 @@ end
 
     -- Notifications (only if Luna supports Notification)
     pcall(function()
-        PlaySound(12221976, 1)
         Luna:Notification({
             Title = "Gibssss Loaded",
             Content = "Script loaded successfully!",
@@ -298,8 +294,7 @@ end
         })
     end)
 else
-    -- Luna not available: inform user in console
-    PlaySound(12221976, 1)
+    -- Luna not available: inform user in consol
     warn("Luna UI not available. Script core features still loaded.")
 end
 
