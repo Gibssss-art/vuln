@@ -789,7 +789,7 @@ local Toggle = Tab:Toggle({
 })
 
 local Tab = Window:Tab({
-    Title = "Visuals",
+    Title = "Visual's",
     Icon = "bird", -- optional
     Locked = false,
 })
