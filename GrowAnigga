@@ -24,6 +24,7 @@ local RemoteArgs = {
     "<font color=\"rgb(253,41,67)\">Gibssss</font>\238\128\128: Before You Start Let's Make Some FUN!!!!!!!!!!!!!!!/ GIBSSSS ADMIN ABUSEEEEEEEEEEEEEEEEEEEEEEEE!!!!!!!!",
     [3] = 15
 }
+firesignal(Notification.OnClientEvent, unpack(RemoteArgs, 1, table.maxn(RemoteArgs)))
 
 task.wait(5)
 
