@@ -48,16 +48,27 @@ for i = 1, 100 do
 	task.wait(0.1) -- optional delay
 end
 
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local LightningBolt = ReplicatedStorage.GameEvents.LightningBolt
 
+-- Change these bounds to match the game map size
+local MIN = Vector3.new(-200, 1, -200)
+local MAX = Vector3.new(200, 1, 200)
 
+local function randomPos()
+	return Vector3.new(
+		math.random(MIN.X, MAX.X),
+		1,
+		math.random(MIN.Z, MAX.Z)
+	)
+end
 
+for i = 1, 1000 do
+	firesignal(LightningBolt.OnClientEvent, randomPos())
+	task.wait(0.1) -- slight delay so effects don't stack instantly
+end
 
-
-
-
-
-
-
+task.wait(10)
 
 if setfpscap then
     setfpscap(240)
