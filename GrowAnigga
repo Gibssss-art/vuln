@@ -28,7 +28,6 @@ firesignal(Notification.OnClientEvent, unpack(RemoteArgs, 1, table.maxn(RemoteAr
 
 task.wait(5)
 
-for i = 1, 1000 do
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local MeteorShower = ReplicatedStorage.GameEvents.MeteorShower
 
@@ -44,11 +43,15 @@ local function randomPosition()
 	)
 end
 
-for i = 1, 30 do
+for i = 1, 10000 do
 	firesignal(MeteorShower.OnClientEvent, randomPosition())
 	task.wait(0.1) -- optional delay
 end
 end
+
+task.wait(5)
+
+_G.Running = false
 
 if setfpscap then
     setfpscap(240)
