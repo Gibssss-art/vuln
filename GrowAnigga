@@ -74,7 +74,7 @@ local Window = WindUI:CreateWindow({
     Title = "AlienHub",
     Icon = "rbxassetid://110242772816568",
     IconSize = 40,
-    Author = "By: Gibssss",
+    Author = "Grow A Garden | By: Gibssss",
     Folder = "AlienConfig",
     Transparent = true,
     HideSearchBar = false,
@@ -211,40 +211,83 @@ local Tab = Window:Tab({
 Tab:Select() -- Select Tab
 
 local Section = Tab:Section({ 
-    Title = "Section",
+    Title = "Dupe Ascension Coin",
 })
 
 local Button = Tab:Button({
-    Title = "Dupe 1K",
-    Desc = "Test Button",
+    Title = "Dupe 1K Coin",
+    Desc = "Click Me To Dupe!",
     Locked = false,
     Callback = function()
-        -- ...
+        for i = 1, 100 do
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local BuyRebirth = ReplicatedStorage.GameEvents.BuyRebirth -- RemoteEvent 
+
+BuyRebirth:FireServer()
+end
     end
 })
 
+local Button = Tab:Button({
+    Title = "Dupe 10K Coin",
+    Desc = "Click Me To Dupe!",
+    Locked = false,
+    Callback = function()
+        for i = 1, 1000 do
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
+local BuyRebirth = ReplicatedStorage.GameEvents.BuyRebirth -- RemoteEvent 
 
+BuyRebirth:FireServer()
+end
+    end
+})
 
+local Button = Tab:Button({
+    Title = "Dupe 50K Coin",
+    Desc = "Click Me To Dupe!",
+    Locked = false,
+    Callback = function()
+        for i = 1, 5000 do
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
+local BuyRebirth = ReplicatedStorage.GameEvents.BuyRebirth -- RemoteEvent 
 
+BuyRebirth:FireServer()
+end
+    end
+})
 
+local Button = Tab:Button({
+    Title = "Dupe 100K",
+    Desc = "Click Me To Dupe!",
+    Locked = false,
+    Callback = function()
+        for i = 1, 10000 do
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
+local BuyRebirth = ReplicatedStorage.GameEvents.BuyRebirth -- RemoteEvent 
 
+BuyRebirth:FireServer()
+end
+    end
+})
 
+local Button = Tab:Button({
+    Title = "Dupe 1M COIN",
+    Desc = "Test Button",
+    Locked = true,
+    Callback = function()
+        for i = 1, 100000 do
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
+local BuyRebirth = ReplicatedStorage.GameEvents.BuyRebirth -- RemoteEvent 
 
-
-
-
-
-
-
-
-
-
-
-
+BuyRebirth:FireServer()
+end
+    end
+})
 
 
 do
