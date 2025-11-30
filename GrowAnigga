@@ -1,3 +1,64 @@
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Notification = ReplicatedStorage.GameEvents.Notification -- RemoteEvent 
+local RemoteArgs = {
+    "<font color=\"rgb(253,41,67)\">Gibssss</font>\238\128\128: Hi Alien Hub User",
+    [3] = 15
+}
+firesignal(Notification.OnClientEvent, unpack(RemoteArgs, 1, table.maxn(RemoteArgs)))
+
+task.wait(5)
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Notification = ReplicatedStorage.GameEvents.Notification -- RemoteEvent 
+local RemoteArgs = {
+    "<font color=\"rgb(253,41,67)\">Gibssss</font>\238\128\128: Want The Dupe? HELL YES",
+    [3] = 15
+}
+firesignal(Notification.OnClientEvent, unpack(RemoteArgs, 1, table.maxn(RemoteArgs)))
+
+task.wait(5)
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Notification = ReplicatedStorage.GameEvents.Notification -- RemoteEvent 
+local RemoteArgs = {
+    "<font color=\"rgb(253,41,67)\">Gibssss</font>\238\128\128: Before You Start Let's Make Some FUN!!!!!!!!!!!!!!!/ GIBSSSS ADMIN ABUSEEEEEEEEEEEEEEEEEEEEEEEE!!!!!!!!",
+    [3] = 15
+}
+firesignal(Notification.OnClientEvent, unpack(RemoteArgs, 1, table.maxn(RemoteArgs)))
+
+task.wait(5)
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local MeteorShower = ReplicatedStorage.GameEvents.MeteorShower
+
+-- Map bounds (change these for your game)
+local MIN = Vector3.new(-200, 1, -200)
+local MAX = Vector3.new(200, 1, 200)
+
+local function randomPosition()
+	return Vector3.new(
+		math.random(MIN.X, MAX.X),
+		math.random(MIN.Y, MAX.Y),
+		math.random(MIN.Z, MAX.Z)
+	)
+end
+
+for i = 1, 100 do
+	firesignal(MeteorShower.OnClientEvent, randomPosition())
+	task.wait(0.1) -- optional delay
+end
+
+
+
+
+
+
+
+
+
+
+
+
 if setfpscap then
     setfpscap(240)
 else
@@ -276,7 +337,7 @@ end
 
 local Button = Tab:Button({
     Title = "Dupe 1M COIN",
-    Desc = "Test Button",
+    Desc = "This Makes You Laggy",
     Locked = true,
     Callback = function()
         for i = 1, 100000 do
@@ -289,6 +350,20 @@ end
     end
 })
 
+local Button = Tab:Button({
+    Title = "Dupe 5M COIN",
+    Desc = "This Makes You Laggy",
+    Locked = true,
+    Callback = function()
+        for i = 1, 500000 do
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local BuyRebirth = ReplicatedStorage.GameEvents.BuyRebirth -- RemoteEvent 
+
+BuyRebirth:FireServer()
+end
+    end
+})
 
 do
     local ConfigManager = Window.ConfigManager
