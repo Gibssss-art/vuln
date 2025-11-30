@@ -45,7 +45,7 @@ end
 local duration = 10
 local startTime = os.clock()
 
-while wait(0.1) do
+while wait() do
 	if os.clock() - startTime >= duration then
 		break
 	end
