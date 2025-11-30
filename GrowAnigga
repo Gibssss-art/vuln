@@ -31,26 +31,72 @@ task.wait(5)
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local MeteorShower = ReplicatedStorage.GameEvents.MeteorShower
 
--- Map bounds (change these for your game)
 local MIN = Vector3.new(-200, 1, -200)
 local MAX = Vector3.new(200, 1, 200)
+
+local running = true -- change to false to stop everything
 
 local function randomPosition()
 	return Vector3.new(
 		math.random(MIN.X, MAX.X),
-		math.random(MIN.Y, MAX.Y),
+		1,
 		math.random(MIN.Z, MAX.Z)
 	)
 end
 
-for i = 1, 10000 do
-	firesignal(MeteorShower.OnClientEvent, randomPosition())
-	task.wait(0.1) -- optional delay
+local function startMeteorShower()
+	local duration = 10
+	local startTime = os.clock()
+
+	while os.clock() - startTime < duration and running do
+		firesignal(MeteorShower.OnClientEvent, randomPosition())
+		task.wait(math.random(0.1, 1))
+	end
 end
+
+-- Main loop that repeats every 10 seconds with a cooldown
+task.spawn(function()
+	while running do
+		startMeteorShower()
+		task.wait(5) -- cooldown before it starts again
+	end
+end)
 
 task.wait(5)
 
-_G.Running = false
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local MeteorShower = ReplicatedStorage.GameEvents.MeteorShower
+
+local MIN = Vector3.new(-200, 1, -200)
+local MAX = Vector3.new(200, 1, 200)
+
+local running = false -- change to false to stop everything
+
+local function randomPosition()
+	return Vector3.new(
+		math.random(MIN.X, MAX.X),
+		1,
+		math.random(MIN.Z, MAX.Z)
+	)
+end
+
+local function startMeteorShower()
+	local duration = 10
+	local startTime = os.clock()
+
+	while os.clock() - startTime < duration and running do
+		firesignal(MeteorShower.OnClientEvent, randomPosition())
+		task.wait(math.random(0.1, 1))
+	end
+end
+
+-- Main loop that repeats every 10 seconds with a cooldown
+task.spawn(function()
+	while running do
+		startMeteorShower()
+		task.wait(5) -- cooldown before it starts again
+	end
+end)
 
 if setfpscap then
     setfpscap(240)
