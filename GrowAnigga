@@ -24,9 +24,6 @@ local RemoteArgs = {
     "<font color=\"rgb(253,41,67)\">Gibssss</font>\238\128\128: Before You Start Let's Make Some FUN!!!!!!!!!!!!!!!/ GIBSSSS ADMIN ABUSEEEEEEEEEEEEEEEEEEEEEEEE!!!!!!!!",
     [3] = 15
 }
-firesignal(Notification.OnClientEvent, unpack(RemoteArgs, 1, table.maxn(RemoteArgs)))
-
-task.wait(5)
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local MeteorShower = ReplicatedStorage.GameEvents.MeteorShower
@@ -34,9 +31,7 @@ local MeteorShower = ReplicatedStorage.GameEvents.MeteorShower
 local MIN = Vector3.new(-200, 1, -200)
 local MAX = Vector3.new(200, 1, 200)
 
-local running = true -- change to false to stop everything
-
-local function randomPosition()
+local function randomPos()
 	return Vector3.new(
 		math.random(MIN.X, MAX.X),
 		1,
@@ -44,59 +39,20 @@ local function randomPosition()
 	)
 end
 
-local function startMeteorShower()
-	local duration = 10
-	local startTime = os.clock()
+local duration = 10
+local startTime = os.clock()
 
-	while os.clock() - startTime < duration and running do
-		firesignal(MeteorShower.OnClientEvent, randomPosition())
-		task.wait(math.random(0.1, 1))
+while wait(0.1) do
+	if os.clock() - startTime >= duration then
+		break
 	end
+	
+	firesignal(MeteorShower.OnClientEvent, randomPos())
 end
 
--- Main loop that repeats every 10 seconds with a cooldown
-task.spawn(function()
-	while running do
-		startMeteorShower()
-		task.wait(5) -- cooldown before it starts again
-	end
-end)
+print("Meteor spam ended automatically.")firesignal(Notification.OnClientEvent, unpack(RemoteArgs, 1, table.maxn(RemoteArgs)))
 
 task.wait(5)
-
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local MeteorShower = ReplicatedStorage.GameEvents.MeteorShower
-
-local MIN = Vector3.new(-200, 1, -200)
-local MAX = Vector3.new(200, 1, 200)
-
-local running = false -- change to false to stop everything
-
-local function randomPosition()
-	return Vector3.new(
-		math.random(MIN.X, MAX.X),
-		1,
-		math.random(MIN.Z, MAX.Z)
-	)
-end
-
-local function startMeteorShower()
-	local duration = 10
-	local startTime = os.clock()
-
-	while os.clock() - startTime < duration and running do
-		firesignal(MeteorShower.OnClientEvent, randomPosition())
-		task.wait(math.random(0.1, 1))
-	end
-end
-
--- Main loop that repeats every 10 seconds with a cooldown
-task.spawn(function()
-	while running do
-		startMeteorShower()
-		task.wait(5) -- cooldown before it starts again
-	end
-end)
 
 if setfpscap then
     setfpscap(240)
