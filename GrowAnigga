@@ -47,7 +47,6 @@ for i = 1, 10000 do
 	firesignal(MeteorShower.OnClientEvent, randomPosition())
 	task.wait(0.1) -- optional delay
 end
-end
 
 task.wait(5)
 
