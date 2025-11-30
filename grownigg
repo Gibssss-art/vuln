@@ -1,0 +1,270 @@
+if setfpscap then
+    setfpscap(240)
+else
+    warn("Your exploit does not support setfpscap.")
+end
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Nash29197/Alien/refs/heads/main/%25%25%25%25%25"))()
+
+local WindUI = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
+WindUI:AddTheme({
+    Name = "Alien",
+    
+    Accent = Color3.fromHex("#18181b"),
+    Background = Color3.fromHex("#101010"), -- Accent
+    BackgroundTransparency = 0,
+    Outline = Color3.fromHex("#FFFFFF"),
+    Text = Color3.fromHex("#FFFFFF"),
+    Placeholder = Color3.fromHex("#7a7a7a"), 
+    Button = Color3.fromHex("#52525b"),
+    Icon = WindUI:Gradient({
+        ["0"] = { Color = Color3.fromHex("#30ff6a"), Transparency = 0 },
+        ["100"] = { Color = Color3.fromHex("#4A4A4A"), Transparency = 0 },
+    }, { Rotation = 0 }),  
+    
+    Hover = Color3.fromHex("#FFFFFF"), -- Text
+    
+    WindowBackground = Color3.fromHex("101010"), -- Background
+    WindowShadow = Color3.fromHex("000000"),
+    
+    DialogBackground = Color3.fromHex("#101010"), -- Background
+    DialogBackgroundTransparency = 0, -- BackgroundTransparency
+    DialogTitle = Color3.fromHex("#FFFFFF"), -- Text
+    DialogContent = Color3.fromHex("#FFFFFF"), -- Text
+    DialogIcon = Color3.fromHex("#a1a1aa"), -- Icon
+    
+    WindowTopbarButtonIcon = WindUI:Gradient({
+        ["0"] = { Color = Color3.fromHex("#30ff6a"), Transparency = 0 },
+        ["100"] = { Color = Color3.fromHex("#4A4A4A"), Transparency = 0 },
+    }, { Rotation = 0 }),  
+    WindowTopbarTitle = WindUI:Gradient({
+        ["0"] = { Color = Color3.fromHex("#30ff6a"), Transparency = 0 },
+        ["100"] = { Color = Color3.fromHex("#4A4A4A"), Transparency = 0 },
+    }, { Rotation = 0 }),
+    WindowTopbarAuthor = WindUI:Gradient({
+        ["0"] = { Color = Color3.fromHex("#30ff6a"), Transparency = 0 },
+        ["100"] = { Color = Color3.fromHex("#4A4A4A"), Transparency = 0 },
+    }, { Rotation = 0 }),
+    WindowTopbarIcon = Color3.fromHex("FFFFFF"), -- Text
+    
+    TabBackground = Color3.fromHex("#FFFFFF"), -- Text
+    TabTitle = Color3.fromHex("#FFFFFF"),  
+    TabIcon = WindUI:Gradient({
+        ["0"] = { Color = Color3.fromHex("#30ff6a"), Transparency = 0 },
+        ["100"] = { Color = Color3.fromHex("#4A4A4A"), Transparency = 0 },
+    }, { Rotation = 0 }),    
+    
+    ElementBackground = Color3.fromHex("#FFFFFF"), -- Text
+    ElementTitle = Color3.fromHex("#FFFFFF"),
+    ElementDesc = Color3.fromHex("#FFFFFF"), -- Text
+    ElementIcon = Color3.fromHex("#a1a1aa"), -- Icon 
+    
+    PopupBackground = Color3.fromHex("#101010"), -- Background
+    PopupBackgroundTransparency = 0, -- BackgroundTransparency
+    PopupTitle = WindUI:Gradient({
+        ["0"] = { Color = Color3.fromHex("#30ff6a"), Transparency = 0 },
+        ["100"] = { Color = Color3.fromHex("#4A4A4A"), Transparency = 0 },
+    }, { Rotation = 0 }),
+    PopupContent = Color3.fromHex("#FFFFFF"), -- Text
+    PopupIcon = Color3.fromHex("#a1a1aa"), -- Icon
+    
+})
+
+local Window = WindUI:CreateWindow({
+    Title = "AlienHub",
+    Icon = "rbxassetid://110242772816568",
+    IconSize = 40,
+    Author = "By: Gibssss",
+    Folder = "AlienConfig",
+    Transparent = true,
+    HideSearchBar = false,
+    Theme = "Alien",
+    User = {
+        Enabled = true,
+        Anonymous = false,
+        Callback = function()
+        end,
+    },
+})
+
+Window:Tag({
+    Title = "DEV",
+    Color = Color3.fromHex("#30ff6a"),
+    Radius = 13,
+})
+
+Window:EditOpenButton({
+    Title = "Alien",
+    Icon = "rbxassetid://110242772816568",
+    CornerRadius = UDim.new(0,16),
+    StrokeThickness = 2,
+    Color = ColorSequence.new(
+        Color3.fromHex("30ff6a"), 
+        Color3.fromHex("4A4A4A")
+    ),
+    OnlyMobile = false,
+    Enabled = true,
+    Draggable = true,
+})
+
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local HttpService = game:GetService("HttpService")
+local VirtualUser = game:GetService("VirtualUser")
+local VirtualInputManager = game:GetService("VirtualInputManager")
+
+local Player = Players.LocalPlayer
+local PlayerGui = Player:WaitForChild("PlayerGui")
+local Character = Player.Character or Player.CharacterAdded:Wait()
+local Humanoid = Character:WaitForChild("Humanoid")
+local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
+local Backpack = Player:WaitForChild("Backpack")
+
+local InfoTab = Window:Tab({Title = "Information", Icon = "info" })
+local Section = InfoTab:Section({Title = "JOIN Discord:", Icon = "info",TextXAlignment = "Left",TextSize = 17,})
+
+local InviteCode = "ZJwTMvkV2z"
+local DiscordAPI = "https://discord.com/api/v10/invites/" .. InviteCode .. "?with_counts=true&with_expiration=true"
+
+local Response
+local ErrorMessage = nil
+
+xpcall(function()
+    Response = game:GetService("HttpService"):JSONDecode(WindUI.Creator.Request({
+        Url = DiscordAPI,
+        Method = "GET",
+        Headers = {
+            ["Accept"] = "application/json"
+        }
+    }).Body)
+end, function(err)
+    warn("err fetching discord info: " .. tostring(err))
+    ErrorMessage = tostring(err)
+    Response = nil
+end)
+
+if Response and Response.guild then
+    local ParagraphConfig = {
+        Title = Response.guild.name,
+        Desc =
+            ' <font color="#52525b">•</font> Member Count: ' .. tostring(Response.approximate_member_count) ..
+            '\n <font color="#16a34a">•</font> Online Count: ' .. tostring(Response.approximate_presence_count)
+        ,
+        Image = "https://cdn.discordapp.com/icons/" .. Response.guild.id .. "/" .. Response.guild.icon .. ".png?size=256",
+        ImageSize = 42,
+        Buttons = {
+            {
+                Icon = "link",
+                Title = "Copy Discord Invite",
+                Callback = function()
+                    pcall(function()
+                        setclipboard("https://discord.gg/" .. InviteCode)
+                    end)
+                end
+            },
+            {
+                Icon = "refresh-cw",
+                Title = "Update Info",
+                Callback = function()
+                    xpcall(function()
+                        local UpdatedResponse = game:GetService("HttpService"):JSONDecode(WindUI.Creator.Request({
+                            Url = DiscordAPI,
+                            Method = "GET",
+                        }).Body)
+                        
+                        if UpdatedResponse and UpdatedResponse.guild then
+                            DiscordInfo:SetDesc(
+                                ' <font color="#52525b">•</font> Member Count: ' .. tostring(UpdatedResponse.approximate_member_count) ..
+                                '\n <font color="#16a34a">•</font> Online Count: ' .. tostring(UpdatedResponse.approximate_presence_count)
+                            )
+                        end
+                    end, function(err)
+                        warn("err updating discord info: " .. tostring(err))
+                    end)
+                end
+            }
+        }
+    }
+    
+    if Response.guild.banner then
+        ParagraphConfig.Thumbnail = "https://cdn.discordapp.com/banners/" .. Response.guild.id .. "/" .. Response.guild.banner .. ".png?size=256"
+        ParagraphConfig.ThumbnailSize = 80
+    end
+    
+    local DiscordInfo = InfoTab:Paragraph(ParagraphConfig)
+else
+    InfoTab:Paragraph({
+        Title = "Error when receiving information about the Discord server",
+        Desc = ErrorMessage or "Unknown error occurred",
+        Image = "triangle-alert",
+        ImageSize = 26,
+        Color = "Red",
+    })
+end
+
+local Tab = Window:Tab({
+    Title = "Vuln",
+    Icon = "bird", -- optional
+    Locked = false,
+})
+Tab:Select() -- Select Tab
+
+local Section = Tab:Section({ 
+    Title = "Section",
+})
+
+local Button = Tab:Button({
+    Title = "Dupe 1K",
+    Desc = "Test Button",
+    Locked = false,
+    Callback = function()
+        -- ...
+    end
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+do
+    local ConfigManager = Window.ConfigManager
+    local ConfigName = "default"
+
+    task.spawn(function()
+        task.wait(2) 
+        Window.CurrentConfig = ConfigManager:CreateConfig(ConfigName)
+        Window.CurrentConfig:Load()
+    end)
+
+    if Player then
+        Players.PlayerRemoving:Connect(function(playerWhoLeft)
+            if playerWhoLeft == Player then
+                if Window and Window.Parent then
+                    Window.CurrentConfig = ConfigManager:CreateConfig(ConfigName)
+                    Window.CurrentConfig:Save()
+                end
+            end
+        end)
+    end
+end
