@@ -1,7 +1,7 @@
-if getgenv().DaraHubExecuted then
+if getgenv().AlienHubExecuted then
     return
 end
-getgenv().DaraHubExecuted = true
+getgenv().AlienHubHubExecuted = true
 local player = game.Players.LocalPlayer
 local guiService = game:GetService("GuiService")
 local starterGui = game:GetService("StarterGui")
@@ -74,10 +74,10 @@ WindUI:SetTheme("Dark")
 -- Create WindUI window
 local Window = WindUI:CreateWindow({
     NewElements = true,
-    Title = "Dara Hub | Evade",
+    Title = "AlienHub | Evade",
     Icon = "rbxassetid://137330250139083",
-    Author = "Made by: Pnsdg And Yomka",
-    Folder = "DaraHub/Games/Evade",
+    Author = "Made by: Gibsss",
+    Folder = "AlienHub/Games/Evade",
     Size = UDim2.fromOffset(580, 490),
     Theme = "Dark",
     HidePanelBackground = false,
@@ -108,7 +108,7 @@ if featureStates.DisableCameraShake == nil then
 end
 Window:SetIconSize(48)
 Window:Tag({
-    Title = "V1.3.9",
+    Title = "V1",
     Color = Color3.fromHex("#30ff6a")
 })
 --[[
