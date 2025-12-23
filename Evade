@@ -1,207 +1,126 @@
-if setfpscap then
-    setfpscap(240)
-else
-    warn("Your exploit does not support setfpscap.")
+if getgenv().DaraHubExecuted then
+    return
+end
+getgenv().DaraHubExecuted = true
+local player = game.Players.LocalPlayer
+local guiService = game:GetService("GuiService")
+local starterGui = game:GetService("StarterGui")
+
+local playerGui = player:WaitForChild("PlayerGui")
+if playerGui:FindFirstChild("CustomTopGui") then
+    return
 end
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Nash29197/Alien/refs/heads/main/%25%25%25%25%25"))()
+starterGui:SetCore("TopbarEnabled", false)
 
-local WindUI = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
-WindUI:AddTheme({
-    Name = "Alien",
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "CustomTopGui"
+screenGui.IgnoreGuiInset = false
+screenGui.ScreenInsets = Enum.ScreenInsets.TopbarSafeInsets
+screenGui.DisplayOrder = 100
+screenGui.ResetOnSpawn = false
+screenGui.Parent = playerGui
+
+local frame = Instance.new("Frame")
+frame.Parent = screenGui
+frame.BackgroundTransparency = 1
+frame.BorderSizePixel = 0
+frame.Position = UDim2.new(0, 0, 0, 0)
+frame.Size = UDim2.new(1, 0, 1, -2)
+
+local scrollingFrame = Instance.new("ScrollingFrame")
+scrollingFrame.Name = "Right"
+scrollingFrame.Parent = frame
+scrollingFrame.BackgroundTransparency = 1
+scrollingFrame.BorderSizePixel = 0
+scrollingFrame.Position = UDim2.new(0, 12, 0, 0)
+scrollingFrame.Size = UDim2.new(1, -24, 1, 0)
+scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
+scrollingFrame.AutomaticCanvasSize = Enum.AutomaticSize.X
+scrollingFrame.ScrollBarThickness = 0
+scrollingFrame.ScrollingDirection = Enum.ScrollingDirection.X
+scrollingFrame.ScrollingEnabled = false
+
+local uiListLayout = Instance.new("UIListLayout")
+uiListLayout.Parent = scrollingFrame
+uiListLayout.Padding = UDim.new(0, 12)
+uiListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+uiListLayout.FillDirection = Enum.FillDirection.Horizontal
+uiListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
+uiListLayout.VerticalAlignment = Enum.VerticalAlignment.Bottom
+coroutine.resume(coroutine.create(function()
+    pcall(loadstring(game:HttpGet('https://raw.githubusercontent.com/Pnsdgsa/Script-kids/refs/heads/main/Scripthub/Darahub/evade/More-Loadstrings.lua')))
+end))
+local WindUI
+
+do
+    local ok, result = pcall(function()
+        return require("./src/Init")
+    end)
     
-    Accent = Color3.fromHex("#18181b"),
-    Background = Color3.fromHex("#101010"), -- Accent
-    BackgroundTransparency = 0,
-    Outline = Color3.fromHex("#FFFFFF"),
-    Text = Color3.fromHex("#FFFFFF"),
-    Placeholder = Color3.fromHex("#7a7a7a"), 
-    Button = Color3.fromHex("#52525b"),
-    Icon = WindUI:Gradient({
-        ["0"] = { Color = Color3.fromHex("#30ff6a"), Transparency = 0 },
-        ["100"] = { Color = Color3.fromHex("#4A4A4A"), Transparency = 0 },
-    }, { Rotation = 0 }),  
-    
-    Hover = Color3.fromHex("#FFFFFF"), -- Text
-    
-    WindowBackground = Color3.fromHex("101010"), -- Background
-    WindowShadow = Color3.fromHex("000000"),
-    
-    DialogBackground = Color3.fromHex("#101010"), -- Background
-    DialogBackgroundTransparency = 0, -- BackgroundTransparency
-    DialogTitle = Color3.fromHex("#FFFFFF"), -- Text
-    DialogContent = Color3.fromHex("#FFFFFF"), -- Text
-    DialogIcon = Color3.fromHex("#a1a1aa"), -- Icon
-    
-    WindowTopbarButtonIcon = WindUI:Gradient({
-        ["0"] = { Color = Color3.fromHex("#30ff6a"), Transparency = 0 },
-        ["100"] = { Color = Color3.fromHex("#4A4A4A"), Transparency = 0 },
-    }, { Rotation = 0 }),  
-    WindowTopbarTitle = WindUI:Gradient({
-        ["0"] = { Color = Color3.fromHex("#30ff6a"), Transparency = 0 },
-        ["100"] = { Color = Color3.fromHex("#4A4A4A"), Transparency = 0 },
-    }, { Rotation = 0 }),
-    WindowTopbarAuthor = WindUI:Gradient({
-        ["0"] = { Color = Color3.fromHex("#30ff6a"), Transparency = 0 },
-        ["100"] = { Color = Color3.fromHex("#4A4A4A"), Transparency = 0 },
-    }, { Rotation = 0 }),
-    WindowTopbarIcon = Color3.fromHex("FFFFFF"), -- Text
-    
-    TabBackground = Color3.fromHex("#FFFFFF"), -- Text
-    TabTitle = Color3.fromHex("#FFFFFF"),  
-    TabIcon = WindUI:Gradient({
-        ["0"] = { Color = Color3.fromHex("#30ff6a"), Transparency = 0 },
-        ["100"] = { Color = Color3.fromHex("#4A4A4A"), Transparency = 0 },
-    }, { Rotation = 0 }),    
-    
-    ElementBackground = Color3.fromHex("#FFFFFF"), -- Text
-    ElementTitle = Color3.fromHex("#FFFFFF"),
-    ElementDesc = Color3.fromHex("#FFFFFF"), -- Text
-    ElementIcon = Color3.fromHex("#a1a1aa"), -- Icon 
-    
-    PopupBackground = Color3.fromHex("#101010"), -- Background
-    PopupBackgroundTransparency = 0, -- BackgroundTransparency
-    PopupTitle = WindUI:Gradient({
-        ["0"] = { Color = Color3.fromHex("#30ff6a"), Transparency = 0 },
-        ["100"] = { Color = Color3.fromHex("#4A4A4A"), Transparency = 0 },
-    }, { Rotation = 0 }),
-    PopupContent = Color3.fromHex("#FFFFFF"), -- Text
-    PopupIcon = Color3.fromHex("#a1a1aa"), -- Icon
-    
-})
-
-local Window = WindUI:CreateWindow({
-    Title = "AlienHub",
-    Icon = "rbxassetid://110242772816568",
-    IconSize = 40,
-    Author = "Evade By: Gibssss",
-    Folder = "AlienConfig",
-    Transparent = true,
-    HideSearchBar = false,
-    Theme = "Alien",
-    User = {
-        Enabled = true,
-        Anonymous = false,
-        Callback = function()
-        end,
-    },
-})
-
-Window:Tag({
-    Title = "BETA",
-    Color = Color3.fromHex("#30ff6a"),
-    Radius = 13,
-})
-
-Window:EditOpenButton({
-    Title = "Alien",
-    Icon = "rbxassetid://110242772816568",
-    CornerRadius = UDim.new(0,16),
-    StrokeThickness = 2,
-    Color = ColorSequence.new(
-        Color3.fromHex("30ff6a"), 
-        Color3.fromHex("4A4A4A")
-    ),
-    OnlyMobile = false,
-    Enabled = true,
-    Draggable = true,
-})
-
-local RunService = game:GetService("RunService")
-local Players = game:GetService("Players")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local HttpService = game:GetService("HttpService")
-local VirtualUser = game:GetService("VirtualUser")
-local VirtualInputManager = game:GetService("VirtualInputManager")
-
-local Player = Players.LocalPlayer
-local PlayerGui = Player:WaitForChild("PlayerGui")
-local Character = Player.Character or Player.CharacterAdded:Wait()
-local Humanoid = Character:WaitForChild("Humanoid")
-local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
-local Backpack = Player:WaitForChild("Backpack")
-
-local InfoTab = Window:Tab({Title = "Information", Icon = "info" })
-local Section = InfoTab:Section({Title = "JOIN Discord:", Icon = "info",TextXAlignment = "Left",TextSize = 17,})
-
-local InviteCode = "ZJwTMvkV2z"
-local DiscordAPI = "https://discord.com/api/v10/invites/" .. InviteCode .. "?with_counts=true&with_expiration=true"
-
-local Response
-local ErrorMessage = nil
-
-xpcall(function()
-    Response = game:GetService("HttpService"):JSONDecode(WindUI.Creator.Request({
-        Url = DiscordAPI,
-        Method = "GET",
-        Headers = {
-            ["Accept"] = "application/json"
-        }
-    }).Body)
-end, function(err)
-    warn("err fetching discord info: " .. tostring(err))
-    ErrorMessage = tostring(err)
-    Response = nil
-end)
-
-if Response and Response.guild then
-    local ParagraphConfig = {
-        Title = Response.guild.name,
-        Desc =
-            ' <font color="#52525b">•</font> Member Count: ' .. tostring(Response.approximate_member_count) ..
-            '\n <font color="#16a34a">•</font> Online Count: ' .. tostring(Response.approximate_presence_count)
-        ,
-        Image = "https://cdn.discordapp.com/icons/" .. Response.guild.id .. "/" .. Response.guild.icon .. ".png?size=256",
-        ImageSize = 42,
-        Buttons = {
-            {
-                Icon = "link",
-                Title = "Copy Discord Invite",
-                Callback = function()
-                    pcall(function()
-                        setclipboard("https://discord.gg/" .. InviteCode)
-                    end)
-                end
-            },
-            {
-                Icon = "refresh-cw",
-                Title = "Update Info",
-                Callback = function()
-                    xpcall(function()
-                        local UpdatedResponse = game:GetService("HttpService"):JSONDecode(WindUI.Creator.Request({
-                            Url = DiscordAPI,
-                            Method = "GET",
-                        }).Body)
-                        
-                        if UpdatedResponse and UpdatedResponse.guild then
-                            DiscordInfo:SetDesc(
-                                ' <font color="#52525b">•</font> Member Count: ' .. tostring(UpdatedResponse.approximate_member_count) ..
-                                '\n <font color="#16a34a">•</font> Online Count: ' .. tostring(UpdatedResponse.approximate_presence_count)
-                            )
-                        end
-                    end, function(err)
-                        warn("err updating discord info: " .. tostring(err))
-                    end)
-                end
-            }
-        }
-    }
-    
-    if Response.guild.banner then
-        ParagraphConfig.Thumbnail = "https://cdn.discordapp.com/banners/" .. Response.guild.id .. "/" .. Response.guild.banner .. ".png?size=256"
-        ParagraphConfig.ThumbnailSize = 80
+    if ok then
+        WindUI = result
+    else 
+        WindUI = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
     end
-    
-    local DiscordInfo = InfoTab:Paragraph(ParagraphConfig)
-else
-    InfoTab:Paragraph({
-        Title = "Error when receiving information about the Discord server",
-        Desc = ErrorMessage or "Unknown error occurred",
-        Image = "triangle-alert",
-        ImageSize = 26,
-        Color = "Red",
-    })
 end
+
+
+-- Localization setup
+-- Set WindUI properties
+WindUI.TransparencyValue = 0.2
+WindUI:SetTheme("Dark")
+
+-- Create WindUI window
+local Window = WindUI:CreateWindow({
+    NewElements = true,
+    Title = "Dara Hub | Evade",
+    Icon = "rbxassetid://137330250139083",
+    Author = "Made by: Pnsdg And Yomka",
+    Folder = "DaraHub/Games/Evade",
+    Size = UDim2.fromOffset(580, 490),
+    Theme = "Dark",
+    HidePanelBackground = false,
+    Acrylic = false,
+    HideSearchBar = false,
+    SideBarWidth = 200
+})
+local isWindowOpen = false
+local function updateWindowOpenState()
+    if Window and type(Window.IsOpen) == "function" then
+        local ok, val = pcall(function() return Window:IsOpen() end)
+        if ok and type(val) == "boolean" then
+            isWindowOpen = val
+            return
+        end
+    end
+    if Window and Window.Opened ~= nil then
+        isWindowOpen = Window.Opened
+        return
+    end
+    isWindowOpen = isWindowOpen or false
+end
+
+pcall(updateWindowOpenState)
+featureStates = featureStates or {}
+if featureStates.DisableCameraShake == nil then
+    featureStates.DisableCameraShake = false
+end
+Window:SetIconSize(48)
+Window:Tag({
+    Title = "V1.3.9",
+    Color = Color3.fromHex("#30ff6a")
+})
+--[[
+Window:Tag({
+Title = "Beta",
+Color = Color3.fromHex("#315dff")
+})
+]]
+
+Window:CreateTopbarButton("theme-switcher", "moon", function()
+    WindUI:SetTheme(WindUI:GetCurrentTheme() == "Dark" and "Light" or "Dark")
+end, 990)
 
 -- Services
 local Players = game:GetService("Players")
