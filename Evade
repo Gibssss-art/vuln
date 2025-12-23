@@ -1,3 +1,10 @@
+    setfpscap(240)
+else
+    warn("Your exploit does not support setfpscap.")
+end
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Nash29197/Alien/refs/heads/main/%25%25%25%25%25"))()
+
 if getgenv().AlienHubExecuted then
     return
 end
@@ -75,7 +82,7 @@ WindUI:SetTheme("Dark")
 local Window = WindUI:CreateWindow({
     NewElements = true,
     Title = "AlienHub | Evade",
-    Icon = "rbxassetid://137330250139083",
+    Icon = "rbxassetid://110242772816568",
     Author = "Made by: Gibsss",
     Folder = "AlienHub/Games/Evade",
     Size = UDim2.fromOffset(580, 490),
@@ -108,7 +115,7 @@ if featureStates.DisableCameraShake == nil then
 end
 Window:SetIconSize(48)
 Window:Tag({
-    Title = "V1",
+    Title = "BETA",
     Color = Color3.fromHex("#30ff6a")
 })
 --[[
