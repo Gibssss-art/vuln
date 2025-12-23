@@ -1,4 +1,5 @@
-    setfpscap(240)
+if setfpscap then
+  setfpscap(240)
 else
     warn("Your exploit does not support setfpscap.")
 end
