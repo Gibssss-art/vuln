@@ -4027,7 +4027,7 @@ TimerDisplayToggle = Tabs.Visuals:Toggle({
     Tabs.Visuals:Divider()
     
     local cosmetic1, cosmetic2 = "" --made by @itzme_gibsss
- discord server https://discord.com/invite/ZJwTMvkV2z
+ discord server https://discord.gg/ZJwTMvkV2z
     local originalCosmetic1, originalCosmetic2 = "", ""
     local isSwapped = false
     
