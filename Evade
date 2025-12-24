@@ -1553,7 +1553,8 @@ end
     ESP = FeatureSection:Tab({ Title = "ESP", Icon = "eye" }),
     Utility = FeatureSection:Tab({ Title = "Utility", Icon = "wrench"}),
     Teleport = FeatureSection:Tab({ Title = "Teleport", Icon = "navigation" }),
-    Settings = FeatureSection:Tab({ Title = "Settings", Icon = "settings" })    
+    Settings = FeatureSection:Tab({ Title = "Settings", Icon = "settings" }),
+    
 }
 
 
@@ -1581,7 +1582,6 @@ Tabs.Main:Button({
     Callback = function()
         local serverLink = getServerLink()
         pcall(function()
-            setclipboard(serverLink)
         end)
         WindUI:Notify({
                 Icon = "link",
@@ -4024,7 +4024,6 @@ TimerDisplayToggle = Tabs.Visuals:Toggle({
     Tabs.Visuals:Section({ Title = "Cosmetics Changer", TextSize = 20 })
     Tabs.Visuals:Divider()
     
-    local cosmetic1, cosmetic2 = "" --made by @.scv8 discord server https://discord.gg/RBZVmT6UKs
     local originalCosmetic1, originalCosmetic2 = "", ""
     local isSwapped = false
     
@@ -11567,6 +11566,38 @@ FPSCounter = game:GetService("CoreGui"):FindFirstChild("FPSCounter")
 if FPSCounter and FPSCounter:IsA("ScreenGui") then
     FPSCounterToggle:Set(FPSCounter.Enabled)
 end
+do
+     InviteCode = "ny6pJgnR6c"
+     DiscordAPI = "https://discord.com/api/v10/invites/" .. InviteCode .. "?with_counts=true&with_expiration=true"
+
+     success = pcall(function()
+        Response = game:GetService("HttpService"):JSONDecode(request({
+            Url = DiscordAPI,
+            Method = "GET"
+        }).Body)
+        return Response
+    end)
+    
+    if success and Response and Response.guild then
+    Flag = "DiscordServerParagraph",
+            Desc = tostring(Response.guild.description),
+            Image = "https://cdn.discordapp.com/icons/" .. Response.guild.id .. "/" .. Response.guild.icon .. ".png?size=1024",
+            -- Thumbnail = "https://cdn.discordapp.com/banners/1300692552005189632/35981388401406a4b7dffd6f447a64c4.png?size=512",
+            ImageSize = 48,
+            Buttons = {
+                {
+                    Title = "Copy link",
+                    Icon = "link",
+                    Callback = function()
+                    end
+                }
+            }
+        })
+    end
+end
+    Window:SelectTab(1)
+end
+
 
 
 setupGui()
