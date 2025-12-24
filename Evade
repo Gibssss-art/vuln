@@ -1546,6 +1546,7 @@ end
     local FeatureSection = Window:Section({ Title = "Features", Opened = true })
 
     local Tabs = {
+    info = FeatureSection:Tab({ Title = "info", Icon = "info" })
     Main = FeatureSection:Tab({ Title = "Main", Icon = "layout-grid" }),
     Player = FeatureSection:Tab({ Title = "Player", Icon = "user" }),
     Auto = FeatureSection:Tab({ Title = "Auto", Icon = "repeat-2" }),
@@ -1554,7 +1555,6 @@ end
     Utility = FeatureSection:Tab({ Title = "Utility", Icon = "wrench"}),
     Teleport = FeatureSection:Tab({ Title = "Teleport", Icon = "navigation" }),
     Settings = FeatureSection:Tab({ Title = "Settings", Icon = "settings" }),
-    info = FeatureSection:Tab({ Title = "info", Icon = "info" })
     
 }
 
