@@ -4026,7 +4026,7 @@ TimerDisplayToggle = Tabs.Visuals:Toggle({
     Tabs.Visuals:Section({ Title = "Cosmetics Changer", TextSize = 20 })
     Tabs.Visuals:Divider()
     
-    local cosmetic1, cosmetic2 = "" --made by @itzme_gibsss discord server https://discord.gg/ZJwTMvkV2z
+    local cosmetic1, cosmetic2 = "" --made by @.scv8 discord server https://discord.gg/RBZVmT6UKs
     local originalCosmetic1, originalCosmetic2 = "", ""
     local isSwapped = false
     
@@ -11570,7 +11570,7 @@ if FPSCounter and FPSCounter:IsA("ScreenGui") then
     FPSCounterToggle:Set(FPSCounter.Enabled)
 end
 do
-     InviteCode = "ZJwTMvkV2z"
+     InviteCode = "ny6pJgnR6c"
      DiscordAPI = "https://discord.com/api/v10/invites/" .. InviteCode .. "?with_counts=true&with_expiration=true"
 
      success = pcall(function()
@@ -11583,7 +11583,7 @@ do
     
     if success and Response and Response.guild then
         Tabs.info:Section({
-            Title = "Join Our Discord Server",
+            Title = "Join My Discord Server",
             TextSize = 20,
         })
          DiscordServerParagraph = Tabs.info:Paragraph({
