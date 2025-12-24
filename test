@@ -48,59 +48,7 @@ end;
 
 ------------- Global API Setup -------------
 
-GG.ExecName = (identifyexecutor and identifyexecutor()) or "nil";
-GG.Load_Icona = false;
-GG.ScriptCache = {};
 
-ScriptCache.gcF = {};
-ScriptCache.userIdentify = {
-    is_loaded_lc = false;
-
-    device = nil;
-
-    is_Internal = nil;
-    is_executor_WhiteList = nil;
-
-    gcF = false;
-
-    unc_infos = false;
-};
-ScriptCache.AutoConfigPathCache = {};
-
-GG.include = function(globalOrName:string, as:string)
-    if not AssetStorage then return; end; local fn:(any)->(any)=nil;
-    if type(globalOrName) == 'function' then fn = globalOrName;
-    elseif type(globalOrName) == 'string' then
-        local found = AssetStorage[globalOrName];
-        if type(found) ~= 'function' then return; end;
-        fn = found;
-    else return; end;
-    local result = fn();
-    if result and as then
-    GG[as] = result; return;
-    else return result; end;
-end;
-
-ScriptCache.userIdentify.gcF = {};
-ScriptCache.userIdentify.gcF.is_Internal = function(...): boolean? return GG.ScriptCache.userIdentify.is_Internal; end;
-ScriptCache.userIdentify.gcF.get_device = function(...): boolean? return GG.ScriptCache.userIdentify.device; end;
-ScriptCache.userIdentify.gcF.is_exec_white = function(...): boolean? return GG.ScriptCache.userIdentify.is_executor_WhiteList; end;
-ScriptCache.userIdentify.gcF.getunc_infos = function(...): boolean? return GG.ScriptCache.userIdentify.unc_infos; end;
-
-ScriptCache.userIdentify.secureEnv = function(index: string, env: (...any) -> nil): nil
-    if clonefunction and env and type(env) == 'function' then
-        GG[index] = clonefunction(env);
-    else
-        GG[index] = env;
-    end;
-end;
-ScriptCache.userIdentify.secureEnvS = function(index: string, service : string): nil
-    if cloneref and service then
-        GG[index] = cloneref(GetService(game, service));
-    else
-        GG[index] = service;
-    end;
-end;
 
 ------------- LC Loader -------------
 
