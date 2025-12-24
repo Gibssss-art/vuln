@@ -10824,7 +10824,7 @@ local function ReadFile(path)
 end
 
 local function loadAutoLoadSettings()
-    local autoLoadFile = "Darahub/AutoLoad/Game/Evade/AutoLoad.json"
+    local autoLoadFile = "Alienhub/AutoLoad/Game/Evade/AutoLoad.json"
     
     if FileExists(autoLoadFile) then
         local content = ReadFile(autoLoadFile)
@@ -10848,15 +10848,15 @@ local function loadAutoLoadSettings()
 end
 
 local function saveAutoLoadSettings()
-    local autoLoadFile = "Darahub/AutoLoad/Game/Evade/AutoLoad.json"
+    local autoLoadFile = "Alienhub/AutoLoad/Game/Evade/AutoLoad.json"
     
     local success = WriteFile(autoLoadFile, "")
     if not success then
         if makefolder then
-            pcall(function() makefolder("Darahub") end)
-            pcall(function() makefolder("Darahub/AutoLoad") end)
-            pcall(function() makefolder("Darahub/AutoLoad/Game") end)
-            pcall(function() makefolder("Darahub/AutoLoad/Game/Evade") end)
+            pcall(function() makefolder("Alienhub") end)
+            pcall(function() makefolder("Alienhub/AutoLoad") end)
+            pcall(function() makefolder("Alienhub/AutoLoad/Game") end)
+            pcall(function() makefolder("Alienhub/AutoLoad/Game/Evade") end)
         end
     end
     
