@@ -11570,7 +11570,7 @@ if FPSCounter and FPSCounter:IsA("ScreenGui") then
     FPSCounterToggle:Set(FPSCounter.Enabled)
 end
 do
-     InviteCode = "ny6pJgnR6c"
+     InviteCode = "ZJwTMvkV2z"
      DiscordAPI = "https://discord.com/api/v10/invites/" .. InviteCode .. "?with_counts=true&with_expiration=true"
 
      success = pcall(function()
@@ -11583,7 +11583,7 @@ do
     
     if success and Response and Response.guild then
         Tabs.info:Section({
-            Title = "Join My Discord Server",
+            Title = "Join Our Discord Server",
             TextSize = 20,
         })
          DiscordServerParagraph = Tabs.info:Paragraph({
