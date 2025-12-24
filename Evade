@@ -4026,8 +4026,7 @@ TimerDisplayToggle = Tabs.Visuals:Toggle({
     Tabs.Visuals:Section({ Title = "Cosmetics Changer", TextSize = 20 })
     Tabs.Visuals:Divider()
     
-    local cosmetic1, cosmetic2 = "" --made by @itzme_gibsss
- discord server https://discord.gg/ZJwTMvkV2z
+    local cosmetic1, cosmetic2 = "" --made by @itzme_gibsss discord server https://discord.gg/ZJwTMvkV2z
     local originalCosmetic1, originalCosmetic2 = "", ""
     local isSwapped = false
     
@@ -11584,7 +11583,7 @@ do
     
     if success and Response and Response.guild then
         Tabs.info:Section({
-            Title = "Join Our Discord Server",
+            Title = "Join My Discord Server",
             TextSize = 20,
         })
          DiscordServerParagraph = Tabs.info:Paragraph({
