@@ -210,7 +210,7 @@ if _G.FastAttack then
         end
 
         task.spawn(function()
-            while task.wait(Settings.ClickDelay) do
+            while Settings.AutoClick and task.wait(Settings.ClickDelay) do
                 if Settings.AutoClick then
                     FastAttack:BladeHits()
                 end
@@ -266,7 +266,7 @@ if game.PlaceId == 2753915549 then
     end
 
          function MaterialMon()
-         if _G.SelectMaterial == "Radiactive Material" then
+         if _G.SelectMaterial == "Radioactive Material" then
                MMon = "Factory Staff"
 	            MPos = CFrame.new(-105.889565, 72.8076935, -670.247986, -0.965929747, 0, -0.258804798, 0, 1, 0, 0.258804798, 0, -0.965929747)
 				SP = "Bar"
@@ -435,7 +435,7 @@ if game.PlaceId == 2753915549 then
                 NameMon = "Prisoner"
                 CFrameQuest = CFrame.new(5308.93115, 1.65517521, 475.120514, -0.0894274712, -5.00292918e-09, -0.995993316, 1.60817859e-09, 1, -5.16744869e-09, 0.995993316, -2.06384709e-09, -0.0894274712)
                 CFrameMon = CFrame.new(5098.9736328125, -0.3204058110713959, 474.2373352050781)
-            elseif (MyLevel >= 210 and MyLevel <= 249) or SelectMonster == "Dangerous Prisone" then
+            elseif (MyLevel >= 210 and MyLevel <= 249) or SelectMonster == "Dangerous Prisoner" then
                 Mon = "Dangerous Prisoner"
                 LevelQuest = 2
                 NameQuest = "PrisonerQuest"
@@ -7532,7 +7532,10 @@ Tabs.DragonTab:Toggle({
   local TweenService = game:GetService("TweenService")
 local VirtualInputManager = game:GetService("VirtualInputManager")
 local player = game.Players.LocalPlayer
-local char = player.Character or player.CharacterAdded:Wait()
+local char = player.Character
+if not char then
+    char = player.CharacterAdded:Wait()
+end
 local humanoid = char:FindFirstChildOfClass("Humanoid")
 
 local Positions = {
