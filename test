@@ -10033,7 +10033,7 @@ Tabs.TeleportTab:Toggle({
                 elseif _G.SelectIsland == "Mini Sky Island" then
                     topos(CFrame.new(-288.74060058594, 49326.31640625, -35248.59375))
                 elseif _G.SelectIsland == "Great Tree" then
-                    topos(CFrame.new(2433.2736816406, 136.8092041016, -6701.9853515625))
+                    topos(CFrame.new(2432.810, 136.274, -6707.273))
                 elseif _G.SelectIsland == "Castle On The Sea" then
                     topos(CFrame.new(-5074.45556640625, 314.5155334472656, -2991.054443359375))
                 elseif _G.SelectIsland == "MiniSky" then
