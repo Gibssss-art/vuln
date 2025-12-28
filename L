@@ -1,86 +1,160 @@
--- Services
 local Players = game:GetService("Players")
-local UserInputService = game:GetService("UserInputService")
-
 local player = Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local hrp = character:WaitForChild("HumanoidRootPart")
 
--- GUI
-local gui = Instance.new("ScreenGui")
-gui.Name = "CFrameCopier"
-gui.ResetOnSpawn = false
-gui.Parent = game.CoreGui -- PlayerGui if not exploiting
-
-local button = Instance.new("TextButton")
-button.Parent = gui
-button.Size = UDim2.new(0, 170, 0, 45)
-button.Position = UDim2.new(0, 30, 0.5, -22)
-button.Text = "Copy CFrame"
-button.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-button.TextColor3 = Color3.fromRGB(255, 255, 255)
-button.Font = Enum.Font.GothamBold
-button.TextSize = 16
-button.BorderSizePixel = 0
-
--- Rounded corners
-local corner = Instance.new("UICorner")
-corner.CornerRadius = UDim.new(0, 10)
-corner.Parent = button
-
--- 🖱️ Drag logic
-local dragging = false
-local dragStart
-local startPos
-
-local function update(input)
-    local delta = input.Position - dragStart
-    button.Position = UDim2.new(
-        startPos.X.Scale,
-        startPos.X.Offset + delta.X,
-        startPos.Y.Scale,
-        startPos.Y.Offset + delta.Y
-    )
+-- Get HRP safely
+local function getHRP()
+	local char = player.Character or player.CharacterAdded:Wait()
+	return char:WaitForChild("HumanoidRootPart")
 end
 
-button.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1
-    or input.UserInputType == Enum.UserInputType.Touch then
-        dragging = true
-        dragStart = input.Position
-        startPos = button.Position
+-- ===== GUI =====
+local gui = Instance.new("ScreenGui")
+gui.Name = "CFrameCopyGui"
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
 
-        input.Changed:Connect(function()
-            if input.UserInputState == Enum.UserInputState.End then
-                dragging = false
-            end
-        end)
-    end
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 260, 0, 150)
+frame.Position = UDim2.new(0.05, 0, 0.4, 0)
+frame.BackgroundColor3 = Color3.fromRGB(30,30,30)
+frame.Active = true
+frame.Draggable = true
+frame.Parent = gui
+
+-- TextBox (shows CFrame)
+local box = Instance.new("TextBox")
+box.Size = UDim2.new(1, -20, 0, 50)
+box.Position = UDim2.new(0, 10, 0, 10)
+box.ClearTextOnFocus = false
+box.TextEditable = true
+box.TextWrapped = true
+box.TextScaled = true
+box.BackgroundColor3 = Color3.fromRGB(45,45,45)
+box.TextColor3 = Color3.new(1,1,1)
+box.Text = "Click Copy CFrame"
+box.Parent = frame
+
+-- Copy Button
+local copyBtn = Instance.new("TextButton")
+copyBtn.Size = UDim2.new(1, -20, 0, 40)
+copyBtn.Position = UDim2.new(0, 10, 0, 70)
+copyBtn.Text = "Copy CFrame"
+copyBtn.TextScaled = true
+copyBtn.BackgroundColor3 = Color3.fromRGB(60,180,120)
+copyBtn.TextColor3 = Color3.new(1,1,1)
+copyBtn.Parent = frame
+
+-- ===== COPY LOGIC =====
+copyBtn.MouseButton1Click:Connect(function()
+	local hrp = getHRP()
+	local cf = hrp.CFrame
+
+	-- Clean, reusable format
+	local text = string.format(
+		"CFrame.new(%.3f, %.3f, %.3f)",
+		cf.X, cf.Y, cf.Z
+	)
+
+	box.Text = text
+	box:CaptureFocus()
+	box.CursorPosition = #box.Text + 1
 end)
 
-button.InputChanged:Connect(function(input)
-    if dragging and
-       (input.UserInputType == Enum.UserInputType.MouseMovement
-       or input.UserInputType == Enum.UserInputType.Touch) then
-        update(input)
-    end
-end)
 
--- 📋 Copy CFrame
-button.MouseButton1Click:Connect(function()
-    local cf = hrp.CFrame
-    local text = string.format(
-        "CFrame.new(%.3f, %.3f, %.3f)",
-        cf.X, cf.Y, cf.Z
-    )
 
-    if setclipboard then
-        setclipboard(text)
-        button.Text = "Copied!"
-        task.delay(1, function()
-            button.Text = "Copy CFrame"
-        end)
-    else
-        warn("Clipboard not supported")
-    end
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+
+local player = Players.LocalPlayer
+
+-- Get HRP safely
+local function getHRP()
+	local char = player.Character or player.CharacterAdded:Wait()
+	return char:WaitForChild("HumanoidRootPart")
+end
+
+-- ===== GUI =====
+local gui = Instance.new("ScreenGui")
+gui.Name = "PasteCFrameGui"
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
+
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 280, 0, 180)
+frame.Position = UDim2.new(0.05, 0, 0.35, 0)
+frame.BackgroundColor3 = Color3.fromRGB(30,30,30)
+frame.Active = true
+frame.Draggable = true
+frame.Parent = gui
+
+-- TextBox
+local box = Instance.new("TextBox")
+box.Size = UDim2.new(1, -20, 0, 70)
+box.Position = UDim2.new(0, 10, 0, 10)
+box.ClearTextOnFocus = false
+box.TextWrapped = true
+box.TextScaled = true
+box.Text = "Paste CFrame here"
+box.BackgroundColor3 = Color3.fromRGB(45,45,45)
+box.TextColor3 = Color3.new(1,1,1)
+box.Parent = frame
+
+-- Tween Button
+local tpBtn = Instance.new("TextButton")
+tpBtn.Size = UDim2.new(1, -20, 0, 50)
+tpBtn.Position = UDim2.new(0, 10, 0, 100)
+tpBtn.Text = "Tween Teleport"
+tpBtn.TextScaled = true
+tpBtn.BackgroundColor3 = Color3.fromRGB(70,130,255)
+tpBtn.TextColor3 = Color3.new(1,1,1)
+tpBtn.Parent = frame
+
+-- ===== PARSE CFRAME =====
+local function parseCFrame(text)
+	text = text:gsub("CFrame.new", ""):gsub("[%(%)]", "")
+	local nums = {}
+
+	for n in text:gmatch("[-%d%.]+") do
+		table.insert(nums, tonumber(n))
+	end
+
+	if #nums >= 3 then
+		return CFrame.new(nums[1], nums[2], nums[3])
+	end
+end
+
+-- ===== TWEEN =====
+local function TweenToCFrame(cf)
+	local hrp = getHRP()
+
+	local tweenInfo = TweenInfo.new(
+		1.5,
+		Enum.EasingStyle.Quad,
+		Enum.EasingDirection.Out
+	)
+
+	local tween = TweenService:Create(
+		hrp,
+		tweenInfo,
+		{CFrame = cf}
+	)
+
+	tween:Play()
+end
+
+-- ===== BUTTON =====
+tpBtn.MouseButton1Click:Connect(function()
+	local cf = parseCFrame(box.Text)
+	if cf then
+		TweenToCFrame(cf)
+		tpBtn.Text = "Teleporting..."
+		task.delay(1.5, function()
+			tpBtn.Text = "Tween Teleport"
+		end)
+	else
+		tpBtn.Text = "Invalid CFrame"
+		task.delay(1, function()
+			tpBtn.Text = "Tween Teleport"
+		end)
+	end
 end)
