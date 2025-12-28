@@ -3092,6 +3092,83 @@ function CheckItemBPCRBPCR(name)
         end
     end
 end
+
+Tabs.MainTab:Button({
+    Title = "Rejoin Server",
+    Desc = "To Rejoin",
+    Locked = false,
+    Callback = function()
+	(game:GetService("TeleportService")):Teleport(game.PlaceId, (game:GetService("Players")).LocalPlayer);
+end);
+
+Tabs.MainTab:Button({
+    Title = "Server Hop",
+    Desc = "Join Random Server",
+    Locked = false,
+    Callback = function()
+	while wait(0.2) do
+		local module = (loadstring(game:HttpGet("https://roblox.farrghii.com/Hop.lua")))();
+		module:Teleport(game.PlaceId, "Singapore");
+	end;
+end);
+
+Tabs.MainTab:Button({
+    Title = "Hop Lower Player",
+    Desc = "Join Random Lowest Server",
+    Locked = false,
+    Callback = function()
+	local module = (loadstring(game:HttpGet("https://raw.githubusercontent.com/raw-scriptpastebin/FE/main/Server_Hop_Settings")))();
+	module:Teleport(game.PlaceId);
+end);
+spawn(function()
+	while wait(0.2) do
+		pcall(function()
+			JobAiDee:Set("Server Job ID : " .. game.JobId);
+		end);
+	end;
+end);
+Tabs.MainTab:Section({ Title = "Server Job ID" })
+Tabs.MainTab:Button({
+    Title = "Copy Server Job ID",
+    Desc = "Click Me",
+    Locked = false,
+    Callback = function()
+	setclipboard(tostring(game.JobId));
+end);
+ServTab:Textbox("Enter Server Job ID", true, function(value)
+	local parseResult = string.gsub(value, "`", "");
+	_G.JobId = parseResult;
+end);
+
+Tabs.MainTab:Button({
+    Title = "Join Sever",
+    Desc = "Click Me",
+    Locked = false,
+    Callback = function()
+	(game:GetService("TeleportService")):TeleportToPlaceInstance(game.placeId, _G.JobId, game.Players.LocalPlayer);
+end);
+
+local Kitsune = Tabs.SeaTab:Paragraph({
+    Title = "Moon",
+    Desc = "Checking Moon status..."
+})
+if World2 or World3 then
+	if World3 then
+		KitsuneStatus = ServTab:Label("Kitsune");
+		FrozenStatus = ServTab:Label("Frozen");
+	end;
+	MirageStatus = ServTab:Label("Mirage");
+	HakiDealer = ServTab:Label("Haki Dealer");
+end;
+
+
+
+
+
+
+
+
+
 Tabs.MainTab:Button({
     Title = "Stop Tween",
     Desc = "For Reset Tween",
