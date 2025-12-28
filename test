@@ -10164,9 +10164,9 @@ Tabs.TeleportTab:Toggle({
                 elseif _G.SelectNPC == "Random Devil Fruit" then
                     topos(CFrame.new(-12491, 337, -7449))
                 elseif _G.SelectNPC == "Blox Fruits Dealer" then
-                    topos(CFrame.new(-12511, 337, -7448))
+                    topos(CFrame.new(-12513, 337, -7450))
                 elseif _G.SelectNPC == "Remove Devil Fruit" then
-                    topos(CFrame.new(-5571, 1089, -2661))
+                    topos(CFrame.new(-5566, 1089, -2664))
                 elseif _G.SelectNPC == "Horned Man" then
                     topos(CFrame.new(-11890, 931, -8760))
                 elseif _G.SelectNPC == "Hungey Man" then
