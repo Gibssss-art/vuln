@@ -23,6 +23,7 @@ local Window = NatUI:CreateWindow({
 
 local Tabs = {}
 Tabs.UpdateTab = Window:Tab({ Title = "New Update", Icon = "badge-dollar-sign" })
+Tabs.ServerTab = Window:Tab({ Title = "Server", Icon = "settings-2" })
 Tabs.MainTab = Window:Tab({ Title = "Main", Icon = "landmark" })
 Tabs.FarmTab = Window:Tab({ Title = "Farm", Icon = "badge-dollar-sign" })
 Tabs.QuestTab = Window:Tab({ Title = "Quest", Icon = "book-key" })
