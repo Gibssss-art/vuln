@@ -1,0 +1,86 @@
+-- Services
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local hrp = character:WaitForChild("HumanoidRootPart")
+
+-- GUI
+local gui = Instance.new("ScreenGui")
+gui.Name = "CFrameCopier"
+gui.ResetOnSpawn = false
+gui.Parent = game.CoreGui -- PlayerGui if not exploiting
+
+local button = Instance.new("TextButton")
+button.Parent = gui
+button.Size = UDim2.new(0, 170, 0, 45)
+button.Position = UDim2.new(0, 30, 0.5, -22)
+button.Text = "Copy CFrame"
+button.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+button.TextColor3 = Color3.fromRGB(255, 255, 255)
+button.Font = Enum.Font.GothamBold
+button.TextSize = 16
+button.BorderSizePixel = 0
+
+-- Rounded corners
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 10)
+corner.Parent = button
+
+-- 🖱️ Drag logic
+local dragging = false
+local dragStart
+local startPos
+
+local function update(input)
+    local delta = input.Position - dragStart
+    button.Position = UDim2.new(
+        startPos.X.Scale,
+        startPos.X.Offset + delta.X,
+        startPos.Y.Scale,
+        startPos.Y.Offset + delta.Y
+    )
+end
+
+button.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1
+    or input.UserInputType == Enum.UserInputType.Touch then
+        dragging = true
+        dragStart = input.Position
+        startPos = button.Position
+
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+            end
+        end)
+    end
+end)
+
+button.InputChanged:Connect(function(input)
+    if dragging and
+       (input.UserInputType == Enum.UserInputType.MouseMovement
+       or input.UserInputType == Enum.UserInputType.Touch) then
+        update(input)
+    end
+end)
+
+-- 📋 Copy CFrame
+button.MouseButton1Click:Connect(function()
+    local cf = hrp.CFrame
+    local text = string.format(
+        "CFrame.new(%.3f, %.3f, %.3f)",
+        cf.X, cf.Y, cf.Z
+    )
+
+    if setclipboard then
+        setclipboard(text)
+        button.Text = "Copied!"
+        task.delay(1, function()
+            button.Text = "Copy CFrame"
+        end)
+    else
+        warn("Clipboard not supported")
+    end
+end)
