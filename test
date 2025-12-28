@@ -3152,22 +3152,6 @@ local Kitsune = Tabs.SeaTab:Paragraph({
     Title = "Moon",
     Desc = "Checking Moon status..."
 })
-if World2 or World3 then
-	if World3 then
-		KitsuneStatus = ServTab:Label("Kitsune");
-		FrozenStatus = ServTab:Label("Frozen");
-	end;
-	MirageStatus = ServTab:Label("Mirage");
-	HakiDealer = ServTab:Label("Haki Dealer");
-end;
-
-
-
-
-
-
-
-
 
 Tabs.MainTab:Button({
     Title = "Stop Tween",
