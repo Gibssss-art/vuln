@@ -10182,7 +10182,7 @@ Tabs.TeleportTab:Toggle({
                 elseif _G.SelectNPC == "Player Hunter" then
                     topos(CFrame.new(-5559, 314, -2840))
                 elseif _G.SelectNPC == "Uzoth" then
-                    topos(CFrame.new(-9785, 852, 6667))
+                    topos(CFrame.new(5670, 1207, 869))
                 end
             until not _G.TeleportNPC
         end
