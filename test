@@ -2243,10 +2243,10 @@ Tabs.MiscTab = Window:Tab({ Title = "Misc", Icon = "settings-2" })
 
 Window:SelectTab(1)
 
-Tabs.HomeTab:Section({
+L_1_[93]Tabs.HomeTab:Section({
 	Title = "Status Server",
 })
-Tabs.HomeTab:Section({
+Time = L_1_[93]Tabs.HomeTab:Section({
 	Title = "Time Zone",
 })
 function UpdateOS()
@@ -2280,7 +2280,7 @@ spawn(function()
 		wait(1)
 	end
 end)
-Tabs.HomeTab:Section({
+Timmessss = L_1_[93]Tabs.HomeTab:Section({
 	Title = "Time",
 })
 function UpdateTime()
