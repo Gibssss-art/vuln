@@ -2243,7 +2243,7 @@ X1:AddParagraph({
     end
 })
 X1 = Tabs.Info:AddSection("Status Server")
-Time = L_1_[93]X1:AddParagraph({
+Time = L_1_[93].X1:AddParagraph({
     Title = "Time Zone",
     Content = "Nigerrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
     Icon = "star",
@@ -2279,7 +2279,7 @@ spawn(function()
 		wait(1)
 	end
 end)
-Timmessss = L_1_[93]X1:AddParagraph({
+Timmessss = L_1_[93].X1:AddParagraph({
     Title = "Time",
     Content = "Chloe Chloe Chloe Chloe",
     Icon = "star",
@@ -2298,7 +2298,7 @@ spawn(function()
 		wait(1)
 	end
 end)
-Miragecheck = L_1_[93]X1:AddParagraph({
+Miragecheck = L_1_[93].X1:AddParagraph({
     Title = "Mirage Island",
     Content = "Status: ",
     Icon = "star",
