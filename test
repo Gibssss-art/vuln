@@ -2228,11 +2228,26 @@ local Tabs = {
     Quest = Window:AddTab({ Name = "Quest", Icon = "user" }),
 }
 
+X1 = Tabs.Info:AddSection("Information")
+X1:AddParagraph({
+    Title = "Join Our Discord",
+    Content = "Join Us!",
+    Icon = "discord",
+    ButtonText = "Copy Discord Link",
+    ButtonCallback = function()
+        local link = "https://discord.gg/nathub"
+        if setclipboard then
+            setclipboard(link)
+            chloex("Successfully Copied!")
+        end
+    end
+})
 X1 = Tabs.Info:AddSection("Status Server")
 X1:AddParagraph({
     Title = "Time Zone",
     Content = "Nigerrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
     Icon = "star",
+})
 function UpdateOS()
 	local L_190_ = {}
 	L_190_[6] = os["date"]("*t")
@@ -2264,7 +2279,57 @@ spawn(function()
 		wait(1)
 	end
 end)
+X1:AddParagraph({
+    Title = "Time",
+    Content = "Chloe Chloe Chloe Chloe",
+    Icon = "star",
 })
+function UpdateTime()
+	local L_191_ = {}
+	L_191_[1] = math["floor"](workspace["DistributedGameTime"] + .5)
+	L_191_[3] = math["floor"](L_191_[1] / 3600) % 24
+	L_191_[2] = math["floor"](L_191_[1] / 60) % 60
+	L_191_[4] = math["floor"](L_191_[1] / 1) % 60
+	Timmessss:SetDesc(L_191_[3] .. (" Hour (h) " .. (L_191_[2] .. (" Minute (m) " .. (L_191_[4] .. " Second (s) ")))))
+end
+spawn(function()
+	while true do
+		UpdateTime()
+		wait(1)
+	end
+end)
+X1:AddParagraph({
+    Title = "Mirage Island",
+    Content = "Status: ",
+    Icon = "star",
+})
+L_1_[77] = ""
+spawn(function()
+	pcall(function()
+		while true do
+			local L_192_ = {}
+			wait(1)
+			L_192_[3] = game["Workspace"]["_WorldOrigin"]["Locations"]:FindFirstChild("Mirage Island") ~= nil
+			L_192_[1] = L_192_[3] and "✅️" or "❌️"
+			if L_192_[1] ~= L_1_[77] then
+				Miragecheck:SetDesc("Status: " .. L_192_[1])
+				L_1_[77] = L_192_[1]
+			end
+		end
+	end)
+end)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
