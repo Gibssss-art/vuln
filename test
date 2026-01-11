@@ -2203,103 +2203,34 @@ QuestNeta = function()
 		[6] = PosQ
 	}
 end
-loadstring([[
-    function LPH_NO_VIRTUALIZE(f) return f end;
-]])();
-local version = LRM_ScriptVersion and "v" .. table.concat(LRM_ScriptVersion:split(""), ".") or "Dev Version"
-local natui_url = game:HttpGet("https://raw.githubusercontent.com/dy1zn4t/bmF0dWk-/refs/heads/main/ui.lua")
-local NatUI = loadstring(natui_url)()
-local IsOnMobile = table.find({Enum.Platform.Android, Enum.Platform.IOS}, game:GetService("UserInputService"):GetPlatform())
-local WindowSize = IsOnMobile and UDim2.fromOffset(528, 334) or UDim2.fromOffset(580, 350)
 
-local Window = NatUI:CreateWindow({
-    Title = "NatHub",
-    Icon = "rbxassetid://99764942615873",
-    Author = (premium and "Premium" or "Blox Fruit") .. " | " .. version,
-    Folder = "NatHub",
-    Size = WindowSize,
-    LiveSearchDropdown = true,
+local Chloex = loadstring(game:HttpGet("https://raw.githubusercontent.com/dy1zn4t/4mVaA8QEMe/refs/heads/main/.lua"))()
+
+local Window = Chloex:Window({
+    Title   = "ChloeX |",                --- title
+    Footer  = "Example",                   --- in right after title
+    Image   = "136505615779937",           ---- rbxassetid (texture)
+    Color   = Color3.fromRGB(0, 208, 255), --- colour text/ui
+    Theme   = 9542022979,                  ---- background for theme ui (rbxassetid)
+    Version = 1,                           --- version config set as default 1 if u remake / rewrite / big update and change name name in your hub change it to 2 and config will reset
 })
 
-
-local Tabs = {}
-Tabs.UpdateTab = Window:Tab({ Title = "Home", Icon = "badge-dollar-sign" })
-Tabs.MainTab = Window:Tab({ Title = "Main", Icon = "landmark" })
-Tabs.FarmTab = Window:Tab({ Title = "Farm", Icon = "badge-dollar-sign" })
-Tabs.QuestTab = Window:Tab({ Title = "Quest", Icon = "book-key" })
-Tabs.ItemTab = Window:Tab({ Title = "Items", Icon = "box" })
-Tabs.FruitTab = Window:Tab({ Title = "Fruit", Icon = "apple" })
-Tabs.RaidTab = Window:Tab({ Title = "Raid", Icon = "vegan" })
-Tabs.PvpTab = Window:Tab({ Title = "Pvp", Icon = "person-standing" })
-Tabs.SeaTab = Window:Tab({ Title = "Sea Event", Icon = "waves" })
-Tabs.ShopTab = Window:Tab({ Title = "Shop", Icon = "store" })
-Tabs.TeleportTab = Window:Tab({ Title = "Teleport", Icon = "scan-barcode" })
-Tabs.VulcanoTab = Window:Tab({ Title = "Vulcano Event", Icon = "mountain-snow" })
-Tabs.DragonTab = Window:Tab({ Title = "Dragon Dojo", Icon = "bone" })
-Tabs.RaceTab = Window:Tab({ Title = "Race", Icon = "bolt" })
-Tabs.EspTab = Window:Tab({ Title = "Esp", Icon = "eye" })
-Tabs.SettingTab = Window:Tab({ Title = "Setting", Icon = "cog" })
-Tabs.MiscTab = Window:Tab({ Title = "Misc", Icon = "settings-2" })
-
-Window:SelectTab(1)
-
-L_1_[93]Tabs.HomeTab:Section({
-	Title = "Status Server",
-})
-Time = L_1_[93]Tabs.HomeTab:Section({
-	Title = "Time Zone",
-})
-function UpdateOS()
-	local L_190_ = {}
-	L_190_[6] = os["date"]("*t")
-	L_190_[4] = L_190_[6]["hour"] % 24
-	L_190_[3] = L_190_[4] < 12 and "AM" or "PM"
-	L_190_[8] = string["format"]("%02i:%02i:%02i %s", (L_190_[4] - 1) % 12 + 1, L_190_[6]["min"], L_190_[6]["sec"], L_190_[3])
-	L_190_[11] = string["format"]("%02d/%02d/%04d", L_190_[6]["day"], L_190_[6]["month"], L_190_[6]["year"])
-	L_190_[9] = game:GetService("LocalizationService")
-	L_190_[1] = game:GetService("Players")
-	L_190_[10] = L_190_[1]["LocalPlayer"]
-	L_190_[12] = L_190_[10]["Name"]
-	if not(getgenv())["countryRegionCode"] then
-		L_190_[7], L_190_[2] = pcall(function()
-			return L_190_[9]:GetCountryRegionForPlayerAsync(L_190_[10])
-		end)
-		if L_190_[7] then
-			(getgenv())["countryRegionCode"] = L_190_[2]
-		else
-			(getgenv())["countryRegionCode"] = "Unknown"
-		end
-	else
-		L_190_[2] = (getgenv())["countryRegionCode"]
-	end
-	Time:SetDesc(L_190_[11] .. (" - " .. (L_190_[8] .. (" [ " .. (L_190_[2] .. " ]")))))
+if Window then
+    than("Window loaded!")
 end
-spawn(function()
-	while true do
-		UpdateOS()
-		wait(1)
-	end
-end)
-Timmessss = L_1_[93]Tabs.HomeTab:Section({
-	Title = "Time",
-})
-function UpdateTime()
-	local L_191_ = {}
-	L_191_[1] = math["floor"](workspace["DistributedGameTime"] + .5)
-	L_191_[3] = math["floor"](L_191_[1] / 3600) % 24
-	L_191_[2] = math["floor"](L_191_[1] / 60) % 60
-	L_191_[4] = math["floor"](L_191_[1] / 1) % 60
-	Timmessss:SetDesc(L_191_[3] .. (" Hour (h) " .. (L_191_[2] .. (" Minute (m) " .. (L_191_[4] .. " Second (s) ")))))
-end
-spawn(function()
-	while true do
-		UpdateTime()
-		wait(1)
-	end
-end)
-Tabs.HomeTab:Section({
-	Title = "Time",
-})
+
+local Tabs = {
+    Info = Window:AddTab({ Name = "Info", Icon = "player" }), --- rbxassetid / robloxassetid (decals - texture)
+    Main = Window:AddTab({ Name = "Main", Icon = "user" }),
+}
+
+
+
+
+
+
+
+
 
 
 
