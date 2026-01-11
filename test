@@ -2233,7 +2233,6 @@ X1:AddParagraph({
     Title = "Time Zone",
     Content = "Nigerrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
     Icon = "star",
-})
 function UpdateOS()
 	local L_190_ = {}
 	L_190_[6] = os["date"]("*t")
@@ -2265,6 +2264,8 @@ spawn(function()
 		wait(1)
 	end
 end)
+})
+
 
 
 
