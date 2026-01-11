@@ -2220,8 +2220,12 @@ if Window then
 end
 
 local Tabs = {
-    Home = Window:AddTab({ Name = "Home", Icon = "player" }), --- rbxassetid / robloxassetid (decals - texture)
+    Info = Window:AddTab({ Name = "Info", Icon = "player" }), --- rbxassetid / robloxassetid (decals - texture)
     Main = Window:AddTab({ Name = "Main", Icon = "user" }),
+    Farming = Window:AddTab({ Name = "Farming", Icon = "user" }),
+    Settings = Window:AddTab({ Name = "Settings", Icon = "user" }),
+    Fishing = Window:AddTab({ Name = "Fishing", Icon = "user" }),
+    Quest = Window:AddTab({ Name = "Quest", Icon = "user" }),
 }
 
 
