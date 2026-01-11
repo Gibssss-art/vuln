@@ -2220,7 +2220,7 @@ if Window then
 end
 
 local Tabs = {
-    Info = Window:AddTab({ Name = "Info", Icon = "player" }), --- rbxassetid / robloxassetid (decals - texture)
+    Home = Window:AddTab({ Name = "Home", Icon = "player" }), --- rbxassetid / robloxassetid (decals - texture)
     Main = Window:AddTab({ Name = "Main", Icon = "user" }),
 }
 
