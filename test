@@ -2243,41 +2243,50 @@ X1:AddParagraph({
     end
 })
 X1 = Tabs.Info:AddSection("Status Server")
+
 local countryRegionCode = X1:AddParagraph({
     Title = "Time Zone",
-    Content = "Nigerrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
+    Content = "Loading...",
     Icon = "star",
 })
+
+local Time = countryRegionCode
+
 function UpdateOS()
-	local L_190_ = {}
-	L_190_[6] = os["date"]("*t")
-	L_190_[4] = L_190_[6]["hour"] % 24
-	L_190_[3] = L_190_[4] < 12 and "AM" or "PM"
-	L_190_[8] = string["format"]("%02i:%02i:%02i %s", (L_190_[4] - 1) % 12 + 1, L_190_[6]["min"], L_190_[6]["sec"], L_190_[3])
-	L_190_[11] = string["format"]("%02d/%02d/%04d", L_190_[6]["day"], L_190_[6]["month"], L_190_[6]["year"])
-	L_190_[9] = game:GetService("LocalizationService")
-	L_190_[1] = game:GetService("Players")
-	L_190_[10] = L_190_[1]["LocalPlayer"]
-	L_190_[12] = L_190_[10]["Name"]
-	if not(getgenv())["countryRegionCode"] then
-		L_190_[7], L_190_[2] = pcall(function()
-			return L_190_[9]:GetCountryRegionForPlayerAsync(L_190_[10])
-		end)
-		if L_190_[7] then
-			(getgenv())["countryRegionCode"] = L_190_[2]
-		else
-			(getgenv())["countryRegionCode"] = "Unknown"
-		end
-	else
-		L_190_[2] = (getgenv())["countryRegionCode"]
-	end
-	Time:SetDesc(L_190_[11] .. (" - " .. (L_190_[8] .. (" [ " .. (L_190_[2] .. " ]")))))
+    local L_190_ = {}
+    L_190_[6] = os.date("*t")
+    L_190_[4] = L_190_[6]["hour"] % 24
+    L_190_[3] = L_190_[4] < 12 and "AM" or "PM"
+    L_190_[8] = string.format("%02i:%02i:%02i %s", (L_190_[4] - 1) % 12 + 1, L_190_[6]["min"], L_190_[6]["sec"], L_190_[3])
+    L_190_[11] = string.format("%02d/%02d/%04d", L_190_[6]["day"], L_190_[6]["month"], L_190_[6]["year"])
+    L_190_[9] = game:GetService("LocalizationService")
+    L_190_[1] = game:GetService("Players")
+    L_190_[10] = L_190_[1].LocalPlayer
+    L_190_[12] = L_190_[10].Name
+
+    if not getgenv().countryRegionCode then
+        local success, result = pcall(function()
+            return L_190_[9]:GetCountryRegionForPlayerAsync(L_190_[10])
+        end)
+        if success and result then
+            getgenv().countryRegionCode = result
+        else
+            getgenv().countryRegionCode = "Unknown"
+        end
+    end
+
+    local countryCode = getgenv().countryRegionCode or "Unknown"
+
+    if Time and typeof(Time.SetDesc) == "function" then
+        Time:SetDesc(L_190_[11] .. " - " .. L_190_[8] .. " [ " .. countryCode .. " ]")
+    end
 end
+
 spawn(function()
-	while true do
-		UpdateOS()
-		wait(1)
-	end
+    while true do
+        UpdateOS()
+        wait(1)
+    end
 end)
 Timmessss = L_1_[93]X1:AddParagraph({
     Title = "Time",
