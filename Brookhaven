@@ -1,4 +1,4 @@
---// Ajay \\--
+--// Gibsss \\--
 
 --==[[ Ban System ]]==--
 local Players = game:GetService("Players")
@@ -14,7 +14,7 @@ local bannedUsers = {
 if bannedUsers[player.Name] then
     
     local gui = Instance.new("ScreenGui")
-    gui.Name = "AJ_BanScreen"
+    gui.Name = "Gibsss_BanScreen"
     gui.IgnoreGuiInset = true
     gui.ResetOnSpawn = false
     gui.Parent = game:GetService("CoreGui")
@@ -59,7 +59,7 @@ if bannedUsers[player.Name] then
     end)
     
     task.wait(8)
-player:Kick("You have been banned from AJ Music Hub by the owner.")
+player:Kick("You have been banned from Gibsss Music by the owner.")
 
     return
 end
@@ -81,12 +81,12 @@ local DevUser = Instance.new("TextLabel")
 local DevInsta = Instance.new("TextLabel")
 local IconCorner = Instance.new("UICorner")
 
-local TARGET_USERNAME = "Edward_Ajay" 
-local DISPLAY_NAME = "Ajay"
-local INSTA_ID = "Instagram: @4jayyz"
+local TARGET_USERNAME = "GibsssPogi" 
+local DISPLAY_NAME = "Gibsss"
+local INSTA_ID = "None"
 
 ScreenGui.Parent = game:GetService("CoreGui")
-ScreenGui.Name = "AJ_Maintenance"
+ScreenGui.Name = "Gibsss_Maintenance"
 
 MainFrame.Name = "MainFrame"
 MainFrame.Parent = ScreenGui
@@ -212,12 +212,12 @@ local DevUser = Instance.new("TextLabel")
 local UICorner = Instance.new("UICorner")
 local IconCorner = Instance.new("UICorner")
 
-local TARGET_USERNAME = "OpSamPlaying_1234"
-local DISPLAY_NAME = "BruteForceXSam"
-local CREDIT_TEXT = "Thanks for providing the full Song ID source 🎵"
+local TARGET_USERNAME = "GibsssPogi"
+local DISPLAY_NAME = "Gibsss"
+local CREDIT_TEXT = "YEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEeeeeeeee"
 
 ScreenGui.Parent = game:GetService("CoreGui")
-ScreenGui.Name = "AJ_Credits"
+ScreenGui.Name = "Gibsss_Credits"
 
 MainFrame.Parent = ScreenGui
 MainFrame.BackgroundColor3 = Color3.fromRGB(12,12,12)
@@ -305,7 +305,7 @@ local TweenService = game:GetService("TweenService")
 local CoreGui = game:GetService("CoreGui")
 
 local gui = Instance.new("ScreenGui")
-gui.Name = "AjLoadingScreen"
+gui.Name = "GibsssLoadingScreen"
 gui.Parent = CoreGui
 gui.IgnoreGuiInset = true
 
@@ -332,7 +332,7 @@ TweenService:Create(textLabel, TweenInfo.new(1), {
     TextTransparency = 0
 }):Play()
 
-local message = "It's all about her..."
+local message = "I want to be yours"
 for i = 1, #message do
     textLabel.Text = string.sub(message, 1, i)
     task.wait(0.05)
@@ -383,12 +383,12 @@ SetDefaultNameAndBio()
 --[[
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
-local DEV_USER = "Edward_Ajay"
+local DEV_USER = "Gibsss"
 
 -- Toast Function
 local function createToastEx(msg, color)
     local gui = Instance.new("ScreenGui")
-    gui.Name = "AJ_Alert"
+    gui.Name = "Gibsss_alert"
     gui.Parent = game:GetService("CoreGui")
     gui.DisplayOrder = 999 
 
@@ -439,7 +439,7 @@ local function triggerAlert(plr)
         welcomeSound.Parent = game:GetService("SoundService")
         welcomeSound:Play()
         game:GetService("Debris"):AddItem(welcomeSound, 4)
-    elseif plr.Name == "Edward_Ajay" then
+    elseif plr.Name == "Gibsss" then
         createToastEx("🚨 TARGET: " .. plr.Name .. " joined!", Color3.fromRGB(180, 0, 0))
     end
 end
@@ -460,7 +460,7 @@ end]]
 --===[[ DecCrown ]]===--
 local Players = game:GetService("Players")
 
-local DEV_USER = "Edward_Ajay"
+local DEV_USER = "Gibsss"
 
 local function addCrown(character)
 
@@ -518,7 +518,7 @@ Players.PlayerAdded:Connect(watchPlayer)
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
 
-local DEV_USER = "Edward_Ajay"
+local DEV_USER = "Gibsss"
 
 local crownGui
 
@@ -583,9 +583,9 @@ end
 local Rayfield = loadstring(game:HttpGet("https://sirius.menu/rayfield"))()
 
 local Window = Rayfield:CreateWindow({
-   Name = "🎵 AJ Music Hub",
-   LoadingTitle = "AJ Song Hub",
-   LoadingSubtitle = "Instagram : @4jayyz",
+   Name = "Gibsss Music Brookhaven",
+   LoadingTitle = "Gibsss Song Hub",
+   LoadingSubtitle = "none",
    ConfigurationSaving = {
       Enabled = false
    },
@@ -595,7 +595,7 @@ local Window = Rayfield:CreateWindow({
 
 Rayfield:Notify({
     Title = "Important Notice",
-    Content = "If you want to add your Song on my script or If you find any bugs, DM me on Instagram: @4jayyz",
+    Content = "If you want to add your Song on my script or If you find any bugs, DM me on Discord: itzme_gibsss",
     Duration = 10,
     Image = 4483362458,
 })
@@ -613,7 +613,7 @@ game:GetService("Debris"):AddItem(welcomeSound, 10)
 end
 --===[[ End ]]===--
 
---===[[ Aj Music GUI ]]===--
+--===[[ Gibsss Music GUI ]]===--
 task.spawn(function()
     task.wait(1) -- wait for rayfield to build UI
 
@@ -622,7 +622,7 @@ task.spawn(function()
     for _,v in pairs(CoreGui:GetDescendants()) do
         if v:IsA("TextLabel") or v:IsA("TextButton") then
             if string.find(v.Text, "Show") then
-                v.Text = "AJ Music GUI"
+                v.Text = "Gibsss Music GUI"
             end
         end
     end
@@ -633,7 +633,7 @@ end)
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 
-local DEV_USER = "Edward_Ajay"
+local DEV_USER = "GibsssPogi"
 
 getgenv().AJ_SCRIPT_USER = true
 
@@ -1444,13 +1444,13 @@ function OpenCommandsUI()
     end
     
     Rayfield:Notify({
-        Title = "Aj",
+        Title = "Gibsss",
         Content = "You Can Write Those Commands In Chat Box",
         Duration = 6
     })
 
     local gui = Instance.new("ScreenGui")
-    gui.Name = "AjCommandsUI"
+    gui.Name = "GibsssCommandsUI"
     gui.Parent = game.CoreGui
 
     local frame = Instance.new("Frame", gui)
@@ -1464,7 +1464,7 @@ function OpenCommandsUI()
     local title = Instance.new("TextLabel", frame)
     title.Size = UDim2.new(1, 0, 0, 40)
     title.BackgroundTransparency = 1
-    title.Text = "AJ Script Commands List"
+    title.Text = "Gibsss Script Commands List"
     title.TextColor3 = Color3.fromRGB(0, 255, 150)
     title.Font = Enum.Font.SourceSansBold
     title.TextSize = 26
@@ -1518,7 +1518,7 @@ function OpenCommandsUI()
 
 
     -- Commands list
-    AddCommand("ExitAj/ExAj", "Destroy The Rayfield GUI")
+    AddCommand("ExitGibsss/ExGibsss", "Destroy The Rayfield GUI")
     AddCommand("AntiSit / Nosit", "Prevents your character from sitting")
     AddCommand("UnnoSit / Sit", "Allows your character to sit normally")
 
@@ -1928,7 +1928,7 @@ welcomeSound:Play()
 game:GetService("Debris"):AddItem(welcomeSound, 10)
 --===[[ End ]]===--
 
---===[[ 🗿 ]]===--
+--===[[ Hehehehhehe..... ]]===--
 local TweenService = game:GetService("TweenService")
 local gui = Instance.new("ScreenGui")
 gui.Name = "ClownIntro"
@@ -1944,7 +1944,7 @@ label.Size = UDim2.new(0,200,0,200)
 label.Position = UDim2.new(0.5,0,0.5,0)
 label.AnchorPoint = Vector2.new(0.5,0.5)
 
-label.Text = "🗿"
+label.Text = "Hehehehhehe....."
 label.TextScaled = true
 label.Font = Enum.Font.GothamBold
 label.TextTransparency = 1
@@ -2120,17 +2120,17 @@ local function GetChar()
 end
 
 
-local PlaysTb = Window:CreateTab("▶️ Play", 4483362458) 
-local SongsTb = Window:CreateTab("🎶 Songs", 4483362458) 
-local HindiTb = Window:CreateTab("🎵 Hindi", 4483362458) 
-local BhojpuriTb = Window:CreateTab("➿ Bhojpuri", 4483362458) 
-local PhonkTb = Window:CreateTab("🎼 Phonk", 4483362458)  
-local MultiLTb = Window:CreateTab("♾️ Multi-Lang", 4483362458) 
-local SoundsTb = Window:CreateTab("🔊 Sounds", 4483362458) 
+local PlaysTb = Window:CreateTab("Play", 4483362458) 
+local SongsTb = Window:CreateTab("Songs", 4483362458) 
+local HindiTb = Window:CreateTab("Hindi", 4483362458) 
+local BhojpuriTb = Window:CreateTab("Bhojpuri", 4483362458) 
+local PhonkTb = Window:CreateTab("Phonk", 4483362458)  
+local MultiLTb = Window:CreateTab("Multi-Lang", 4483362458) 
+local SoundsTb = Window:CreateTab("Sounds", 4483362458) 
 
 PlaysTb:CreateSection("You can choose through this option whether you want to play music through the game's Music Pass or without Music Pass.")
 local ToggleMusicPass = PlaysTb:CreateToggle({
-   Name = "Through Music Pass ✅",
+   Name = "Through Music Pass",
    CurrentValue = true,
    Flag = "MusicPassToggle",
 
@@ -2165,12 +2165,12 @@ PlaysTb:CreateInput({
    Callback = function(t) ButtonPSound() customID = t end,
 })
 PlaysTb:CreateButton({
-   Name = "▶️ Play Manual ID",
+   Name = "Play Manual ID",
    Callback = function() ButtonPSound() UniversalPlay(customID) end,
 })
 -- Stop Music Button
 PlaysTb:CreateButton({
-   Name = "⏹️ Stop Music",
+   Name = "Stop Music",
    Callback = function() 
        ButtonPSound()
        UniversalStop() 
@@ -2190,7 +2190,7 @@ game:GetService("Players")
 
 
 local VolumeSlider = PlaysTb:CreateSlider({
-   Name = "🔊 Volume Control",
+   Name = "Volume Control",
    Range = {1, 100},
    Increment = 5,
    CurrentValue = 50,
@@ -2209,7 +2209,7 @@ local VolumeSlider = PlaysTb:CreateSlider({
 PlaysTb:CreateSection("Choose Your Vehicle For Music")
 -- Premium Button
 PlaysTb:CreateButton({
-    Name = "💎 Premium: SegwaySmall",
+    Name = "Premium: SegwaySmall",
     Callback = function()
         ButtonPSound()
         vehicleRemote:FireServer("SegwaySmall")
@@ -2230,7 +2230,7 @@ game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("SetUn
 
 -- Normal Button
 PlaysTb:CreateButton({
-    Name = "🛹 Normal: Skateboard",
+    Name = "Normal: Skateboard",
     Callback = function()
         ButtonPSound()
         vehicleRemote:FireServer("SkateBoard")
@@ -2252,7 +2252,7 @@ game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("SetUn
 
 -- Remove Vehicle & Reset Physics
 PlaysTb:CreateButton({
-    Name = "❌ Remove Vehicle & Reset",
+    Name = "Remove Vehicle & Reset",
     Callback = function()
         ButtonPSound()
         vehicleRemote:FireServer("Delete NoMotorVehicle")
@@ -2274,7 +2274,7 @@ PlaysTb:CreateButton({
 })
 
 PlaysTb:CreateToggle({
-   Name = "🌈 Vehicle RGB ",
+   Name = "Vehicle RGB ",
    CurrentValue = false,
    Callback = function(Value)
       ButtonPSound()
@@ -2309,7 +2309,7 @@ PlaysTb:CreateToggle({
 
 
 local AntiSitToggleObject = PlaysTb:CreateToggle({
-    Name = "⭕Anti-Sit",
+    Name = "Anti-Sit",
     CurrentValue = false,
     Flag = "AntiSitToggle",
 
@@ -2320,7 +2320,7 @@ local AntiSitToggleObject = PlaysTb:CreateToggle({
 })
 
 PlaysTb:CreateButton({
-    Name = "Aj Spammer",
+    Name = "Gibsss Spammer",
     Callback = function()
     ButtonPSound()
 loadstring(game:HttpGet("https://pastebin.com/raw/bPnmeDGz"))()
@@ -2328,7 +2328,7 @@ loadstring(game:HttpGet("https://pastebin.com/raw/bPnmeDGz"))()
     })
     
 PlaysTb:CreateButton({
-    Name = "Aj Emote Gui",
+    Name = "Gibsss Emote Gui",
     Callback = function()
     ButtonPSound()
 loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Emote-Gui-75782"))()
@@ -2606,7 +2606,7 @@ AddSong(MultiLTb, "Kadhal Muttal", 97407313818909)
 -- SOUND
 AddSong(SoundsTb,"UwU", 105577043687038)
 AddSong(SoundsTb,"Senpai", 115498703521334)
-AddSong(SoundsTb,"Kiss 💋", 118235447189969)
+AddSong(SoundsTb,"Kiss", 118235447189969)
 AddSong(SoundsTb,"Anime Ahh", 119651952208423)
 AddSong(SoundsTb,"Ah", 121259252258118)
 AddSong(SoundsTb,"18+ Girl", 131014261385625)
@@ -2643,7 +2643,7 @@ AddSong(SoundsTb,"S-SariRoti", 9075261161)
 
 
 
--- ⚙️ SETTINGS TAB
+-- SETTINGS TAB
 -- Services & Remotes
 
 
@@ -2725,7 +2725,7 @@ end
 
 local player = game.Players.LocalPlayer
 local runService = game:GetService("RunService")
-local Settings = Window:CreateTab("⚙️ Settings", 4483362458) 
+local Settings = Window:CreateTab("Settings", 4483362458) 
 
 -- WalkSpeed Slider
 Settings:CreateSlider({
@@ -2751,7 +2751,7 @@ Settings:CreateSlider({
     end
 })
 
--- 🧲 No Gravity
+-- No Gravity
 local force
 
 Settings:CreateSlider({
@@ -2776,7 +2776,7 @@ Settings:CreateSlider({
     end
 })
 
--- 🔁 Reset Speed
+-- Reset Speed
 Settings:CreateButton({
     Name = "Reset Speed",
     Callback = function()
@@ -2786,7 +2786,7 @@ Settings:CreateButton({
     end
 })
 
--- 🔁 Reset Jump
+-- Reset Jump
 Settings:CreateButton({
     Name = "Reset Jump",
     Callback = function()
@@ -2796,7 +2796,7 @@ Settings:CreateButton({
     end
 })
 
--- 🔁 Reset Gravity
+-- Reset Gravity
 Settings:CreateButton({
     Name = "Reset Gravity",
     Callback = function()
@@ -2807,7 +2807,7 @@ Settings:CreateButton({
 
 
 Settings:CreateToggle({
-    Name = "🔒 Shift Lock",
+    Name = Shift Lock",
     CurrentValue = false,
     Flag = "ShiftLockToggle",
     Callback = function(Value)
@@ -3003,7 +3003,7 @@ Settings:CreateButton({
 -- server option 
 Settings:CreateSection("Server Option")
 Settings:CreateButton({
-    Name = "🔁 Rejoin Server",
+    Name = "Rejoin Server",
     Callback = function()
         ButtonPSound()
         local TeleportService = game:GetService("TeleportService")
@@ -3012,7 +3012,7 @@ Settings:CreateButton({
     end
 })
 Settings:CreateButton({
-    Name = "👥 Small Server",
+    Name = "Small Server",
     Callback = function()
         ButtonPSound()
         local HttpService = game:GetService("HttpService")
@@ -3035,7 +3035,7 @@ Settings:CreateButton({
     end
 })
 Settings:CreateButton({
-    Name = "🔀 Server Hop",
+    Name = "Server Hop",
     Callback = function()
         ButtonPSound()
         local HttpService = game:GetService("HttpService")
@@ -3058,9 +3058,9 @@ Settings:CreateButton({
     end
 })
 
--- ❌ Destroy GUI Button
+-- Destroy GUI Button
 Settings:CreateButton({
-    Name = "❌ Destroy GUI",
+    Name = "Destroy GUI",
     Callback = function()
         ButtonPSound()
         local s = Instance.new("Sound")
@@ -3075,10 +3075,10 @@ Settings:CreateButton({
 })
 
 
--- 📜 Credits
+-- Credits
 Settings:CreateParagraph({
     Title = "Credits",
-    Content = "AJ (@4jayyz)\nMade for Delta Android Executor"
+    Content = "Gibssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
 })
 
 
@@ -3166,9 +3166,7 @@ local LocalPlayer = Players.LocalPlayer
 
 -- Developer list
 local Developers = {
-    ["Edward_Ajay"] = true,
-    ["Edward_Ajay4"] = true,
-    ["fizu678"] = true,
+    ["GibsssPogi"] = true,
 }
 
 local PlayerDropdown = AvatarTb:CreateDropdown({
@@ -3189,14 +3187,14 @@ local PlayerDropdown = AvatarTb:CreateDropdown({
    end,
 })
 
--- 🕒 AUTO REFRESH LIST
+-- AUTO REFRESH LIST
 task.spawn(function()
     while task.wait(30) do
         PlayerDropdown:Refresh(GetPlayerNames(), true)
     end
 end)
 
--- 👑 COPY LOGIC WITH AUTO-CLEAR
+-- COPY LOGIC WITH AUTO-CLEAR
 AvatarTb:CreateButton({
    Name = "Copy Avatar",
    Callback = function()
@@ -3274,7 +3272,7 @@ AvatarTb:CreateSection("Avatar VIP Fire")
 
 local function FireNotify(fireName)
     Rayfield:Notify({
-        Title = "VIP Fire Applied 🔥",
+        Title = "VIP Fire Applied",
         Content = fireName .. " successfully applied!",
         Duration = 4,
         Image = 4483362458,
@@ -3345,9 +3343,9 @@ AvatarTb:CreateButton({
 --// Buttons Section
 AvatarTb:CreateSection("Avatar Body Bundles") 
 
--- 🎀 Viral Girl Body
+-- Viral Girl Body
 AvatarTb:CreateButton({
-   Name = "🎀 Get Viral Girl Body",
+   Name = "Get Viral Girl Body",
    Callback = function()
     ButtonPSound()  
       -- Part 1
@@ -3378,9 +3376,9 @@ AvatarTb:CreateButton({
    end,
 })
 
--- 🖤 Tall Emo Body
+-- Tall Emo Body
 AvatarTb:CreateButton({
-   Name = "🖤 Get Tall Emo Body",
+   Name = "Get Tall Emo Body",
    Callback = function()
     ButtonPSound()
       local args1 = {15365110905}
@@ -3406,9 +3404,9 @@ AvatarTb:CreateButton({
    end,
 })
 
--- 👗 Zepeto Girl Body
+-- Zepeto Girl Body
 AvatarTb:CreateButton({
-   Name = "👗 Get Zepeto Girl Body",
+   Name = "Get Zepeto Girl Body",
    Callback = function()
     ButtonPSound()
       local args1 = {115745153758680}
@@ -3434,9 +3432,9 @@ AvatarTb:CreateButton({
    end,
 })
 
--- 👔 Zepeto Boy Body
+-- Zepeto Boy Body
 AvatarTb:CreateButton({
-   Name = "👔 Get Zepeto Boy Body",
+   Name = "Get Zepeto Boy Body",
    Callback = function()
     ButtonPSound()
       local args1 = {127731857442064}
@@ -3471,7 +3469,7 @@ AvatarTb:CreateButton({
 AvatarTb:CreateSection("Avatar Mods")
 
 AvatarTb:CreateButton({
-   Name = "🦵 Add Korblox",
+   Name = "Add Korblox",
    Callback = function()
     ButtonPSound()
       ApplyBodyMod(true, false)
@@ -3480,7 +3478,7 @@ AvatarTb:CreateButton({
 })
 
 AvatarTb:CreateButton({
-   Name = "💀 Add Headless",
+   Name = "Add Headless",
    Callback = function()
    ButtonPSound()
       ApplyBodyMod(false, true)
@@ -3490,36 +3488,36 @@ AvatarTb:CreateButton({
 
 
 -- All ids
-AddAvatarItem("🛸 Add UFO", 8151404994, "UFO")
-AddAvatarItem("🪓 Add Axe", 3240543366, "Axe")
-AddAvatarItem("☠️ Add SkullAura", 14524326503, "Skull Aura")
-AddAvatarItem("📯 Add BSP Horn", 233705354, "BSP Horn")
-AddAvatarItem("🟡 Add Yellow Fire Horn", 215718515, "Fire Horn")
-AddAvatarItem("🟢 Add Green Fire Horn", 1744060292, "Green Fire horn") 
-AddAvatarItem("🔵 Add Blue Fire Horn", 74891470, "Blue Fire Horn")
-AddAvatarItem("🔴 Add Red Fairy", 128217885, "Red Fairy")
-AddAvatarItem("🟣 Add Purple Fairy", 150381051, "Purple Fairy")
-AddAvatarItem("🟢 Add Green Fairy", 226189871, "Green Fairy")
-AddAvatarItem("❄️ Add Ice Fairy", 141742418, "Ice Fairy")
-AddAvatarItem("👻 Add Ghosdeeri", 183468963, "Ghosdeeri")
-AddAvatarItem("💀 Add Doomsekkar", 132809431, "Doomsekkar")
-AddAvatarItem("✨ Add Sparkling Wings", 192557913, "Sparkling Wings")
-AddAvatarItem("👑 Add Royal Crown", 10159600649, "Royal Crown")
-AddAvatarItem("🎧 Add Soundable Laugh Hat", 305888394, "Sound Hat")
-AddAvatarItem("🐔 Add Soundable Chicken Hat", 24112667, "Soundable Chicken")
-AddAvatarItem("🟪 Add Soundable Purple Hat", 24114402, "Soundable Purple Hat")
-AddAvatarItem("🎹 Add Soundable Hat", 33070696, "Soundable Hat")
-AddAvatarItem("🔫 Sci-Fi Gun", 3013849063, "Gun")
-AddAvatarItem("👑 Like Crown", 13632291015, "Crown")
-AddAvatarItem("🔵 Blue Crown", 13632274891, "Blue Crown")
-AddAvatarItem("🔴 Red Crown", 13634032867, "Red Crown")
-AddAvatarItem("🟡 Yellow Crown", 13632296794, "Yellow Crown")
-AddAvatarItem("🌈 Rainbow Crown", 13634162618, "Rainbow Crown")
+AddAvatarItem("Add UFO", 8151404994, "UFO")
+AddAvatarItem("Add Axe", 3240543366, "Axe")
+AddAvatarItem("Add SkullAura", 14524326503, "Skull Aura")
+AddAvatarItem("Add BSP Horn", 233705354, "BSP Horn")
+AddAvatarItem("Add Yellow Fire Horn", 215718515, "Fire Horn")
+AddAvatarItem("Add Green Fire Horn", 1744060292, "Green Fire horn") 
+AddAvatarItem("Add Blue Fire Horn", 74891470, "Blue Fire Horn")
+AddAvatarItem("Add Red Fairy", 128217885, "Red Fairy")
+AddAvatarItem("Add Purple Fairy", 150381051, "Purple Fairy")
+AddAvatarItem("Add Green Fairy", 226189871, "Green Fairy")
+AddAvatarItem("Add Ice Fairy", 141742418, "Ice Fairy")
+AddAvatarItem("Add Ghosdeeri", 183468963, "Ghosdeeri")
+AddAvatarItem("Add Doomsekkar", 132809431, "Doomsekkar")
+AddAvatarItem("Add Sparkling Wings", 192557913, "Sparkling Wings")
+AddAvatarItem("Add Royal Crown", 10159600649, "Royal Crown")
+AddAvatarItem("Add Soundable Laugh Hat", 305888394, "Sound Hat")
+AddAvatarItem("Add Soundable Chicken Hat", 24112667, "Soundable Chicken")
+AddAvatarItem("Add Soundable Purple Hat", 24114402, "Soundable Purple Hat")
+AddAvatarItem("Add Soundable Hat", 33070696, "Soundable Hat")
+AddAvatarItem("Sci-Fi Gun", 3013849063, "Gun")
+AddAvatarItem("Like Crown", 13632291015, "Crown")
+AddAvatarItem("Blue Crown", 13632274891, "Blue Crown")
+AddAvatarItem("Red Crown", 13634032867, "Red Crown")
+AddAvatarItem("Yellow Crown", 13632296794, "Yellow Crown")
+AddAvatarItem("Rainbow Crown", 13634162618, "Rainbow Crown")
 
 
 
 
-AvatarTb:CreateSection("--- 🎭 Professional Animation Lists ---")
+AvatarTb:CreateSection("--- Professional Animation Lists ---")
 local AnimData = {
     Idle = {
        ["Adidas Stand"] = 126354114956642,
@@ -3645,7 +3643,7 @@ end
 
 
 
-local Scripts = Window:CreateTab("🧾 Scripts", 4483362458)
+local Scripts = Window:CreateTab("Scripts", 4483362458)
 
 -- Fly V3 GUI
 Scripts:CreateSection("Fly GUI")
@@ -3696,8 +3694,8 @@ Scripts:CreateButton({
 
 
 
- --📜 Credits
+ -- Credits
 Scripts:CreateParagraph({
     Title = "Credits",
-    Content = "AJ (@4jayyz)\nMade for Delta Android Executor"
+    Content = "Gibsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
 })
