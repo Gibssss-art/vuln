@@ -92,7 +92,7 @@ toggleBtn.Position = UDim2.new(0.05, 0, 0.2, 0)
 toggleBtn.BackgroundColor3 = C.surfaceHi
 toggleBtn.Text = "GIBSSS"
 toggleBtn.TextColor3 = C.accent
-toggleBtn.TextSize = 20
+toggleBtn.TextSize = 10
 toggleBtn.Font = Enum.Font.GothamBold
 toggleBtn.Parent = sg
 corner(toggleBtn, 21)
@@ -120,7 +120,7 @@ local titleText = Instance.new("TextLabel")
 titleText.Size = UDim2.new(1, -40, 1, 0)
 titleText.Position = UDim2.new(0, 12, 0, 0)
 titleText.BackgroundTransparency = 1
-titleText.Text = "Seluwia Listener"
+titleText.Text = "Gibsss Gamepass List"
 titleText.TextColor3 = C.accent
 titleText.TextXAlignment = Enum.TextXAlignment.Left
 titleText.TextSize = 13
